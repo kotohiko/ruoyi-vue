@@ -11,6 +11,7 @@ import com.alibaba.druid.pool.DruidDataSource;
  */
 @Configuration
 public class DruidProperties {
+
     @Value("${spring.datasource.druid.initialSize}")
     private int initialSize;
 

@@ -25,6 +25,7 @@ import com.ruoyi.framework.security.context.PermissionContextHolder;
 @Aspect
 @Component
 public class DataScopeAspect {
+
     /**
      * 全部数据权限
      */

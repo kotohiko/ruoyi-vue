@@ -23,6 +23,7 @@ import com.ruoyi.framework.interceptor.RepeatSubmitInterceptor;
  */
 @Configuration
 public class ResourcesConfig implements WebMvcConfigurer {
+
     @Autowired
     private RepeatSubmitInterceptor repeatSubmitInterceptor;
 

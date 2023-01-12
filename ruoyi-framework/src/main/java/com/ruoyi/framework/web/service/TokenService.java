@@ -29,6 +29,7 @@ import io.jsonwebtoken.SignatureAlgorithm;
  */
 @Component
 public class TokenService {
+
     // 令牌自定义标识
     @Value("${token.header}")
     private String header;
@@ -64,9 +65,8 @@ public class TokenService {
                 // 解析对应的权限以及用户信息
                 String uuid = (String) claims.get(Constants.LOGIN_USER_KEY);
                 String userKey = getTokenKey(uuid);
-                LoginUser user = redisCache.getCacheObject(userKey);
-                return user;
-            } catch (Exception e) {
+                return redisCache.getCacheObject(userKey);
+            } catch (Exception ignored) {
             }
         }
         return null;
@@ -112,7 +112,6 @@ public class TokenService {
      * 验证令牌有效期，相差不足20分钟，自动刷新缓存
      *
      * @param loginUser
-     * @return 令牌
      */
     public void verifyToken(LoginUser loginUser) {
         long expireTime = loginUser.getExpireTime();
@@ -156,10 +155,9 @@ public class TokenService {
      * @return 令牌
      */
     private String createToken(Map<String, Object> claims) {
-        String token = Jwts.builder()
+        return Jwts.builder()
                 .setClaims(claims)
                 .signWith(SignatureAlgorithm.HS512, secret).compact();
-        return token;
     }
 
     /**

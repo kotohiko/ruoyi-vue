@@ -10,6 +10,7 @@ import com.ruoyi.quartz.domain.SysJob;
  * @author ruoyi
  */
 public interface SysJobMapper {
+
     /**
      * 查询调度任务日志集合
      *

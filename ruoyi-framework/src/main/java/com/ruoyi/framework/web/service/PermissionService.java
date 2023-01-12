@@ -17,6 +17,7 @@ import com.ruoyi.framework.security.context.PermissionContextHolder;
  */
 @Service("ss")
 public class PermissionService {
+
     /**
      * 所有权限标识
      */

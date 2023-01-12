@@ -10,6 +10,7 @@ import com.ruoyi.common.core.text.Convert;
  * @author ruoyi
  */
 public class PermissionContextHolder {
+
     private static final String PERMISSION_CONTEXT_ATTRIBUTES = "PERMISSION_CONTEXT";
 
     public static void setContext(String permission) {

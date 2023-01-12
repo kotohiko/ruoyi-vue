@@ -32,6 +32,7 @@ import com.ruoyi.framework.datasource.DynamicDataSource;
  */
 @Configuration
 public class DruidConfig {
+
     @Bean
     @ConfigurationProperties("spring.datasource.druid.master")
     public DataSource masterDataSource(DruidProperties druidProperties) {
