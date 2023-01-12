@@ -113,9 +113,9 @@
     </update>
 
     <delete id="deleteConfigById" parameterType="Long">
-        delete
-        from sys_config
-        where config_id = #{configId}
+        DELETE
+        FROM sys_config
+        WHERE config_id = #{configId}
     </delete>
 
     <delete id="deleteConfigByIds" parameterType="Long">

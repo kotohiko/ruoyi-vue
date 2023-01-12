@@ -15,6 +15,7 @@ import com.ruoyi.quartz.service.ISysJobLogService;
  */
 @Service
 public class SysJobLogServiceImpl implements ISysJobLogService {
+
     @Autowired
     private SysJobLogMapper jobLogMapper;
 

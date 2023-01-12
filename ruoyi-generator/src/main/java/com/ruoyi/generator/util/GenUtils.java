@@ -15,6 +15,7 @@ import com.ruoyi.generator.domain.GenTableColumn;
  * @author ruoyi
  */
 public class GenUtils {
+
     /**
      * 初始化表信息
      */

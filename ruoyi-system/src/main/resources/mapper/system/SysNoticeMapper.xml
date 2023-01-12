@@ -85,9 +85,9 @@
     </update>
 
     <delete id="deleteNoticeById" parameterType="Long">
-        delete
-        from sys_notice
-        where notice_id = #{noticeId}
+        DELETE
+        FROM sys_notice
+        WHERE notice_id = #{noticeId}
     </delete>
 
     <delete id="deleteNoticeByIds" parameterType="Long">

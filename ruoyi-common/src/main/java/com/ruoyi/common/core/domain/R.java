@@ -1,5 +1,6 @@
 package com.ruoyi.common.core.domain;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 import com.ruoyi.common.constant.HttpStatus;
@@ -10,6 +11,8 @@ import com.ruoyi.common.constant.HttpStatus;
  * @author ruoyi
  */
 public class R<T> implements Serializable {
+
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**

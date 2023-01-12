@@ -6,6 +6,7 @@ package com.ruoyi.common.utils.uuid;
  * @author ruoyi
  */
 public class IdUtils {
+
     /**
      * 获取随机UUID
      *

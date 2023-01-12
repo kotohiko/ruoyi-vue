@@ -1,5 +1,6 @@
 package com.ruoyi.common.core.domain.model;
 
+import java.io.Serial;
 import java.util.Collection;
 import java.util.Set;
 
@@ -14,6 +15,8 @@ import com.ruoyi.common.core.domain.entity.SysUser;
  * @author ruoyi
  */
 public class LoginUser implements UserDetails {
+
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**

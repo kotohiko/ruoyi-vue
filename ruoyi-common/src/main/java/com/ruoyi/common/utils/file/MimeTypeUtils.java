@@ -6,6 +6,7 @@ package com.ruoyi.common.utils.file;
  * @author ruoyi
  */
 public class MimeTypeUtils {
+
     public static final String IMAGE_PNG = "image/png";
 
     public static final String IMAGE_JPG = "image/jpg";
@@ -38,19 +39,13 @@ public class MimeTypeUtils {
             "pdf"};
 
     public static String getExtension(String prefix) {
-        switch (prefix) {
-            case IMAGE_PNG:
-                return "png";
-            case IMAGE_JPG:
-                return "jpg";
-            case IMAGE_JPEG:
-                return "jpeg";
-            case IMAGE_BMP:
-                return "bmp";
-            case IMAGE_GIF:
-                return "gif";
-            default:
-                return "";
-        }
+        return switch (prefix) {
+            case IMAGE_PNG -> "png";
+            case IMAGE_JPG -> "jpg";
+            case IMAGE_JPEG -> "jpeg";
+            case IMAGE_BMP -> "bmp";
+            case IMAGE_GIF -> "gif";
+            default -> "";
+        };
     }
 }

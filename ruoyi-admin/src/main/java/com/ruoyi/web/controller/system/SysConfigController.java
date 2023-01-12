@@ -32,6 +32,7 @@ import com.ruoyi.system.service.ISysConfigService;
 @RestController
 @RequestMapping("/system/config")
 public class SysConfigController extends BaseController {
+
     @Autowired
     private ISysConfigService configService;
 
@@ -51,7 +52,7 @@ public class SysConfigController extends BaseController {
     @PostMapping("/export")
     public void export(HttpServletResponse response, SysConfig config) {
         List<SysConfig> list = configService.selectConfigList(config);
-        ExcelUtil<SysConfig> util = new ExcelUtil<SysConfig>(SysConfig.class);
+        ExcelUtil<SysConfig> util = new ExcelUtil<>(SysConfig.class);
         util.exportExcel(response, list, "参数数据");
     }
 

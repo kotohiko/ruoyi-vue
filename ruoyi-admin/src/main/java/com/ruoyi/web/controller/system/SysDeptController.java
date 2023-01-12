@@ -31,6 +31,7 @@ import com.ruoyi.system.service.ISysDeptService;
 @RestController
 @RequestMapping("/system/dept")
 public class SysDeptController extends BaseController {
+
     @Autowired
     private ISysDeptService deptService;
 

@@ -6,6 +6,7 @@ package com.ruoyi.system.domain;
  * @author ruoyi
  */
 public class SysUserOnline {
+
     /**
      * 会话编号
      */

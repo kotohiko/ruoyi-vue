@@ -1,5 +1,6 @@
 package com.ruoyi.common.core.domain.entity;
 
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 import javax.validation.constraints.Email;
@@ -17,6 +18,8 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * @author ruoyi
  */
 public class SysDept extends BaseEntity {
+
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**
@@ -77,7 +80,7 @@ public class SysDept extends BaseEntity {
     /**
      * 子部门
      */
-    private List<SysDept> children = new ArrayList<SysDept>();
+    private List<SysDept> children = new ArrayList<>();
 
     public Long getDeptId() {
         return deptId;
@@ -104,7 +107,7 @@ public class SysDept extends BaseEntity {
     }
 
     @NotBlank(message = "部门名称不能为空")
-    @Size(min = 0, max = 30, message = "部门名称长度不能超过30个字符")
+    @Size(max = 30, message = "部门名称长度不能超过30个字符")
     public String getDeptName() {
         return deptName;
     }
@@ -130,7 +133,7 @@ public class SysDept extends BaseEntity {
         this.leader = leader;
     }
 
-    @Size(min = 0, max = 11, message = "联系电话长度不能超过11个字符")
+    @Size(max = 11, message = "联系电话长度不能超过11个字符")
     public String getPhone() {
         return phone;
     }
@@ -140,7 +143,7 @@ public class SysDept extends BaseEntity {
     }
 
     @Email(message = "邮箱格式不正确")
-    @Size(min = 0, max = 50, message = "邮箱长度不能超过50个字符")
+    @Size(max = 50, message = "邮箱长度不能超过50个字符")
     public String getEmail() {
         return email;
     }

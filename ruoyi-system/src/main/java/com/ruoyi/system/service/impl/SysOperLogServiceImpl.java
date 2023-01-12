@@ -15,6 +15,7 @@ import com.ruoyi.system.service.ISysOperLogService;
  */
 @Service
 public class SysOperLogServiceImpl implements ISysOperLogService {
+
     @Autowired
     private SysOperLogMapper operLogMapper;
 

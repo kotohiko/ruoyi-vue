@@ -9,6 +9,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * @author ruoyi
  */
 public class SysUserPost {
+
     /**
      * 用户ID
      */

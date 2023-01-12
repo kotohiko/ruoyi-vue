@@ -36,6 +36,7 @@ import com.ruoyi.quartz.util.ScheduleUtils;
 @RestController
 @RequestMapping("/monitor/job")
 public class SysJobController extends BaseController {
+
     @Autowired
     private ISysJobService jobService;
 
@@ -58,7 +59,7 @@ public class SysJobController extends BaseController {
     @PostMapping("/export")
     public void export(HttpServletResponse response, SysJob sysJob) {
         List<SysJob> list = jobService.selectJobList(sysJob);
-        ExcelUtil<SysJob> util = new ExcelUtil<SysJob>(SysJob.class);
+        ExcelUtil<SysJob> util = new ExcelUtil<>(SysJob.class);
         util.exportExcel(response, list, "定时任务");
     }
 

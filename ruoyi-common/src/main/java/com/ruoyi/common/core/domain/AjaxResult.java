@@ -1,5 +1,6 @@
 package com.ruoyi.common.core.domain;
 
+import java.io.Serial;
 import java.util.HashMap;
 
 import com.ruoyi.common.constant.HttpStatus;
@@ -11,6 +12,8 @@ import com.ruoyi.common.utils.StringUtils;
  * @author ruoyi
  */
 public class AjaxResult extends HashMap<String, Object> {
+
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**

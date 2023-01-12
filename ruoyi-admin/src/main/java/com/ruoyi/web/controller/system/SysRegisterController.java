@@ -18,6 +18,7 @@ import com.ruoyi.system.service.ISysConfigService;
  */
 @RestController
 public class SysRegisterController extends BaseController {
+
     @Autowired
     private SysRegisterService registerService;
 

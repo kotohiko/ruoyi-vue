@@ -11,6 +11,7 @@ import javax.validation.Validator;
  * @author ruoyi
  */
 public class BeanValidators {
+
     public static void validateWithException(Validator validator, Object object, Class<?>... groups)
             throws ConstraintViolationException {
         Set<ConstraintViolation<Object>> constraintViolations = validator.validate(object, groups);

@@ -30,6 +30,7 @@ import com.ruoyi.system.service.ISysMenuService;
 @RestController
 @RequestMapping("/system/menu")
 public class SysMenuController extends BaseController {
+
     @Autowired
     private ISysMenuService menuService;
 

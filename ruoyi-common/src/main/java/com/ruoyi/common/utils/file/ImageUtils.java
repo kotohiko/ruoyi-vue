@@ -20,11 +20,13 @@ import com.ruoyi.common.utils.StringUtils;
  * @author ruoyi
  */
 public class ImageUtils {
+
     private static final Logger log = LoggerFactory.getLogger(ImageUtils.class);
 
     public static byte[] getImage(String imagePath) {
         InputStream is = getFile(imagePath);
         try {
+            assert is != null;
             return IOUtils.toByteArray(is);
         } catch (Exception e) {
             log.error("图片加载异常 {}", e);
@@ -37,6 +39,7 @@ public class ImageUtils {
     public static InputStream getFile(String imagePath) {
         try {
             byte[] result = readFile(imagePath);
+            assert result != null;
             result = Arrays.copyOf(result, result.length);
             return new ByteArrayInputStream(result);
         } catch (Exception e) {

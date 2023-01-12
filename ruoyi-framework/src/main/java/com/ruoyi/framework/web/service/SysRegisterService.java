@@ -25,6 +25,7 @@ import com.ruoyi.system.service.ISysUserService;
  */
 @Component
 public class SysRegisterService {
+
     @Autowired
     private ISysUserService userService;
 

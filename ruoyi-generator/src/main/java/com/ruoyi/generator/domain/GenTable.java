@@ -1,5 +1,6 @@
 package com.ruoyi.generator.domain;
 
+import java.io.Serial;
 import java.util.List;
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
@@ -15,6 +16,8 @@ import com.ruoyi.common.utils.StringUtils;
  * @author ruoyi
  */
 public class GenTable extends BaseEntity {
+
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**

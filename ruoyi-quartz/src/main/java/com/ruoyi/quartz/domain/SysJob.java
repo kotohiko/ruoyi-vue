@@ -1,5 +1,6 @@
 package com.ruoyi.quartz.domain;
 
+import java.io.Serial;
 import java.util.Date;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
@@ -20,6 +21,8 @@ import com.ruoyi.quartz.util.CronUtils;
  * @author ruoyi
  */
 public class SysJob extends BaseEntity {
+
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**
@@ -97,7 +100,7 @@ public class SysJob extends BaseEntity {
     }
 
     @NotBlank(message = "调用目标字符串不能为空")
-    @Size(min = 0, max = 500, message = "调用目标字符串长度不能超过500个字符")
+    @Size(max = 500, message = "调用目标字符串长度不能超过500个字符")
     public String getInvokeTarget() {
         return invokeTarget;
     }
@@ -107,7 +110,7 @@ public class SysJob extends BaseEntity {
     }
 
     @NotBlank(message = "Cron执行表达式不能为空")
-    @Size(min = 0, max = 255, message = "Cron执行表达式不能超过255个字符")
+    @Size(max = 255, message = "Cron执行表达式不能超过255个字符")
     public String getCronExpression() {
         return cronExpression;
     }

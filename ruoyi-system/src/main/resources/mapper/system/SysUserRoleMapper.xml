@@ -16,9 +16,9 @@
     </delete>
 
     <select id="countUserRoleByRoleId" resultType="Integer">
-        select count(1)
-        from sys_user_role
-        where role_id = #{roleId}
+        SELECT COUNT(1)
+        FROM sys_user_role
+        WHERE role_id = #{roleId}
     </select>
 
     <delete id="deleteUserRole" parameterType="Long">

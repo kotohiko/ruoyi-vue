@@ -11,6 +11,7 @@ import com.ruoyi.common.utils.StringUtils;
  * @author ruoyi
  */
 public class CharsetKit {
+
     /**
      * ISO-8859-1
      */
@@ -27,11 +28,11 @@ public class CharsetKit {
     /**
      * ISO-8859-1
      */
-    public static final Charset CHARSET_ISO_8859_1 = Charset.forName(ISO_8859_1);
+    public static final Charset CHARSET_ISO_8859_1 = StandardCharsets.ISO_8859_1;
     /**
      * UTF-8
      */
-    public static final Charset CHARSET_UTF_8 = Charset.forName(UTF_8);
+    public static final Charset CHARSET_UTF_8 = StandardCharsets.UTF_8;
     /**
      * GBK
      */

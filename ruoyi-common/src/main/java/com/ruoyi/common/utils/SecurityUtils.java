@@ -13,6 +13,7 @@ import com.ruoyi.common.exception.ServiceException;
  * @author ruoyi
  */
 public class SecurityUtils {
+
     /**
      * 用户ID
      **/

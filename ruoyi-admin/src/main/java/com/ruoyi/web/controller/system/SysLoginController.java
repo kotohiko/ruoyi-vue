@@ -25,6 +25,7 @@ import com.ruoyi.system.service.ISysMenuService;
  */
 @RestController
 public class SysLoginController {
+
     @Autowired
     private SysLoginService loginService;
 

@@ -9,6 +9,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
  * @author ruoyi
  */
 public class SysRoleMenu {
+
     /**
      * 角色ID
      */

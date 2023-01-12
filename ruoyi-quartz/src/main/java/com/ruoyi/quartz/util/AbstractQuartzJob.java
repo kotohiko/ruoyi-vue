@@ -23,12 +23,13 @@ import com.ruoyi.quartz.service.ISysJobLogService;
  * @author ruoyi
  */
 public abstract class AbstractQuartzJob implements Job {
+
     private static final Logger log = LoggerFactory.getLogger(AbstractQuartzJob.class);
 
     /**
      * 线程本地变量
      */
-    private static ThreadLocal<Date> threadLocal = new ThreadLocal<>();
+    private static final ThreadLocal<Date> threadLocal = new ThreadLocal<>();
 
     @Override
     public void execute(JobExecutionContext context) throws JobExecutionException {

@@ -1,5 +1,6 @@
 package com.ruoyi.system.domain;
 
+import java.io.Serial;
 import java.util.Date;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
@@ -13,6 +14,8 @@ import com.ruoyi.common.core.domain.BaseEntity;
  * @author ruoyi
  */
 public class SysLogininfor extends BaseEntity {
+
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**

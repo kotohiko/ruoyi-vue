@@ -10,12 +10,16 @@ import com.ruoyi.common.annotation.Excel.ColumnType;
 import com.ruoyi.common.constant.UserConstants;
 import com.ruoyi.common.core.domain.BaseEntity;
 
+import java.io.Serial;
+
 /**
  * 字典数据表 sys_dict_data
  *
  * @author ruoyi
  */
 public class SysDictData extends BaseEntity {
+
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**
@@ -87,7 +91,7 @@ public class SysDictData extends BaseEntity {
     }
 
     @NotBlank(message = "字典标签不能为空")
-    @Size(min = 0, max = 100, message = "字典标签长度不能超过100个字符")
+    @Size(max = 100, message = "字典标签长度不能超过100个字符")
     public String getDictLabel() {
         return dictLabel;
     }
@@ -97,7 +101,7 @@ public class SysDictData extends BaseEntity {
     }
 
     @NotBlank(message = "字典键值不能为空")
-    @Size(min = 0, max = 100, message = "字典键值长度不能超过100个字符")
+    @Size(max = 100, message = "字典键值长度不能超过100个字符")
     public String getDictValue() {
         return dictValue;
     }
@@ -107,7 +111,7 @@ public class SysDictData extends BaseEntity {
     }
 
     @NotBlank(message = "字典类型不能为空")
-    @Size(min = 0, max = 100, message = "字典类型长度不能超过100个字符")
+    @Size(max = 100, message = "字典类型长度不能超过100个字符")
     public String getDictType() {
         return dictType;
     }
@@ -116,7 +120,7 @@ public class SysDictData extends BaseEntity {
         this.dictType = dictType;
     }
 
-    @Size(min = 0, max = 100, message = "样式属性长度不能超过100个字符")
+    @Size(max = 100, message = "样式属性长度不能超过100个字符")
     public String getCssClass() {
         return cssClass;
     }
