@@ -45,6 +45,7 @@ import com.ruoyi.generator.util.VelocityUtils;
  */
 @Service
 public class GenTableServiceImpl implements IGenTableService {
+
     private static final Logger log = LoggerFactory.getLogger(GenTableServiceImpl.class);
 
     @Autowired

@@ -13,6 +13,7 @@ import java.util.regex.Pattern;
  * @author ruoyi
  */
 public class XssValidator implements ConstraintValidator<Xss, String> {
+
     private static final String HTML_PATTERN = "<(\\S*?)[^>]*>.*?|<.*? />";
 
     @Override

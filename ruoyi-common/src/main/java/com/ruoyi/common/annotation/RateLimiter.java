@@ -18,6 +18,7 @@ import com.ruoyi.common.enums.LimitType;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface RateLimiter {
+
     /**
      * 限流key
      */

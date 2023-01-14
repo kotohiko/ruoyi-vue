@@ -18,6 +18,7 @@ import com.ruoyi.common.utils.poi.ExcelHandlerAdapter;
 @Retention(RetentionPolicy.RUNTIME)
 @Target(ElementType.FIELD)
 public @interface Excel {
+
     /**
      * 导出时在excel中排序
      */

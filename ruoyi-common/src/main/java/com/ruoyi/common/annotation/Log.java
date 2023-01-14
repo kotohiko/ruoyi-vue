@@ -18,6 +18,7 @@ import com.ruoyi.common.enums.OperatorType;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface Log {
+
     /**
      * 模块
      */

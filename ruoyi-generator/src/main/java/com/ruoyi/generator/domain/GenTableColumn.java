@@ -5,6 +5,8 @@ import javax.validation.constraints.NotBlank;
 import com.ruoyi.common.core.domain.BaseEntity;
 import com.ruoyi.common.utils.StringUtils;
 
+import java.io.Serial;
+
 /**
  * 代码生成业务字段表 gen_table_column
  *
@@ -12,6 +14,7 @@ import com.ruoyi.common.utils.StringUtils;
  */
 public class GenTableColumn extends BaseEntity {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**

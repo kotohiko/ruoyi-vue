@@ -13,7 +13,7 @@ import com.ruoyi.common.constant.Constants;
 public class VelocityInitializer {
 
     /**
-     * 初始化vm方法
+     * 初始化VM方法
      */
     public static void initVelocity() {
         Properties p = new Properties();

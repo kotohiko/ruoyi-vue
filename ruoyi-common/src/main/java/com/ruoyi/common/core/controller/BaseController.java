@@ -23,7 +23,7 @@ import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.sql.SqlUtil;
 
 /**
- * web层通用数据处理
+ * Web层通用数据处理
  *
  * @author ruoyi
  */
