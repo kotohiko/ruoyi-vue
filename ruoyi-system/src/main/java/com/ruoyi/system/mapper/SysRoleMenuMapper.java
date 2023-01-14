@@ -10,6 +10,7 @@ import com.ruoyi.system.domain.SysRoleMenu;
  * @author ruoyi
  */
 public interface SysRoleMenuMapper {
+
     /**
      * 查询菜单使用数量
      *

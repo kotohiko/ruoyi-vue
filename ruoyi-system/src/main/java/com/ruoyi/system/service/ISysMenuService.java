@@ -13,6 +13,7 @@ import com.ruoyi.system.domain.vo.RouterVo;
  * @author ruoyi
  */
 public interface ISysMenuService {
+
     /**
      * 根据用户查询系统菜单列表
      *

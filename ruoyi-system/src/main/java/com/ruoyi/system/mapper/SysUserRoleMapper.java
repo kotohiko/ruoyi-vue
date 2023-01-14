@@ -11,6 +11,7 @@ import com.ruoyi.system.domain.SysUserRole;
  * @author ruoyi
  */
 public interface SysUserRoleMapper {
+
     /**
      * 通过用户ID删除用户和角色关联
      *

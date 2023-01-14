@@ -11,6 +11,7 @@ import com.ruoyi.common.core.domain.entity.SysMenu;
  * @author ruoyi
  */
 public interface SysMenuMapper {
+
     /**
      * 查询系统菜单列表
      *

@@ -16,9 +16,9 @@
     </delete>
 
     <select id="countUserPostById" resultType="Integer">
-        select count(1)
-        from sys_user_post
-        where post_id = #{postId}
+        SELECT COUNT(1)
+        FROM sys_user_post
+        WHERE post_id = #{postId}
     </select>
 
     <delete id="deleteUserPost" parameterType="Long">

@@ -10,9 +10,9 @@
     </resultMap>
 
     <delete id="deleteUserRoleByUserId" parameterType="Long">
-        delete
-        from sys_user_role
-        where user_id = #{userId}
+        DELETE
+        FROM sys_user_role
+        WHERE user_id = #{userId}
     </delete>
 
     <select id="countUserRoleByRoleId" resultType="Integer">
@@ -36,10 +36,10 @@
     </insert>
 
     <delete id="deleteUserRoleInfo" parameterType="SysUserRole">
-        delete
-        from sys_user_role
-        where user_id = #{userId}
-          and role_id = #{roleId}
+        DELETE
+        FROM sys_user_role
+        WHERE user_id = #{userId}
+          AND role_id = #{roleId}
     </delete>
 
     <delete id="deleteUserRoleInfos">

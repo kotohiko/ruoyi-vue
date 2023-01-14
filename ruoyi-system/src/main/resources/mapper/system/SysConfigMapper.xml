@@ -17,7 +17,7 @@
     </resultMap>
 
     <sql id="selectConfigVo">
-        select config_id,
+        SELECT config_id,
                config_name,
                config_key,
                config_value,
@@ -27,7 +27,7 @@
                update_by,
                update_time,
                remark
-        from sys_config
+        FROM sys_config
     </sql>
 
     <!-- 查询条件 -->

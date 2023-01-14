@@ -10,6 +10,7 @@ import com.ruoyi.system.domain.SysNotice;
  * @author ruoyi
  */
 public interface ISysNoticeService {
+
     /**
      * 查询公告信息
      *
