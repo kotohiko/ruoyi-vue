@@ -12,6 +12,7 @@ import com.ruoyi.quartz.domain.SysJob;
  * @author ruoyi
  */
 public interface ISysJobService {
+
     /**
      * 获取quartz调度器的计划任务
      *
