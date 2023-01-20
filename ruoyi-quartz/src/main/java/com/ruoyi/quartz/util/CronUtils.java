@@ -6,7 +6,7 @@ import java.util.Date;
 import org.quartz.CronExpression;
 
 /**
- * cron表达式工具类
+ * Cron表达式工具类
  *
  * @author ruoyi
  */

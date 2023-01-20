@@ -60,7 +60,7 @@
                 <version>${bitwalker.version}</version>
             </dependency>
 
-            <!-- pagehelper 分页插件 -->
+            <!-- pagehelper分页插件 -->
             <dependency>
                 <groupId>com.github.pagehelper</groupId>
                 <artifactId>pagehelper-spring-boot-starter</artifactId>

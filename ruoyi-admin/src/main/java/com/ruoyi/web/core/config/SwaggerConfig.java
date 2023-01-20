@@ -66,19 +66,15 @@ public class SwaggerConfig {
                 // 扫描指定包中的swagger注解
                 // .apis(RequestHandlerSelectors.basePackage("com.ruoyi.project.tool.swagger"))
                 // 扫描所有 .apis(RequestHandlerSelectors.any())
-                .paths(PathSelectors.any())
-                .build()
-                /* 设置安全模式，swagger可以设置访问token */
-                .securitySchemes(securitySchemes())
-                .securityContexts(securityContexts())
-                .pathMapping(pathMapping);
+                .paths(PathSelectors.any()).build()
+                /* 设置安全模式，swagger可以设置访问token */.securitySchemes(securitySchemes()).securityContexts(securityContexts()).pathMapping(pathMapping);
     }
 
     /**
      * 安全模式，这里指定token通过Authorization头请求头传递
      */
     private List<SecurityScheme> securitySchemes() {
-        List<SecurityScheme> apiKeyList = new ArrayList<SecurityScheme>();
+        List<SecurityScheme> apiKeyList = new ArrayList<>();
         apiKeyList.add(new ApiKey("Authorization", "Authorization", In.HEADER.toValue()));
         return apiKeyList;
     }
@@ -88,11 +84,7 @@ public class SwaggerConfig {
      */
     private List<SecurityContext> securityContexts() {
         List<SecurityContext> securityContexts = new ArrayList<>();
-        securityContexts.add(
-                SecurityContext.builder()
-                        .securityReferences(defaultAuth())
-                        .operationSelector(o -> o.requestMappingPattern().matches("/.*"))
-                        .build());
+        securityContexts.add(SecurityContext.builder().securityReferences(defaultAuth()).operationSelector(o -> o.requestMappingPattern().matches("/.*")).build());
         return securityContexts;
     }
 
@@ -121,7 +113,6 @@ public class SwaggerConfig {
                 // 作者信息
                 .contact(new Contact(ruoyiConfig.getName(), null, null))
                 // 版本
-                .version("版本号:" + ruoyiConfig.getVersion())
-                .build();
+                .version("版本号:" + ruoyiConfig.getVersion()).build();
     }
 }

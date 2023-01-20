@@ -11,6 +11,7 @@ import com.ruoyi.common.utils.DateUtils;
  * @author ruoyi
  */
 public class Jvm {
+
     /**
      * 当前JVM占用的内存总数(M)
      */

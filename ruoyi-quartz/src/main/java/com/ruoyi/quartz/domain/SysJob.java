@@ -82,7 +82,7 @@ public class SysJob extends BaseEntity {
     }
 
     @NotBlank(message = "任务名称不能为空")
-    @Size(min = 0, max = 64, message = "任务名称不能超过64个字符")
+    @Size(max = 64, message = "任务名称不能超过64个字符")
     public String getJobName() {
         return jobName;
     }

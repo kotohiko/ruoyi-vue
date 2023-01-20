@@ -33,7 +33,9 @@ public class SysJobServiceImpl implements ISysJobService {
     private SysJobMapper jobMapper;
 
     /**
-     * 项目启动时，初始化定时器 主要是防止手动修改数据库导致未同步到定时任务处理（注：不能手动修改数据库ID和任务组名，否则会导致脏数据）
+     * 项目启动时的初始化定时器
+     * <p>
+     * 主要是防止手动修改数据库导致未同步到定时任务处理（注：不能手动修改数据库ID和任务组名，否则会导致脏数据）
      */
     @PostConstruct
     public void init() throws SchedulerException, TaskException {
@@ -45,10 +47,9 @@ public class SysJobServiceImpl implements ISysJobService {
     }
 
     /**
-     * 获取quartz调度器的计划任务列表
+     * 获取Quartz调度器的计划任务列表
      *
      * @param job 调度信息
-     * @return
      */
     @Override
     public List<SysJob> selectJobList(SysJob job) {

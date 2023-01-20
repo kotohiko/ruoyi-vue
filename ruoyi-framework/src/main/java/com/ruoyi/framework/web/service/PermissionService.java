@@ -11,7 +11,7 @@ import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.framework.security.context.PermissionContextHolder;
 
 /**
- * RuoYi首创 自定义权限实现，ss取自SpringSecurity首字母
+ * RuoYi首创：自定义权限实现。ss取自Spring Security首字母
  *
  * @author ruoyi
  */
@@ -51,7 +51,7 @@ public class PermissionService {
     }
 
     /**
-     * 验证用户是否不具备某权限，与 hasPermi逻辑相反
+     * 验证用户是否不具备某权限，与hasPermi逻辑相反
      *
      * @param permission 权限字符串
      * @return 用户是否不具备某权限

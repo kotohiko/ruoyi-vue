@@ -6,6 +6,7 @@ package com.ruoyi.framework.web.domain.server;
  * @author ruoyi
  */
 public class Sys {
+
     /**
      * 服务器名称
      */

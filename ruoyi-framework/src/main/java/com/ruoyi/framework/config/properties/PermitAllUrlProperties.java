@@ -19,7 +19,7 @@ import org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandl
 import com.ruoyi.common.annotation.Anonymous;
 
 /**
- * 设置Anonymous注解允许匿名访问的url
+ * 设置Anonymous注解允许匿名访问的URL
  *
  * @author ruoyi
  */

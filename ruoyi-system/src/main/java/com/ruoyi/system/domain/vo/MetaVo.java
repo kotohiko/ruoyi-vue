@@ -8,6 +8,7 @@ import com.ruoyi.common.utils.StringUtils;
  * @author ruoyi
  */
 public class MetaVo {
+
     /**
      * 设置该路由在侧边栏和面包屑中展示的名字
      */

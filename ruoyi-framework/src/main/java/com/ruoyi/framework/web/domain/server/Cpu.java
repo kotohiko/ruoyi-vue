@@ -8,6 +8,7 @@ import com.ruoyi.common.utils.Arith;
  * @author ruoyi
  */
 public class Cpu {
+
     /**
      * 核心数
      */

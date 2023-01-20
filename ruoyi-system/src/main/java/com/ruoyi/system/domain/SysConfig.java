@@ -9,6 +9,8 @@ import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.annotation.Excel.ColumnType;
 import com.ruoyi.common.core.domain.BaseEntity;
 
+import java.io.Serial;
+
 /**
  * 参数配置表 sys_config
  *
@@ -16,6 +18,7 @@ import com.ruoyi.common.core.domain.BaseEntity;
  */
 public class SysConfig extends BaseEntity {
 
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**

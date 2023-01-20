@@ -8,6 +8,7 @@ import com.ruoyi.common.utils.Arith;
  * @author ruoyi
  */
 public class Mem {
+
     /**
      * 内存总量
      */

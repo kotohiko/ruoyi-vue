@@ -6,6 +6,7 @@ package com.ruoyi.framework.web.domain.server;
  * @author ruoyi
  */
 public class SysFile {
+
     /**
      * 盘符路径
      */

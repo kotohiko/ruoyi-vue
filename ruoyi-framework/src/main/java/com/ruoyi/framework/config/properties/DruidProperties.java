@@ -5,7 +5,7 @@ import org.springframework.context.annotation.Configuration;
 import com.alibaba.druid.pool.DruidDataSource;
 
 /**
- * druid 配置属性
+ * Druid配置属性
  *
  * @author ruoyi
  */
