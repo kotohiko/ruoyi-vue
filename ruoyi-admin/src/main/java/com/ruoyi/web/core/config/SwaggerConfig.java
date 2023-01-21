@@ -61,17 +61,18 @@ public class SwaggerConfig {
                 .apiInfo(apiInfo())
                 // 设置哪些接口暴露给Swagger展示
                 .select()
-                // 扫描所有有注解的api，用这种方式更灵活
+                // 1. 扫描所有有注解的api，用这种方式更灵活
                 .apis(RequestHandlerSelectors.withMethodAnnotation(ApiOperation.class))
-                // 扫描指定包中的swagger注解
+                // 2. 扫描指定包中的swagger注解
                 // .apis(RequestHandlerSelectors.basePackage("com.ruoyi.project.tool.swagger"))
-                // 扫描所有 .apis(RequestHandlerSelectors.any())
+                // 3. 扫描所有 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any()).build()
-                /* 设置安全模式，swagger可以设置访问token */.securitySchemes(securitySchemes()).securityContexts(securityContexts()).pathMapping(pathMapping);
+                /* 设置安全模式，swagger可以设置访问Token */
+                .securitySchemes(securitySchemes()).securityContexts(securityContexts()).pathMapping(pathMapping);
     }
 
     /**
-     * 安全模式，这里指定token通过Authorization头请求头传递
+     * 安全模式，这里指定Token通过Authorization头请求头传递
      */
     private List<SecurityScheme> securitySchemes() {
         List<SecurityScheme> apiKeyList = new ArrayList<>();

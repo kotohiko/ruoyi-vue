@@ -11,6 +11,7 @@ let downloadLoadingInstance;
 // 是否显示重新登录
 export let isRelogin = {show: false};
 
+// application/json意味着
 axios.defaults.headers['Content-Type'] = 'application/json;charset=utf-8'
 // 创建axios实例
 const service = axios.create({
@@ -22,7 +23,7 @@ const service = axios.create({
 
 // request拦截器
 service.interceptors.request.use(config => {
-  // 是否需要设置 token
+  // 是否需要设置Token
   const isToken = (config.headers || {}).isToken === false
   // 是否需要防止数据重复提交
   const isRepeatSubmit = (config.headers || {}).repeatSubmit === false

@@ -58,7 +58,7 @@ public class SameUrlDataInterceptor extends RepeatSubmitInterceptor {
         // 唯一值（没有消息头则使用请求地址）
         String submitKey = StringUtils.trimToEmpty(request.getHeader(header));
 
-        // 唯一标识（指定key + url + 消息头）
+        // 唯一标识（指定key + URL + 消息头）
         String cacheRepeatKey = CacheConstants.REPEAT_SUBMIT_KEY + url + submitKey;
 
         Object sessionObj = redisCache.getCacheObject(cacheRepeatKey);

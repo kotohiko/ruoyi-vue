@@ -15,7 +15,7 @@ public class KaptchaTextCreator extends DefaultTextCreator {
 
     @Override
     public String getText() {
-        Integer result = 0;
+        int result;
         Random random = new Random();
         int x = random.nextInt(10);
         int y = random.nextInt(10);
@@ -51,7 +51,7 @@ public class KaptchaTextCreator extends DefaultTextCreator {
                 suChinese.append(CNUMBERS[x]);
             }
         }
-        suChinese.append("=?@" + result);
+        suChinese.append("=?@").append(result);
         return suChinese.toString();
     }
 }

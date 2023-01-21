@@ -92,8 +92,7 @@ public class DruidConfig {
             }
 
             @Override
-            public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
-                    throws IOException, ServletException {
+            public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain) throws IOException, ServletException {
                 chain.doFilter(request, response);
                 // 重置缓冲区，响应头不会被重置
                 response.resetBuffer();

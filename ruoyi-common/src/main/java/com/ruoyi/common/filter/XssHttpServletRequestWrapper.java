@@ -35,7 +35,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
             int length = values.length;
             String[] escapesValues = new String[length];
             for (int i = 0; i < length; i++) {
-                // 防xss攻击和过滤前后空格
+                // 防XSS攻击和过滤前后空格
                 escapesValues[i] = EscapeUtil.clean(values[i]).trim();
             }
             return escapesValues;
@@ -45,7 +45,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
 
     @Override
     public ServletInputStream getInputStream() throws IOException {
-        // 非json类型，直接返回
+        // 非JSON类型，直接返回
         if (!isJsonRequest()) {
             return super.getInputStream();
         }
@@ -56,7 +56,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
             return super.getInputStream();
         }
 
-        // xss过滤
+        // XSS过滤
         json = EscapeUtil.clean(json).trim();
         byte[] jsonBytes = json.getBytes(StandardCharsets.UTF_8);
         final ByteArrayInputStream bis = new ByteArrayInputStream(jsonBytes);
@@ -88,7 +88,7 @@ public class XssHttpServletRequestWrapper extends HttpServletRequestWrapper {
     }
 
     /**
-     * 是否是Json请求
+     * 是否JSON请求
      */
     public boolean isJsonRequest() {
         String header = super.getHeader(HttpHeaders.CONTENT_TYPE);
