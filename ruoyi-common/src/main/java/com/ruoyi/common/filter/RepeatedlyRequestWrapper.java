@@ -36,6 +36,9 @@ public class RepeatedlyRequestWrapper extends HttpServletRequestWrapper {
         return new BufferedReader(new InputStreamReader(getInputStream()));
     }
 
+    /**
+     * 默认的流只能被读取一次，如果重复读取将会报错
+     */
     @Override
     public ServletInputStream getInputStream() {
         final ByteArrayInputStream bais = new ByteArrayInputStream(body);

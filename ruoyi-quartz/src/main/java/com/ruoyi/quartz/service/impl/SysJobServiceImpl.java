@@ -225,7 +225,7 @@ public class SysJobServiceImpl implements ISysJobService {
     }
 
     /**
-     * 校验cron表达式是否有效
+     * 校验Cron表达式是否有效
      *
      * @param cronExpression 表达式
      * @return 结果

@@ -14,7 +14,7 @@ import com.ruoyi.quartz.domain.SysJob;
 public interface ISysJobService {
 
     /**
-     * 获取quartz调度器的计划任务
+     * 获取Quartz调度器的计划任务
      *
      * @param job 调度信息
      * @return 调度任务集合

@@ -114,7 +114,6 @@ public class GenTableServiceImpl implements IGenTableService {
      * 修改业务
      *
      * @param genTable 业务信息
-     * @return 结果
      */
     @Override
     @Transactional
@@ -133,7 +132,6 @@ public class GenTableServiceImpl implements IGenTableService {
      * 删除业务对象
      *
      * @param tableIds 需要删除的数据ID
-     * @return 结果
      */
     @Override
     @Transactional
@@ -268,7 +266,7 @@ public class GenTableServiceImpl implements IGenTableService {
         if (StringUtils.isEmpty(dbTableColumns)) {
             throw new ServiceException("同步数据失败，原表结构不存在");
         }
-        List<String> dbTableColumnNames = dbTableColumns.stream().map(GenTableColumn::getColumnName).collect(Collectors.toList());
+        List<String> dbTableColumnNames = dbTableColumns.stream().map(GenTableColumn::getColumnName).toList();
 
         dbTableColumns.forEach(column -> {
             GenUtils.initColumnField(column, table);

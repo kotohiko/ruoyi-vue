@@ -38,6 +38,7 @@ public class SysJobLogController extends BaseController {
     @PreAuthorize("@ss.hasPermi('monitor:job:list')")
     @GetMapping("/list")
     public TableDataInfo list(SysJobLog sysJobLog) {
+        // 分页
         startPage();
         List<SysJobLog> list = jobLogService.selectJobLogList(sysJobLog);
         return getDataTable(list);

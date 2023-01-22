@@ -27,6 +27,7 @@ public abstract class RepeatSubmitInterceptor implements HandlerInterceptor {
             RepeatSubmit annotation = method.getAnnotation(RepeatSubmit.class);
             if (annotation != null) {
                 if (this.isRepeatSubmit(request, annotation)) {
+                    // 反馈报错信息，提示用户重复提交，请稍后再试
                     AjaxResult ajaxResult = AjaxResult.error(annotation.message());
                     ServletUtils.renderString(response, JSON.toJSONString(ajaxResult));
                     return false;

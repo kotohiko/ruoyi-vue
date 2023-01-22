@@ -41,6 +41,7 @@ public class SameUrlDataInterceptor extends RepeatSubmitInterceptor {
     public boolean isRepeatSubmit(HttpServletRequest request, RepeatSubmit annotation) {
         String nowParams = "";
         if (request instanceof RepeatedlyRequestWrapper repeatedlyRequest) {
+            // 在这里会读取一次body
             nowParams = HttpHelper.getBodyString(repeatedlyRequest);
         }
 

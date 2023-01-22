@@ -46,18 +46,16 @@ public class SysRegisterService {
         // 验证码开关
         boolean captchaEnabled = configService.selectCaptchaEnabled();
         if (captchaEnabled) {
-            validateCaptcha(username, registerBody.getCode(), registerBody.getUuid());
+            validateCaptcha(registerBody.getCode(), registerBody.getUuid());
         }
 
         if (StringUtils.isEmpty(username)) {
             msg = "用户名不能为空";
         } else if (StringUtils.isEmpty(password)) {
             msg = "用户密码不能为空";
-        } else if (username.length() < UserConstants.USERNAME_MIN_LENGTH
-                || username.length() > UserConstants.USERNAME_MAX_LENGTH) {
+        } else if (username.length() < UserConstants.USERNAME_MIN_LENGTH || username.length() > UserConstants.USERNAME_MAX_LENGTH) {
             msg = "账户长度必须在2到20个字符之间";
-        } else if (password.length() < UserConstants.PASSWORD_MIN_LENGTH
-                || password.length() > UserConstants.PASSWORD_MAX_LENGTH) {
+        } else if (password.length() < UserConstants.PASSWORD_MIN_LENGTH || password.length() > UserConstants.PASSWORD_MAX_LENGTH) {
             msg = "密码长度必须在5到20个字符之间";
         } else if (UserConstants.NOT_UNIQUE.equals(userService.checkUserNameUnique(sysUser))) {
             msg = "保存用户'" + username + "'失败，注册账号已存在";
@@ -77,11 +75,10 @@ public class SysRegisterService {
     /**
      * 校验验证码
      *
-     * @param username 用户名
-     * @param code     验证码
-     * @param uuid     唯一标识
+     * @param code 验证码
+     * @param uuid 唯一标识
      */
-    public void validateCaptcha(String username, String code, String uuid) {
+    public void validateCaptcha(String code, String uuid) {
         String verifyKey = CacheConstants.CAPTCHA_CODE_KEY + StringUtils.nvl(uuid, "");
         String captcha = redisCache.getCacheObject(verifyKey);
         redisCache.deleteObject(verifyKey);

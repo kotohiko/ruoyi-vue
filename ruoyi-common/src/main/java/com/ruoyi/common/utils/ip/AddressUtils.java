@@ -15,6 +15,7 @@ import com.ruoyi.common.utils.http.HttpUtils;
  * @author ruoyi
  */
 public class AddressUtils {
+
     private static final Logger log = LoggerFactory.getLogger(AddressUtils.class);
 
     // IP地址查询
