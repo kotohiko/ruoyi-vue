@@ -53,5 +53,4 @@ public class FilterConfig {
         registration.setOrder(FilterRegistrationBean.LOWEST_PRECEDENCE);
         return registration;
     }
-
 }

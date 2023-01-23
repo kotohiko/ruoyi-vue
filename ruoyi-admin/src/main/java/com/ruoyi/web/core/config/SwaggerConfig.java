@@ -67,8 +67,7 @@ public class SwaggerConfig {
                 // .apis(RequestHandlerSelectors.basePackage("com.ruoyi.project.tool.swagger"))
                 // 3. 扫描所有 .apis(RequestHandlerSelectors.any())
                 .paths(PathSelectors.any()).build()
-                /* 设置安全模式，swagger可以设置访问Token */
-                .securitySchemes(securitySchemes()).securityContexts(securityContexts()).pathMapping(pathMapping);
+                /* 设置安全模式，swagger可以设置访问Token */.securitySchemes(securitySchemes()).securityContexts(securityContexts()).pathMapping(pathMapping);
     }
 
     /**
