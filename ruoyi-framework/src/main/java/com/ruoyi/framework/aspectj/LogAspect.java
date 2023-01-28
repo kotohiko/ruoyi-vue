@@ -1,19 +1,5 @@
 package com.ruoyi.framework.aspectj;
 
-import java.util.Collection;
-import java.util.Map;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.AfterReturning;
-import org.aspectj.lang.annotation.AfterThrowing;
-import org.aspectj.lang.annotation.Aspect;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
-import org.springframework.validation.BindingResult;
-import org.springframework.web.multipart.MultipartFile;
 import com.alibaba.fastjson2.JSON;
 import com.ruoyi.common.annotation.Log;
 import com.ruoyi.common.core.domain.model.LoginUser;
@@ -27,6 +13,20 @@ import com.ruoyi.common.utils.ip.IpUtils;
 import com.ruoyi.framework.manager.AsyncManager;
 import com.ruoyi.framework.manager.factory.AsyncFactory;
 import com.ruoyi.system.domain.SysOperLog;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.annotation.Aspect;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.stereotype.Component;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.multipart.MultipartFile;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.Collection;
+import java.util.Map;
 
 /**
  * 操作日志记录处理
@@ -43,6 +43,10 @@ public class LogAspect {
      * 排除敏感属性字段
      */
     public static final String[] EXCLUDE_PROPERTIES = {"password", "oldPassword", "newPassword", "confirmPassword"};
+
+//    // 配置织入点（此处的织入点配置在近期版本中取消了。改为在方法中添加参数来实现切面）
+//    @Pointcut("@annotation(com.ruoyi.common.annotation.Log)")
+//    public void logPointCut() {}
 
     /**
      * 处理完请求后执行
@@ -65,6 +69,9 @@ public class LogAspect {
         handleLog(joinPoint, controllerLog, e, null);
     }
 
+    /**
+     * 核心日志方法
+     */
     protected void handleLog(final JoinPoint joinPoint, Log controllerLog, final Exception e, Object jsonResult) {
         try {
             // 获取当前的用户
@@ -80,7 +87,6 @@ public class LogAspect {
             if (loginUser != null) {
                 operLog.setOperName(loginUser.getUsername());
             }
-
             if (e != null) {
                 operLog.setStatus(BusinessStatus.FAIL.ordinal());
                 operLog.setErrorMsg(StringUtils.substring(e.getMessage(), 0, 2000));
