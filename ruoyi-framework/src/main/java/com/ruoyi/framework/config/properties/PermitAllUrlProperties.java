@@ -46,16 +46,14 @@ public class PermitAllUrlProperties implements InitializingBean, ApplicationCont
             Anonymous method = AnnotationUtils.findAnnotation(handlerMethod.getMethod(), Anonymous.class);
             Optional.ofNullable(method).ifPresent(anonymous -> {
                 assert info.getPatternsCondition() != null;
-                info.getPatternsCondition().getPatterns()
-                        .forEach(url -> urls.add(RegExUtils.replaceAll(url, PATTERN, ASTERISK)));
+                info.getPatternsCondition().getPatterns().forEach(url -> urls.add(RegExUtils.replaceAll(url, PATTERN, ASTERISK)));
             });
 
             // 获取类上边的注解, 替代path variable 为 *
             Anonymous controller = AnnotationUtils.findAnnotation(handlerMethod.getBeanType(), Anonymous.class);
             Optional.ofNullable(controller).ifPresent(anonymous -> {
                 assert info.getPatternsCondition() != null;
-                info.getPatternsCondition().getPatterns()
-                        .forEach(url -> urls.add(RegExUtils.replaceAll(url, PATTERN, ASTERISK)));
+                info.getPatternsCondition().getPatterns().forEach(url -> urls.add(RegExUtils.replaceAll(url, PATTERN, ASTERISK)));
             });
         });
     }
