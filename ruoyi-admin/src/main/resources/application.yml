@@ -8,11 +8,11 @@ ruoyi:
   copyrightYear: 2023
   # 实例演示开关
   demoEnabled: true
-  # 文件路径 示例（ Windows配置F:/ruoyi/uploadPath，Linux配置 /home/ruoyi/uploadPath）
-  profile: F:/ruoyi/uploadPath
+  # 文件路径 示例（ Windows配置D:/ruoyi/uploadPath，Linux配置 /home/ruoyi/uploadPath）
+  profile: D:/ruoyi/uploadPath
   # 获取ip地址开关
   addressEnabled: false
-  # 验证码类型 math 数组计算 char 字符验证
+  # 验证码类型 math——数组计算 char——字符验证
   captchaType: math
 
 # 开发环境配置
@@ -67,7 +67,7 @@ spring:
     restart:
       # 热部署开关
       enabled: true
-  # Redis 配置
+  # redis 配置
   redis:
     # 地址
     host: localhost
@@ -90,7 +90,7 @@ spring:
         # #连接池最大阻塞等待时间（使用负值表示没有限制）
         max-wait: -1ms
 
-# Token配置
+# token配置
 token:
   # 令牌自定义标识
   header: Authorization

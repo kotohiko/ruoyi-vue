@@ -12,7 +12,7 @@ public class SysCache {
     /**
      * 缓存名称
      */
-    private String cacheName;
+    private String cacheName = "";
 
     /**
      * 缓存键名
@@ -30,7 +30,6 @@ public class SysCache {
     private String remark = "";
 
     public SysCache() {
-
     }
 
     public SysCache(String cacheName, String remark) {

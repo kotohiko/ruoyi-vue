@@ -1,21 +1,15 @@
 package com.ruoyi.common.utils.reflect;
 
-import java.lang.reflect.Field;
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
-import java.lang.reflect.Modifier;
-import java.lang.reflect.ParameterizedType;
-import java.lang.reflect.Type;
-import java.util.Arrays;
-import java.util.Date;
-
+import com.ruoyi.common.core.text.Convert;
+import com.ruoyi.common.utils.DateUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.apache.commons.lang3.Validate;
 import org.apache.poi.ss.usermodel.DateUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.ruoyi.common.core.text.Convert;
-import com.ruoyi.common.utils.DateUtils;
+
+import java.lang.reflect.*;
+import java.util.Date;
 
 /**
  * 反射工具类. 提供调用getter/setter方法, 访问私有变量, 调用私有方法, 获取泛型类型Class, 被AOP过的真实类等工具函数.
@@ -24,14 +18,13 @@ import com.ruoyi.common.utils.DateUtils;
  */
 @SuppressWarnings("rawtypes")
 public class ReflectUtils {
-
     private static final String SETTER_PREFIX = "set";
 
     private static final String GETTER_PREFIX = "get";
 
     private static final String CGLIB_CLASS_SEPARATOR = "$$";
 
-    private static final Logger logger = LoggerFactory.getLogger(ReflectUtils.class);
+    private static Logger logger = LoggerFactory.getLogger(ReflectUtils.class);
 
     /**
      * 调用Getter方法.
@@ -107,7 +100,8 @@ public class ReflectUtils {
      * 同时匹配方法名+参数类型，
      */
     @SuppressWarnings("unchecked")
-    public static <E> E invokeMethod(final Object obj, final String methodName, final Class<?>[] parameterTypes, final Object[] args) {
+    public static <E> E invokeMethod(final Object obj, final String methodName, final Class<?>[] parameterTypes,
+                                     final Object[] args) {
         if (obj == null || methodName == null) {
             return null;
         }
@@ -119,7 +113,7 @@ public class ReflectUtils {
         try {
             return (E) method.invoke(obj, args);
         } catch (Exception e) {
-            String msg = "method: " + method + ", obj: " + obj + ", args: " + Arrays.toString(args) + "";
+            String msg = "method: " + method + ", obj: " + obj + ", args: " + args + "";
             throw convertReflectionExceptionToUnchecked(msg, e);
         }
     }
@@ -168,7 +162,7 @@ public class ReflectUtils {
             }
             return (E) method.invoke(obj, args);
         } catch (Exception e) {
-            String msg = "method: " + method + ", obj: " + obj + ", args: " + Arrays.toString(args) + "";
+            String msg = "method: " + method + ", obj: " + obj + ", args: " + args + "";
             throw convertReflectionExceptionToUnchecked(msg, e);
         }
     }
@@ -188,7 +182,8 @@ public class ReflectUtils {
                 Field field = superClass.getDeclaredField(fieldName);
                 makeAccessible(field);
                 return field;
-            } catch (NoSuchFieldException ignored) {
+            } catch (NoSuchFieldException e) {
+                continue;
             }
         }
         return null;
@@ -200,7 +195,8 @@ public class ReflectUtils {
      * 匹配函数名+参数类型。
      * 用于方法需要被多次调用的情况. 先使用本函数先取得Method,然后调用Method.invoke(Object obj, Object... args)
      */
-    public static Method getAccessibleMethod(final Object obj, final String methodName, final Class<?>... parameterTypes) {
+    public static Method getAccessibleMethod(final Object obj, final String methodName,
+                                             final Class<?>... parameterTypes) {
         // 为空不报错。直接返回 null
         if (obj == null) {
             return null;
@@ -211,7 +207,8 @@ public class ReflectUtils {
                 Method method = searchType.getDeclaredMethod(methodName, parameterTypes);
                 makeAccessible(method);
                 return method;
-            } catch (NoSuchMethodException ignored) {
+            } catch (NoSuchMethodException e) {
+                continue;
             }
         }
         return null;
@@ -245,7 +242,8 @@ public class ReflectUtils {
      * 改变private/protected的方法为public，尽量不调用实际改动的语句，避免JDK的SecurityManager抱怨。
      */
     public static void makeAccessible(Method method) {
-        if ((!Modifier.isPublic(method.getModifiers()) || !Modifier.isPublic(method.getDeclaringClass().getModifiers())) && !method.canAccess(method)) {
+        if ((!Modifier.isPublic(method.getModifiers()) || !Modifier.isPublic(method.getDeclaringClass().getModifiers()))
+                && !method.isAccessible()) {
             method.setAccessible(true);
         }
     }
@@ -254,7 +252,8 @@ public class ReflectUtils {
      * 改变private/protected的成员变量为public，尽量不调用实际改动的语句，避免JDK的SecurityManager抱怨。
      */
     public static void makeAccessible(Field field) {
-        if ((!Modifier.isPublic(field.getModifiers()) || !Modifier.isPublic(field.getDeclaringClass().getModifiers()) || Modifier.isFinal(field.getModifiers())) && !field.isAccessible()) {
+        if ((!Modifier.isPublic(field.getModifiers()) || !Modifier.isPublic(field.getDeclaringClass().getModifiers())
+                || Modifier.isFinal(field.getModifiers())) && !field.isAccessible()) {
             field.setAccessible(true);
         }
     }
@@ -283,7 +282,8 @@ public class ReflectUtils {
         Type[] params = ((ParameterizedType) genType).getActualTypeArguments();
 
         if (index >= params.length || index < 0) {
-            logger.debug("Index: " + index + ", Size of " + clazz.getSimpleName() + "'s Parameterized Type: " + params.length);
+            logger.debug("Index: " + index + ", Size of " + clazz.getSimpleName() + "'s Parameterized Type: "
+                    + params.length);
             return Object.class;
         }
         if (!(params[index] instanceof Class)) {
@@ -313,7 +313,8 @@ public class ReflectUtils {
      * 将反射时的checked exception转换为unchecked exception.
      */
     public static RuntimeException convertReflectionExceptionToUnchecked(String msg, Exception e) {
-        if (e instanceof IllegalAccessException || e instanceof IllegalArgumentException || e instanceof NoSuchMethodException) {
+        if (e instanceof IllegalAccessException || e instanceof IllegalArgumentException
+                || e instanceof NoSuchMethodException) {
             return new IllegalArgumentException(msg, e);
         } else if (e instanceof InvocationTargetException) {
             return new RuntimeException(msg, ((InvocationTargetException) e).getTargetException());

@@ -69,7 +69,7 @@ CREATE TABLE qrtz_simple_triggers
 ) ENGINE = innodb COMMENT = '简单触发器的信息表';
 
 -- ----------------------------
--- 4、 存储CronTrigger，包括Cron表达式和时区信息
+-- 4、 存储 Cron Trigger，包括 Cron 表达式和时区信息
 -- ---------------------------- 
 CREATE TABLE qrtz_cron_triggers
 (
@@ -83,7 +83,7 @@ CREATE TABLE qrtz_cron_triggers
 ) ENGINE = innodb COMMENT = 'Cron类型的触发器表';
 
 -- ----------------------------
--- 5、 Trigger作为Blob类型存储(用于 Quartz 用户用 JDBC 创建他们自己定制的 Trigger 类型，JobStore 并不知道如何存储实例的时候)
+-- 5、 Trigger 作为 Blob 类型存储(用于 Quartz 用户用 JDBC 创建他们自己定制的 Trigger 类型，JobStore 并不知道如何存储实例的时候)
 -- ---------------------------- 
 CREATE TABLE qrtz_blob_triggers
 (
@@ -96,7 +96,7 @@ CREATE TABLE qrtz_blob_triggers
 ) ENGINE = innodb COMMENT = 'Blob类型的触发器表';
 
 -- ----------------------------
--- 6、 以Blob类型存储存放日历信息， quartz可配置一个日历来指定一个时间范围
+-- 6、 以 Blob 类型存储存放日历信息， quartz可配置一个日历来指定一个时间范围
 -- ---------------------------- 
 CREATE TABLE qrtz_calendars
 (
@@ -107,7 +107,7 @@ CREATE TABLE qrtz_calendars
 ) ENGINE = innodb COMMENT = '日历信息表';
 
 -- ----------------------------
--- 7、 存储已暂停的Trigger组的信息
+-- 7、 存储已暂停的 Trigger 组的信息
 -- ---------------------------- 
 CREATE TABLE qrtz_paused_trigger_grps
 (
@@ -117,7 +117,7 @@ CREATE TABLE qrtz_paused_trigger_grps
 ) ENGINE = innodb COMMENT = '暂停的触发器表';
 
 -- ----------------------------
--- 8、 存储与已触发的Trigger相关的状态信息，以及相联Job的执行信息
+-- 8、 存储与已触发的 Trigger 相关的状态信息，以及相联 Job 的执行信息
 -- ---------------------------- 
 CREATE TABLE qrtz_fired_triggers
 (
@@ -138,7 +138,7 @@ CREATE TABLE qrtz_fired_triggers
 ) ENGINE = innodb COMMENT = '已触发的触发器表';
 
 -- ----------------------------
--- 9、 存储少量的有关Scheduler的状态信息，假如是用于集群中，可以看到其他的Scheduler实例
+-- 9、 存储少量的有关 Scheduler 的状态信息，假如是用于集群中，可以看到其他的 Scheduler 实例
 -- ---------------------------- 
 CREATE TABLE qrtz_scheduler_state
 (
@@ -150,7 +150,7 @@ CREATE TABLE qrtz_scheduler_state
 ) ENGINE = innodb COMMENT = '调度器状态表';
 
 -- ----------------------------
--- 10、 存储程序的悲观锁的信息（假如使用了悲观锁）
+-- 10、 存储程序的悲观锁的信息(假如使用了悲观锁)
 -- ---------------------------- 
 CREATE TABLE qrtz_locks
 (

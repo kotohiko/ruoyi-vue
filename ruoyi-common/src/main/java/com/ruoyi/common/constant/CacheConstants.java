@@ -1,7 +1,7 @@
 package com.ruoyi.common.constant;
 
 /**
- * 缓存的key 常量
+ * 缓存的key常量
  *
  * @author ruoyi
  */

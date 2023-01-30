@@ -12,7 +12,6 @@ import java.util.regex.Pattern;
  * @author ruoyi
  */
 public class BeanUtils extends org.springframework.beans.BeanUtils {
-
     /**
      * Bean方法名中属性名开始的下标
      */
@@ -50,7 +49,7 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
      */
     public static List<Method> getSetterMethods(Object obj) {
         // setter方法列表
-        List<Method> setterMethods = new ArrayList<>();
+        List<Method> setterMethods = new ArrayList<Method>();
 
         // 获取所有方法
         Method[] methods = obj.getClass().getMethods();
@@ -76,7 +75,7 @@ public class BeanUtils extends org.springframework.beans.BeanUtils {
 
     public static List<Method> getGetterMethods(Object obj) {
         // getter方法列表
-        List<Method> getterMethods = new ArrayList<>();
+        List<Method> getterMethods = new ArrayList<Method>();
         // 获取所有方法
         Method[] methods = obj.getClass().getMethods();
         // 查找getter方法

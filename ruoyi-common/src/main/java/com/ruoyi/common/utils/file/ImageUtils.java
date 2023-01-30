@@ -1,5 +1,12 @@
 package com.ruoyi.common.utils.file;
 
+import com.ruoyi.common.config.RuoYiConfig;
+import com.ruoyi.common.constant.Constants;
+import com.ruoyi.common.utils.StringUtils;
+import org.apache.poi.util.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import java.io.ByteArrayInputStream;
 import java.io.FileInputStream;
 import java.io.InputStream;
@@ -7,26 +14,17 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.util.Arrays;
 
-import org.apache.poi.util.IOUtils;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import com.ruoyi.common.config.RuoYiConfig;
-import com.ruoyi.common.constant.Constants;
-import com.ruoyi.common.utils.StringUtils;
-
 /**
  * 图片处理工具类
  *
  * @author ruoyi
  */
 public class ImageUtils {
-
     private static final Logger log = LoggerFactory.getLogger(ImageUtils.class);
 
     public static byte[] getImage(String imagePath) {
         InputStream is = getFile(imagePath);
         try {
-            assert is != null;
             return IOUtils.toByteArray(is);
         } catch (Exception e) {
             log.error("图片加载异常 {}", e);
@@ -39,7 +37,6 @@ public class ImageUtils {
     public static InputStream getFile(String imagePath) {
         try {
             byte[] result = readFile(imagePath);
-            assert result != null;
             result = Arrays.copyOf(result, result.length);
             return new ByteArrayInputStream(result);
         } catch (Exception e) {

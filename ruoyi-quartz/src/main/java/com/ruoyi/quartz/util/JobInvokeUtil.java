@@ -15,7 +15,6 @@ import java.util.List;
  * @author ruoyi
  */
 public class JobInvokeUtil {
-
     /**
      * 执行方法
      *
@@ -31,7 +30,7 @@ public class JobInvokeUtil {
             Object bean = SpringUtils.getBean(beanName);
             invokeMethod(bean, methodName, methodParams);
         } else {
-            Object bean = Class.forName(beanName).getDeclaredConstructor().newInstance();
+            Object bean = Class.forName(beanName).newInstance();
             invokeMethod(bean, methodName, methodParams);
         }
     }
@@ -43,7 +42,9 @@ public class JobInvokeUtil {
      * @param methodName   方法名称
      * @param methodParams 方法参数
      */
-    private static void invokeMethod(Object bean, String methodName, List<Object[]> methodParams) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
+    private static void invokeMethod(Object bean, String methodName, List<Object[]> methodParams)
+            throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
+            InvocationTargetException {
         if (StringUtils.isNotNull(methodParams) && methodParams.size() > 0) {
             Method method = bean.getClass().getMethod(methodName, getMethodParamsType(methodParams));
             method.invoke(bean, getMethodParamsValue(methodParams));
@@ -98,8 +99,8 @@ public class JobInvokeUtil {
         }
         String[] methodParams = methodStr.split(",(?=([^\"']*[\"'][^\"']*[\"'])*[^\"']*$)");
         List<Object[]> classs = new LinkedList<>();
-        for (String methodParam : methodParams) {
-            String str = StringUtils.trimToEmpty(methodParam);
+        for (int i = 0; i < methodParams.length; i++) {
+            String str = StringUtils.trimToEmpty(methodParams[i]);
             // String字符串类型，以'或"开头
             if (StringUtils.startsWithAny(str, "'", "\"")) {
                 classs.add(new Object[]{StringUtils.substring(str, 1, str.length() - 1), String.class});
@@ -150,7 +151,7 @@ public class JobInvokeUtil {
         Object[] classs = new Object[methodParams.size()];
         int index = 0;
         for (Object[] os : methodParams) {
-            classs[index] = os[0];
+            classs[index] = (Object) os[0];
             index++;
         }
         return classs;

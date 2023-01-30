@@ -1,9 +1,9 @@
 package com.ruoyi.framework.web.domain.server;
 
-import java.lang.management.ManagementFactory;
-
 import com.ruoyi.common.utils.Arith;
 import com.ruoyi.common.utils.DateUtils;
+
+import java.lang.management.ManagementFactory;
 
 /**
  * JVM相关信息
@@ -11,7 +11,6 @@ import com.ruoyi.common.utils.DateUtils;
  * @author ruoyi
  */
 public class Jvm {
-
     /**
      * 当前JVM占用的内存总数(M)
      */

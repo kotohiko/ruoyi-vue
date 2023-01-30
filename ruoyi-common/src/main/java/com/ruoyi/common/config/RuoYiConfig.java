@@ -11,73 +11,34 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "ruoyi")
 public class RuoYiConfig {
-
-    /**
-     * 项目名称
-     */
-    private String name;
-
-    /**
-     * 版本
-     */
-    private String version;
-
-    /**
-     * 版权年份
-     */
-    private String copyrightYear;
-
-    /**
-     * 实例演示开关
-     */
-    private boolean demoEnabled;
-
     /**
      * 上传路径
      */
     private static String profile;
-
     /**
      * 获取地址开关
      */
     private static boolean addressEnabled;
-
     /**
      * 验证码类型
      */
     private static String captchaType;
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getVersion() {
-        return version;
-    }
-
-    public void setVersion(String version) {
-        this.version = version;
-    }
-
-    public String getCopyrightYear() {
-        return copyrightYear;
-    }
-
-    public void setCopyrightYear(String copyrightYear) {
-        this.copyrightYear = copyrightYear;
-    }
-
-    public boolean isDemoEnabled() {
-        return demoEnabled;
-    }
-
-    public void setDemoEnabled(boolean demoEnabled) {
-        this.demoEnabled = demoEnabled;
-    }
+    /**
+     * 项目名称
+     */
+    private String name;
+    /**
+     * 版本
+     */
+    private String version;
+    /**
+     * 版权年份
+     */
+    private String copyrightYear;
+    /**
+     * 实例演示开关
+     */
+    private boolean demoEnabled;
 
     public static String getProfile() {
         return profile;
@@ -129,5 +90,37 @@ public class RuoYiConfig {
      */
     public static String getUploadPath() {
         return getProfile() + "/upload";
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getVersion() {
+        return version;
+    }
+
+    public void setVersion(String version) {
+        this.version = version;
+    }
+
+    public String getCopyrightYear() {
+        return copyrightYear;
+    }
+
+    public void setCopyrightYear(String copyrightYear) {
+        this.copyrightYear = copyrightYear;
+    }
+
+    public boolean isDemoEnabled() {
+        return demoEnabled;
+    }
+
+    public void setDemoEnabled(boolean demoEnabled) {
+        this.demoEnabled = demoEnabled;
     }
 }

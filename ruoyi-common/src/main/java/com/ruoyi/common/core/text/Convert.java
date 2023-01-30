@@ -1,5 +1,8 @@
 package com.ruoyi.common.core.text;
 
+import com.ruoyi.common.utils.StringUtils;
+import org.apache.commons.lang3.ArrayUtils;
+
 import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.nio.ByteBuffer;
@@ -7,16 +10,12 @@ import java.nio.charset.Charset;
 import java.text.NumberFormat;
 import java.util.Set;
 
-import com.ruoyi.common.utils.StringUtils;
-import org.apache.commons.lang3.ArrayUtils;
-
 /**
  * 类型转换器
  *
  * @author ruoyi
  */
 public class Convert {
-
     /**
      * 转换为字符串<br>
      * 如果给定的值为null，或者转换失败，返回默认值<br>
@@ -476,11 +475,19 @@ public class Convert {
             return defaultValue;
         }
         valueStr = valueStr.trim().toLowerCase();
-        return switch (valueStr) {
-            case "true", "yes", "ok", "1" -> true;
-            case "false", "no", "0" -> false;
-            default -> defaultValue;
-        };
+        switch (valueStr) {
+            case "true":
+            case "yes":
+            case "ok":
+            case "1":
+                return true;
+            case "false":
+            case "no":
+            case "0":
+                return false;
+            default:
+                return defaultValue;
+        }
     }
 
     /**
@@ -797,12 +804,13 @@ public class Convert {
 
             if (c[i] == '\u3000') {
                 c[i] = ' ';
-            } else if (c[i] > '\uFF00' && c[i] < '｟') {
+            } else if (c[i] > '\uFF00' && c[i] < '\uFF5F') {
                 c[i] = (char) (c[i] - 65248);
             }
         }
+        String returnString = new String(c);
 
-        return new String(c);
+        return returnString;
     }
 
     /**
@@ -819,23 +827,23 @@ public class Convert {
         String head = n < 0 ? "负" : "";
         n = Math.abs(n);
 
-        StringBuilder s = new StringBuilder();
+        String s = "";
         for (int i = 0; i < fraction.length; i++) {
-            s.append((digit[(int) (Math.floor(n * 10 * Math.pow(10, i)) % 10)] + fraction[i]).replaceAll("(零.)+", ""));
+            s += (digit[(int) (Math.floor(n * 10 * Math.pow(10, i)) % 10)] + fraction[i]).replaceAll("(零.)+", "");
         }
         if (s.length() < 1) {
-            s = new StringBuilder("整");
+            s = "整";
         }
         int integerPart = (int) Math.floor(n);
 
         for (int i = 0; i < unit[0].length && integerPart > 0; i++) {
-            StringBuilder p = new StringBuilder();
+            String p = "";
             for (int j = 0; j < unit[1].length && n > 0; j++) {
-                p.insert(0, digit[integerPart % 10] + unit[1][j]);
+                p = digit[integerPart % 10] + unit[1][j] + p;
                 integerPart = integerPart / 10;
             }
-            s.insert(0, p.toString().replaceAll("(零.)*零$", "").replaceAll("^$", "零") + unit[0][i]);
+            s = p.replaceAll("(零.)*零$", "").replaceAll("^$", "零") + unit[0][i] + s;
         }
-        return head + s.toString().replaceAll("(零.)*零元", "元").replaceFirst("(零.)+", "").replaceAll("(零.)+", "零").replaceAll("^整$", "零元整");
+        return head + s.replaceAll("(零.)*零元", "元").replaceFirst("(零.)+", "").replaceAll("(零.)+", "零").replaceAll("^整$", "零元整");
     }
 }

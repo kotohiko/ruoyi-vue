@@ -24,8 +24,8 @@
     #end
 
     <sql id="select${ClassName}Vo">
-        SELECT#FOREACH($COLUMN IN $COLUMNS) $column.columnName#if($foreach.count != $columns.size()),#end#end
-        FROM ${tableName}
+        select#foreach($column in $columns) $column.columnName#if($foreach.count != $columns.size()),#end#end
+        from ${tableName}
     </sql>
 
     <select id="select${ClassName}List" parameterType="${ClassName}" resultMap="${ClassName}Result">
@@ -131,8 +131,8 @@
     </update>
 
     <delete id="delete${ClassName}By${pkColumn.capJavaField}" parameterType="${pkColumn.javaType}">
-        DELETE
-        FROM ${tableName} where ${pkColumn.columnName} = #{${pkColumn.javaField}}
+        delete
+        from ${tableName} where ${pkColumn.columnName} = #{${pkColumn.javaField}}
     </delete>
 
     <delete id="delete${ClassName}By${pkColumn.capJavaField}s" parameterType="String">

@@ -1,10 +1,10 @@
 package com.ruoyi.common.utils.ip;
 
+import com.ruoyi.common.utils.StringUtils;
+
+import javax.servlet.http.HttpServletRequest;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
-import javax.servlet.http.HttpServletRequest;
-
-import com.ruoyi.common.utils.StringUtils;
 
 /**
  * 获取IP方法
@@ -12,7 +12,6 @@ import com.ruoyi.common.utils.StringUtils;
  * @author ruoyi
  */
 public class IpUtils {
-
     /**
      * 获取客户端IP
      *
@@ -84,8 +83,9 @@ public class IpUtils {
                     return true;
                 }
             case SECTION_5:
-                if (b1 == SECTION_6) {
-                    return true;
+                switch (b1) {
+                    case SECTION_6:
+                        return true;
                 }
             default:
                 return false;
@@ -109,7 +109,7 @@ public class IpUtils {
             long l;
             int i;
             switch (elements.length) {
-                case 1 -> {
+                case 1:
                     l = Long.parseLong(elements[0]);
                     if ((l < 0L) || (l > 4294967295L)) {
                         return null;
@@ -118,8 +118,8 @@ public class IpUtils {
                     bytes[1] = (byte) (int) ((l & 0xFFFFFF) >> 16 & 0xFF);
                     bytes[2] = (byte) (int) ((l & 0xFFFF) >> 8 & 0xFF);
                     bytes[3] = (byte) (int) (l & 0xFF);
-                }
-                case 2 -> {
+                    break;
+                case 2:
                     l = Integer.parseInt(elements[0]);
                     if ((l < 0L) || (l > 255L)) {
                         return null;
@@ -132,8 +132,8 @@ public class IpUtils {
                     bytes[1] = (byte) (int) (l >> 16 & 0xFF);
                     bytes[2] = (byte) (int) ((l & 0xFFFF) >> 8 & 0xFF);
                     bytes[3] = (byte) (int) (l & 0xFF);
-                }
-                case 3 -> {
+                    break;
+                case 3:
                     for (i = 0; i < 2; ++i) {
                         l = Integer.parseInt(elements[i]);
                         if ((l < 0L) || (l > 255L)) {
@@ -147,8 +147,8 @@ public class IpUtils {
                     }
                     bytes[2] = (byte) (int) (l >> 8 & 0xFF);
                     bytes[3] = (byte) (int) (l & 0xFF);
-                }
-                case 4 -> {
+                    break;
+                case 4:
                     for (i = 0; i < 4; ++i) {
                         l = Integer.parseInt(elements[i]);
                         if ((l < 0L) || (l > 255L)) {
@@ -156,10 +156,9 @@ public class IpUtils {
                         }
                         bytes[i] = (byte) (int) (l & 0xFF);
                     }
-                }
-                default -> {
+                    break;
+                default:
                     return null;
-                }
             }
         } catch (NumberFormatException e) {
             return null;
@@ -175,7 +174,7 @@ public class IpUtils {
     public static String getHostIp() {
         try {
             return InetAddress.getLocalHost().getHostAddress();
-        } catch (UnknownHostException ignored) {
+        } catch (UnknownHostException e) {
         }
         return "127.0.0.1";
     }
@@ -188,7 +187,7 @@ public class IpUtils {
     public static String getHostName() {
         try {
             return InetAddress.getLocalHost().getHostName();
-        } catch (UnknownHostException ignored) {
+        } catch (UnknownHostException e) {
         }
         return "未知";
     }
@@ -204,7 +203,7 @@ public class IpUtils {
         if (ip != null && ip.indexOf(",") > 0) {
             final String[] ips = ip.trim().split(",");
             for (String subIp : ips) {
-                if (!isUnknown(subIp)) {
+                if (false == isUnknown(subIp)) {
                     ip = subIp;
                     break;
                 }

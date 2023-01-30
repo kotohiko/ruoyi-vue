@@ -75,8 +75,9 @@ public class CaptchaController {
         // 转换流信息写出
         FastByteArrayOutputStream os = new FastByteArrayOutputStream();
         try {
-            assert image != null;
-            ImageIO.write(image, "jpg", os);
+            if (image != null) {
+                ImageIO.write(image, "jpg", os);
+            }
         } catch (IOException e) {
             return AjaxResult.error(e.getMessage());
         }

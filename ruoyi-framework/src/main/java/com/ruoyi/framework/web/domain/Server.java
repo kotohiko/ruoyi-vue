@@ -13,6 +13,7 @@ import oshi.software.os.OSFileStore;
 import oshi.software.os.OperatingSystem;
 import oshi.util.Util;
 
+import java.net.UnknownHostException;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
@@ -23,7 +24,6 @@ import java.util.Properties;
  * @author ruoyi
  */
 public class Server {
-
     private static final int OSHI_WAIT_SECOND = 1000;
 
     /**
@@ -49,7 +49,7 @@ public class Server {
     /**
      * 磁盘相关信息
      */
-    private List<SysFile> sysFiles = new LinkedList<>();
+    private List<SysFile> sysFiles = new LinkedList<SysFile>();
 
     public Cpu getCpu() {
         return cpu;
@@ -91,7 +91,29 @@ public class Server {
         this.sysFiles = sysFiles;
     }
 
-    public void copyTo() {
+    /**
+     * 设置磁盘信息
+     */
+    private void setSysFiles(OperatingSystem os) {
+        FileSystem fileSystem = os.getFileSystem();
+        List<OSFileStore> fsArray = fileSystem.getFileStores();
+        for (OSFileStore fs : fsArray) {
+            long free = fs.getUsableSpace();
+            long total = fs.getTotalSpace();
+            long used = total - free;
+            SysFile sysFile = new SysFile();
+            sysFile.setDirName(fs.getMount());
+            sysFile.setSysTypeName(fs.getType());
+            sysFile.setTypeName(fs.getName());
+            sysFile.setTotal(convertFileSize(total));
+            sysFile.setFree(convertFileSize(free));
+            sysFile.setUsed(convertFileSize(used));
+            sysFile.setUsage(Arith.mul(Arith.div(used, total, 4), 100));
+            sysFiles.add(sysFile);
+        }
+    }
+
+    public void copyTo() throws Exception {
         SystemInfo si = new SystemInfo();
         HardwareAbstractionLayer hal = si.getHardware();
 
@@ -155,35 +177,13 @@ public class Server {
     /**
      * 设置Java虚拟机
      */
-    private void setJvmInfo() {
+    private void setJvmInfo() throws UnknownHostException {
         Properties props = System.getProperties();
         jvm.setTotal(Runtime.getRuntime().totalMemory());
         jvm.setMax(Runtime.getRuntime().maxMemory());
         jvm.setFree(Runtime.getRuntime().freeMemory());
         jvm.setVersion(props.getProperty("java.version"));
         jvm.setHome(props.getProperty("java.home"));
-    }
-
-    /**
-     * 设置磁盘信息
-     */
-    private void setSysFiles(OperatingSystem os) {
-        FileSystem fileSystem = os.getFileSystem();
-        List<OSFileStore> fsArray = fileSystem.getFileStores();
-        for (OSFileStore fs : fsArray) {
-            long free = fs.getUsableSpace();
-            long total = fs.getTotalSpace();
-            long used = total - free;
-            SysFile sysFile = new SysFile();
-            sysFile.setDirName(fs.getMount());
-            sysFile.setSysTypeName(fs.getType());
-            sysFile.setTypeName(fs.getName());
-            sysFile.setTotal(convertFileSize(total));
-            sysFile.setFree(convertFileSize(free));
-            sysFile.setUsed(convertFileSize(used));
-            sysFile.setUsage(Arith.mul(Arith.div(used, total, 4), 100));
-            sysFiles.add(sysFile);
-        }
     }
 
     /**

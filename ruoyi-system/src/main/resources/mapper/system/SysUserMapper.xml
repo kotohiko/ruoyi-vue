@@ -47,7 +47,7 @@
     </resultMap>
 
     <sql id="selectUserVo">
-        SELECT u.user_id,
+        select u.user_id,
                u.dept_id,
                u.user_name,
                u.nick_name,
@@ -69,17 +69,17 @@
                d.dept_name,
                d.order_num,
                d.leader,
-               d.status AS dept_status,
+               d.status as dept_status,
                r.role_id,
                r.role_name,
                r.role_key,
                r.role_sort,
                r.data_scope,
-               r.status AS role_status
-        FROM sys_user u
-                 LEFT JOIN sys_dept d ON u.dept_id = d.dept_id
-                 LEFT JOIN sys_user_role ur ON u.user_id = ur.user_id
-                 LEFT JOIN sys_role r ON r.role_id = ur.role_id
+               r.status as role_status
+        from sys_user u
+                 left join sys_dept d on u.dept_id = d.dept_id
+                 left join sys_user_role ur on u.user_id = ur.user_id
+                 left join sys_role r on r.role_id = ur.role_id
     </sql>
 
     <select id="selectUserList" parameterType="SysUser" resultMap="SysUserResult">
@@ -161,27 +161,27 @@
     </select>
 
     <select id="checkUserNameUnique" parameterType="String" resultMap="SysUserResult">
-        SELECT user_id, user_name
-        FROM sys_user
-        WHERE user_name = #{userName}
-          AND del_flag = '0'
-        LIMIT 1
+        select user_id, user_name
+        from sys_user
+        where user_name = #{userName}
+          and del_flag = '0'
+        limit 1
     </select>
 
     <select id="checkPhoneUnique" parameterType="String" resultMap="SysUserResult">
-        SELECT user_id, phonenumber
-        FROM sys_user
-        WHERE phonenumber = #{phonenumber}
-          AND del_flag = '0'
-        LIMIT 1
+        select user_id, phonenumber
+        from sys_user
+        where phonenumber = #{phonenumber}
+          and del_flag = '0'
+        limit 1
     </select>
 
     <select id="checkEmailUnique" parameterType="String" resultMap="SysUserResult">
-        SELECT user_id, email
-        FROM sys_user
-        WHERE email = #{email}
-          AND del_flag = '0'
-        LIMIT 1
+        select user_id, email
+        from sys_user
+        where email = #{email}
+          and del_flag = '0'
+        limit 1
     </select>
 
     <insert id="insertUser" parameterType="SysUser" useGeneratedKeys="true" keyProperty="userId">
@@ -238,27 +238,27 @@
     </update>
 
     <update id="updateUserStatus" parameterType="SysUser">
-        UPDATE sys_user
-        SET status = #{status}
-        WHERE user_id = #{userId}
+        update sys_user
+        set status = #{status}
+        where user_id = #{userId}
     </update>
 
     <update id="updateUserAvatar" parameterType="SysUser">
-        UPDATE sys_user
-        SET avatar = #{avatar}
-        WHERE user_name = #{userName}
+        update sys_user
+        set avatar = #{avatar}
+        where user_name = #{userName}
     </update>
 
     <update id="resetUserPwd" parameterType="SysUser">
-        UPDATE sys_user
-        SET password = #{password}
-        WHERE user_name = #{userName}
+        update sys_user
+        set password = #{password}
+        where user_name = #{userName}
     </update>
 
     <delete id="deleteUserById" parameterType="Long">
-        UPDATE sys_user
-        SET del_flag = '2'
-        WHERE user_id = #{userId}
+        update sys_user
+        set del_flag = '2'
+        where user_id = #{userId}
     </delete>
 
     <delete id="deleteUserByIds" parameterType="Long">

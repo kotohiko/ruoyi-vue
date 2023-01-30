@@ -1,9 +1,9 @@
 <template>
   <el-image
-    :src="`${realSrc}`"
-    fit="cover"
-    :style="`width:${realWidth};height:${realHeight};`"
     :preview-src-list="realSrcList"
+    :src="`${realSrc}`"
+    :style="`width:${realWidth};height:${realHeight};`"
+    fit="cover"
   >
     <div slot="error" class="image-slot">
       <i class="el-icon-picture-outline"></i>

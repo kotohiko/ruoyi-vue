@@ -32,10 +32,10 @@ public class CommonController {
 
     private static final Logger log = LoggerFactory.getLogger(CommonController.class);
 
+    private static final String FILE_DELIMETER = ",";
+
     @Autowired
     private ServerConfig serverConfig;
-
-    private static final String FILE_DELIMETER = ",";
 
     /**
      * 通用下载请求

@@ -1,13 +1,13 @@
 package com.ruoyi.generator.util;
 
-import java.util.Arrays;
-
-import org.apache.commons.lang3.RegExUtils;
 import com.ruoyi.common.constant.GenConstants;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.generator.config.GenConfig;
 import com.ruoyi.generator.domain.GenTable;
 import com.ruoyi.generator.domain.GenTableColumn;
+import org.apache.commons.lang3.RegExUtils;
+
+import java.util.Arrays;
 
 /**
  * 代码生成器 工具类
@@ -15,7 +15,6 @@ import com.ruoyi.generator.domain.GenTableColumn;
  * @author ruoyi
  */
 public class GenUtils {
-
     /**
      * 初始化表信息
      */
@@ -168,6 +167,7 @@ public class GenUtils {
      *
      * @param replacementm 替换值
      * @param searchList   替换列表
+     * @return
      */
     public static String replaceFirst(String replacementm, String[] searchList) {
         String text = replacementm;

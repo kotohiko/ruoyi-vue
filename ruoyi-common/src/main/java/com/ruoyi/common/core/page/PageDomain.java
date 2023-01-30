@@ -8,7 +8,6 @@ import com.ruoyi.common.utils.StringUtils;
  * @author ruoyi
  */
 public class PageDomain {
-
     /**
      * 当前记录起始索引
      */

@@ -1,18 +1,17 @@
 package com.ruoyi.common.filter;
 
-import java.io.BufferedReader;
-import java.io.ByteArrayInputStream;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.nio.charset.StandardCharsets;
+import com.ruoyi.common.constant.Constants;
+import com.ruoyi.common.utils.http.HttpHelper;
+
 import javax.servlet.ReadListener;
 import javax.servlet.ServletInputStream;
 import javax.servlet.ServletResponse;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletRequestWrapper;
-
-import com.ruoyi.common.utils.http.HttpHelper;
-import com.ruoyi.common.constant.Constants;
+import java.io.BufferedReader;
+import java.io.ByteArrayInputStream;
+import java.io.IOException;
+import java.io.InputStreamReader;
 
 /**
  * 构建可重复读取inputStream的request
@@ -20,7 +19,6 @@ import com.ruoyi.common.constant.Constants;
  * @author ruoyi
  */
 public class RepeatedlyRequestWrapper extends HttpServletRequestWrapper {
-
     private final byte[] body;
 
     public RepeatedlyRequestWrapper(HttpServletRequest request, ServletResponse response) throws IOException {
@@ -28,28 +26,25 @@ public class RepeatedlyRequestWrapper extends HttpServletRequestWrapper {
         request.setCharacterEncoding(Constants.UTF8);
         response.setCharacterEncoding(Constants.UTF8);
 
-        body = HttpHelper.getBodyString(request).getBytes(StandardCharsets.UTF_8);
+        body = HttpHelper.getBodyString(request).getBytes(Constants.UTF8);
     }
 
     @Override
-    public BufferedReader getReader() {
+    public BufferedReader getReader() throws IOException {
         return new BufferedReader(new InputStreamReader(getInputStream()));
     }
 
-    /**
-     * 默认的流只能被读取一次，如果重复读取将会报错
-     */
     @Override
-    public ServletInputStream getInputStream() {
+    public ServletInputStream getInputStream() throws IOException {
         final ByteArrayInputStream bais = new ByteArrayInputStream(body);
         return new ServletInputStream() {
             @Override
-            public int read() {
+            public int read() throws IOException {
                 return bais.read();
             }
 
             @Override
-            public int available() {
+            public int available() throws IOException {
                 return body.length;
             }
 
@@ -65,6 +60,7 @@ public class RepeatedlyRequestWrapper extends HttpServletRequestWrapper {
 
             @Override
             public void setReadListener(ReadListener readListener) {
+
             }
         };
     }

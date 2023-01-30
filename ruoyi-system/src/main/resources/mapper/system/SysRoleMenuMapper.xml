@@ -10,15 +10,15 @@
     </resultMap>
 
     <select id="checkMenuExistRole" resultType="Integer">
-        SELECT COUNT(1)
-        FROM sys_role_menu
-        WHERE menu_id = #{menuId}
+        select count(1)
+        from sys_role_menu
+        where menu_id = #{menuId}
     </select>
 
     <delete id="deleteRoleMenuByRoleId" parameterType="Long">
-        DELETE
-        FROM sys_role_menu
-        WHERE role_id = #{roleId}
+        delete
+        from sys_role_menu
+        where role_id = #{roleId}
     </delete>
 
     <delete id="deleteRoleMenu" parameterType="Long">

@@ -8,7 +8,7 @@ import java.lang.annotation.RetentionPolicy;
 import java.lang.annotation.Target;
 
 /**
- * 自定义XSS校验注解
+ * 自定义xss校验注解
  *
  * @author ruoyi
  */
@@ -16,7 +16,6 @@ import java.lang.annotation.Target;
 @Target(value = {ElementType.METHOD, ElementType.FIELD, ElementType.CONSTRUCTOR, ElementType.PARAMETER})
 @Constraint(validatedBy = {XssValidator.class})
 public @interface Xss {
-
     String message()
 
             default "不允许任何脚本运行";

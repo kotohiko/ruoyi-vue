@@ -1,19 +1,19 @@
 <template>
   <div>
     <el-upload
+      v-if="this.type == 'url'"
+      ref="upload"
       :action="uploadUrl"
       :before-upload="handleBeforeUpload"
-      :on-success="handleUploadSuccess"
-      :on-error="handleUploadError"
-      name="file"
-      :show-file-list="false"
       :headers="headers"
+      :on-error="handleUploadError"
+      :on-success="handleUploadSuccess"
+      :show-file-list="false"
+      name="file"
       style="display: none"
-      ref="upload"
-      v-if="this.type == 'url'"
     >
     </el-upload>
-    <div class="editor" ref="editor" :style="styles"></div>
+    <div ref="editor" :style="styles" class="editor"></div>
   </div>
 </template>
 

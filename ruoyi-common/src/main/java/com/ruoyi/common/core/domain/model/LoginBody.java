@@ -6,7 +6,6 @@ package com.ruoyi.common.core.domain.model;
  * @author ruoyi
  */
 public class LoginBody {
-
     /**
      * 用户名
      */

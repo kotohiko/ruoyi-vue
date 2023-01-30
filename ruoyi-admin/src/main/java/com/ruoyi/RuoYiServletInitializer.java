@@ -4,7 +4,7 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.boot.web.servlet.support.SpringBootServletInitializer;
 
 /**
- * Web容器中进行部署
+ * web容器中进行部署
  *
  * @author ruoyi
  */

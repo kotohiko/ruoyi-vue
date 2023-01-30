@@ -1,75 +1,5 @@
 package com.ruoyi.common.utils.poi;
 
-import java.io.File;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
-import java.lang.reflect.ParameterizedType;
-import java.math.BigDecimal;
-import java.text.DecimalFormat;
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collection;
-import java.util.Comparator;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-import java.util.UUID;
-import java.util.stream.Collectors;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.commons.lang3.ArrayUtils;
-import org.apache.commons.lang3.RegExUtils;
-import org.apache.commons.lang3.reflect.FieldUtils;
-import org.apache.poi.hssf.usermodel.HSSFClientAnchor;
-import org.apache.poi.hssf.usermodel.HSSFPicture;
-import org.apache.poi.hssf.usermodel.HSSFPictureData;
-import org.apache.poi.hssf.usermodel.HSSFShape;
-import org.apache.poi.hssf.usermodel.HSSFSheet;
-import org.apache.poi.hssf.usermodel.HSSFWorkbook;
-import org.apache.poi.ooxml.POIXMLDocumentPart;
-import org.apache.poi.ss.usermodel.BorderStyle;
-import org.apache.poi.ss.usermodel.Cell;
-import org.apache.poi.ss.usermodel.CellStyle;
-import org.apache.poi.ss.usermodel.CellType;
-import org.apache.poi.ss.usermodel.ClientAnchor;
-import org.apache.poi.ss.usermodel.DataValidation;
-import org.apache.poi.ss.usermodel.DataValidationConstraint;
-import org.apache.poi.ss.usermodel.DataValidationHelper;
-import org.apache.poi.ss.usermodel.DateUtil;
-import org.apache.poi.ss.usermodel.Drawing;
-import org.apache.poi.ss.usermodel.FillPatternType;
-import org.apache.poi.ss.usermodel.Font;
-import org.apache.poi.ss.usermodel.HorizontalAlignment;
-import org.apache.poi.ss.usermodel.IndexedColors;
-import org.apache.poi.ss.usermodel.Name;
-import org.apache.poi.ss.usermodel.PictureData;
-import org.apache.poi.ss.usermodel.Row;
-import org.apache.poi.ss.usermodel.Sheet;
-import org.apache.poi.ss.usermodel.VerticalAlignment;
-import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.ss.usermodel.WorkbookFactory;
-import org.apache.poi.ss.util.CellRangeAddress;
-import org.apache.poi.ss.util.CellRangeAddressList;
-import org.apache.poi.util.IOUtils;
-import org.apache.poi.xssf.streaming.SXSSFWorkbook;
-import org.apache.poi.xssf.usermodel.XSSFClientAnchor;
-import org.apache.poi.xssf.usermodel.XSSFDataValidation;
-import org.apache.poi.xssf.usermodel.XSSFDrawing;
-import org.apache.poi.xssf.usermodel.XSSFPicture;
-import org.apache.poi.xssf.usermodel.XSSFShape;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
-import org.apache.poi.xssf.usermodel.XSSFWorkbook;
-import org.openxmlformats.schemas.drawingml.x2006.spreadsheetDrawing.CTMarker;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.ruoyi.common.annotation.Excel;
 import com.ruoyi.common.annotation.Excel.ColumnType;
 import com.ruoyi.common.annotation.Excel.Type;
@@ -85,6 +15,32 @@ import com.ruoyi.common.utils.file.FileTypeUtils;
 import com.ruoyi.common.utils.file.FileUtils;
 import com.ruoyi.common.utils.file.ImageUtils;
 import com.ruoyi.common.utils.reflect.ReflectUtils;
+import org.apache.commons.lang3.ArrayUtils;
+import org.apache.commons.lang3.RegExUtils;
+import org.apache.commons.lang3.reflect.FieldUtils;
+import org.apache.poi.hssf.usermodel.*;
+import org.apache.poi.ooxml.POIXMLDocumentPart;
+import org.apache.poi.ss.usermodel.*;
+import org.apache.poi.ss.util.CellRangeAddress;
+import org.apache.poi.ss.util.CellRangeAddressList;
+import org.apache.poi.util.IOUtils;
+import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+import org.apache.poi.xssf.usermodel.*;
+import org.openxmlformats.schemas.drawingml.x2006.spreadsheetDrawing.CTMarker;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import javax.servlet.http.HttpServletResponse;
+import java.io.*;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
+import java.lang.reflect.ParameterizedType;
+import java.math.BigDecimal;
+import java.text.DecimalFormat;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Excel相关处理
@@ -92,116 +48,241 @@ import com.ruoyi.common.utils.reflect.ReflectUtils;
  * @author ruoyi
  */
 public class ExcelUtil<T> {
-
-    private static final Logger log = LoggerFactory.getLogger(ExcelUtil.class);
-
     public static final String FORMULA_REGEX_STR = "=|-|\\+|@";
-
     public static final String[] FORMULA_STR = {"=", "-", "+", "@"};
-
     /**
      * Excel sheet最大行数，默认65536
      */
     public static final int sheetSize = 65536;
-
-    /**
-     * 工作表名称
-     */
-    private String sheetName;
-
-    /**
-     * 导出类型（EXPORT:导出数据；IMPORT：导入模板）
-     */
-    private Type type;
-
-    /**
-     * 工作薄对象
-     */
-    private Workbook wb;
-
-    /**
-     * 工作表对象
-     */
-    private Sheet sheet;
-
-    /**
-     * 样式列表
-     */
-    private Map<String, CellStyle> styles;
-
-    /**
-     * 导入导出数据列表
-     */
-    private List<T> list;
-
-    /**
-     * 注解列表
-     */
-    private List<Object[]> fields;
-
-    /**
-     * 当前行号
-     */
-    private int rownum;
-
-    /**
-     * 标题
-     */
-    private String title;
-
-    /**
-     * 最大高度
-     */
-    private short maxHeight;
-
-    /**
-     * 合并后最后行数
-     */
-    private int subMergedLastRowNum = 0;
-
-    /**
-     * 合并后开始行数
-     */
-    private int subMergedFirstRowNum = 1;
-
-    /**
-     * 对象的子列表方法
-     */
-    private Method subMethod;
-
-    /**
-     * 对象的子列表属性
-     */
-    private List<Field> subFields;
-
-    /**
-     * 统计列表
-     */
-    private final Map<Integer, Double> statistics = new HashMap<>();
-
+    private static final Logger log = LoggerFactory.getLogger(ExcelUtil.class);
     /**
      * 数字格式
      */
     private static final DecimalFormat DOUBLE_FORMAT = new DecimalFormat("######0.00");
-
     /**
      * 实体对象
      */
     public Class<T> clazz;
-
     /**
      * 需要排除列属性
      */
     public String[] excludeFields;
+    /**
+     * 工作表名称
+     */
+    private String sheetName;
+    /**
+     * 导出类型（EXPORT:导出数据；IMPORT：导入模板）
+     */
+    private Type type;
+    /**
+     * 工作薄对象
+     */
+    private Workbook wb;
+    /**
+     * 工作表对象
+     */
+    private Sheet sheet;
+    /**
+     * 样式列表
+     */
+    private Map<String, CellStyle> styles;
+    /**
+     * 导入导出数据列表
+     */
+    private List<T> list;
+    /**
+     * 注解列表
+     */
+    private List<Object[]> fields;
+    /**
+     * 当前行号
+     */
+    private int rownum;
+    /**
+     * 标题
+     */
+    private String title;
+    /**
+     * 最大高度
+     */
+    private short maxHeight;
+    /**
+     * 合并后最后行数
+     */
+    private int subMergedLastRowNum = 0;
+    /**
+     * 合并后开始行数
+     */
+    private int subMergedFirstRowNum = 1;
+    /**
+     * 对象的子列表方法
+     */
+    private Method subMethod;
+    /**
+     * 对象的子列表属性
+     */
+    private List<Field> subFields;
+    /**
+     * 统计列表
+     */
+    private Map<Integer, Double> statistics = new HashMap<Integer, Double>();
 
     public ExcelUtil(Class<T> clazz) {
         this.clazz = clazz;
     }
 
     /**
+     * 获取画布
+     */
+    public static Drawing<?> getDrawingPatriarch(Sheet sheet) {
+        if (sheet.getDrawingPatriarch() == null) {
+            sheet.createDrawingPatriarch();
+        }
+        return sheet.getDrawingPatriarch();
+    }
+
+    /**
+     * 解析导出值 0=男,1=女,2=未知
+     *
+     * @param propertyValue 参数值
+     * @param converterExp  翻译注解
+     * @param separator     分隔符
+     * @return 解析后值
+     */
+    public static String convertByExp(String propertyValue, String converterExp, String separator) {
+        StringBuilder propertyString = new StringBuilder();
+        String[] convertSource = converterExp.split(",");
+        for (String item : convertSource) {
+            String[] itemArray = item.split("=");
+            if (StringUtils.containsAny(propertyValue, separator)) {
+                for (String value : propertyValue.split(separator)) {
+                    if (itemArray[0].equals(value)) {
+                        propertyString.append(itemArray[1] + separator);
+                        break;
+                    }
+                }
+            } else {
+                if (itemArray[0].equals(propertyValue)) {
+                    return itemArray[1];
+                }
+            }
+        }
+        return StringUtils.stripEnd(propertyString.toString(), separator);
+    }
+
+    /**
+     * 反向解析值 男=0,女=1,未知=2
+     *
+     * @param propertyValue 参数值
+     * @param converterExp  翻译注解
+     * @param separator     分隔符
+     * @return 解析后值
+     */
+    public static String reverseByExp(String propertyValue, String converterExp, String separator) {
+        StringBuilder propertyString = new StringBuilder();
+        String[] convertSource = converterExp.split(",");
+        for (String item : convertSource) {
+            String[] itemArray = item.split("=");
+            if (StringUtils.containsAny(propertyValue, separator)) {
+                for (String value : propertyValue.split(separator)) {
+                    if (itemArray[1].equals(value)) {
+                        propertyString.append(itemArray[0] + separator);
+                        break;
+                    }
+                }
+            } else {
+                if (itemArray[1].equals(propertyValue)) {
+                    return itemArray[0];
+                }
+            }
+        }
+        return StringUtils.stripEnd(propertyString.toString(), separator);
+    }
+
+    /**
+     * 解析字典值
+     *
+     * @param dictValue 字典值
+     * @param dictType  字典类型
+     * @param separator 分隔符
+     * @return 字典标签
+     */
+    public static String convertDictByExp(String dictValue, String dictType, String separator) {
+        return DictUtils.getDictLabel(dictType, dictValue, separator);
+    }
+
+    /**
+     * 反向解析值字典值
+     *
+     * @param dictLabel 字典标签
+     * @param dictType  字典类型
+     * @param separator 分隔符
+     * @return 字典值
+     */
+    public static String reverseDictByExp(String dictLabel, String dictType, String separator) {
+        return DictUtils.getDictValue(dictType, dictLabel, separator);
+    }
+
+    /**
+     * 获取Excel2003图片
+     *
+     * @param sheet    当前sheet对象
+     * @param workbook 工作簿对象
+     * @return Map key:图片单元格索引（1_1）String，value:图片流PictureData
+     */
+    public static Map<String, PictureData> getSheetPictures03(HSSFSheet sheet, HSSFWorkbook workbook) {
+        Map<String, PictureData> sheetIndexPicMap = new HashMap<String, PictureData>();
+        List<HSSFPictureData> pictures = workbook.getAllPictures();
+        if (!pictures.isEmpty()) {
+            for (HSSFShape shape : sheet.getDrawingPatriarch().getChildren()) {
+                HSSFClientAnchor anchor = (HSSFClientAnchor) shape.getAnchor();
+                if (shape instanceof HSSFPicture) {
+                    HSSFPicture pic = (HSSFPicture) shape;
+                    int pictureIndex = pic.getPictureIndex() - 1;
+                    HSSFPictureData picData = pictures.get(pictureIndex);
+                    String picIndex = String.valueOf(anchor.getRow1()) + "_" + String.valueOf(anchor.getCol1());
+                    sheetIndexPicMap.put(picIndex, picData);
+                }
+            }
+            return sheetIndexPicMap;
+        } else {
+            return sheetIndexPicMap;
+        }
+    }
+
+    /**
+     * 获取Excel2007图片
+     *
+     * @param sheet    当前sheet对象
+     * @param workbook 工作簿对象
+     * @return Map key:图片单元格索引（1_1）String，value:图片流PictureData
+     */
+    public static Map<String, PictureData> getSheetPictures07(XSSFSheet sheet, XSSFWorkbook workbook) {
+        Map<String, PictureData> sheetIndexPicMap = new HashMap<String, PictureData>();
+        for (POIXMLDocumentPart dr : sheet.getRelations()) {
+            if (dr instanceof XSSFDrawing) {
+                XSSFDrawing drawing = (XSSFDrawing) dr;
+                List<XSSFShape> shapes = drawing.getShapes();
+                for (XSSFShape shape : shapes) {
+                    if (shape instanceof XSSFPicture) {
+                        XSSFPicture pic = (XSSFPicture) shape;
+                        XSSFClientAnchor anchor = pic.getPreferredSize();
+                        CTMarker ctMarker = anchor.getFrom();
+                        String picIndex = ctMarker.getRow() + "_" + ctMarker.getCol();
+                        sheetIndexPicMap.put(picIndex, pic.getPictureData());
+                    }
+                }
+            }
+        }
+        return sheetIndexPicMap;
+    }
+
+    /**
      * 隐藏Excel中列属性
      *
      * @param fields 列属性名 示例[单个"name"/多个"id","name"]
+     * @throws Exception
      */
     public void hideColumn(String... fields) {
         this.excludeFields = fields;
@@ -209,7 +290,7 @@ public class ExcelUtil<T> {
 
     public void init(List<T> list, String sheetName, String title, Type type) {
         if (list == null) {
-            list = new ArrayList<>();
+            list = new ArrayList<T>();
         }
         this.list = list;
         this.sheetName = sheetName;
@@ -298,7 +379,7 @@ public class ExcelUtil<T> {
     public List<T> importExcel(String sheetName, InputStream is, int titleNum) throws Exception {
         this.type = Type.IMPORT;
         this.wb = WorkbookFactory.create(is);
-        List<T> list = new ArrayList<>();
+        List<T> list = new ArrayList<T>();
         // 如果指定sheet名,则取指定sheet中的内容 否则默认指向第1个sheet
         Sheet sheet = StringUtils.isNotEmpty(sheetName) ? wb.getSheet(sheetName) : wb.getSheetAt(0);
         if (sheet == null) {
@@ -316,7 +397,7 @@ public class ExcelUtil<T> {
 
         if (rows > 0) {
             // 定义一个map用于存放excel列的序号和field.
-            Map<String, Integer> cellMap = new HashMap<>();
+            Map<String, Integer> cellMap = new HashMap<String, Integer>();
             // 获取表头
             Row heard = sheet.getRow(titleNum);
             for (int i = 0; i < heard.getPhysicalNumberOfCells(); i++) {
@@ -330,7 +411,7 @@ public class ExcelUtil<T> {
             }
             // 有数据时才处理 得到类的所有field.
             List<Object[]> fields = this.getFields();
-            Map<Integer, Object[]> fieldsMap = new HashMap<>();
+            Map<Integer, Object[]> fieldsMap = new HashMap<Integer, Object[]>();
             for (Object[] objects : fields) {
                 Excel attr = (Excel) objects[1];
                 Integer column = cellMap.get(attr.name());
@@ -350,7 +431,7 @@ public class ExcelUtil<T> {
                     Object val = this.getCellValue(row, entry.getKey());
 
                     // 如果不存在实例则新建.
-                    entity = (entity == null ? clazz.getDeclaredConstructor().newInstance() : entity);
+                    entity = (entity == null ? clazz.newInstance() : entity);
                     // 从map中得到对应列的field.
                     Field field = (Field) entry.getValue()[0];
                     Excel attr = (Excel) entry.getValue()[1];
@@ -445,6 +526,7 @@ public class ExcelUtil<T> {
      * @param response  返回数据
      * @param list      导出数据集合
      * @param sheetName 工作表的名称
+     * @return 结果
      */
     public void exportExcel(HttpServletResponse response, List<T> list, String sheetName) {
         exportExcel(response, list, sheetName, StringUtils.EMPTY);
@@ -457,6 +539,7 @@ public class ExcelUtil<T> {
      * @param list      导出数据集合
      * @param sheetName 工作表的名称
      * @param title     标题
+     * @return 结果
      */
     public void exportExcel(HttpServletResponse response, List<T> list, String sheetName, String title) {
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
@@ -491,6 +574,7 @@ public class ExcelUtil<T> {
      * 对list数据源将其里面的数据导入到excel表单
      *
      * @param sheetName 工作表的名称
+     * @return 结果
      */
     public void importTemplateExcel(HttpServletResponse response, String sheetName) {
         importTemplateExcel(response, sheetName, StringUtils.EMPTY);
@@ -501,6 +585,7 @@ public class ExcelUtil<T> {
      *
      * @param sheetName 工作表的名称
      * @param title     标题
+     * @return 结果
      */
     public void importTemplateExcel(HttpServletResponse response, String sheetName, String title) {
         response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
@@ -511,6 +596,8 @@ public class ExcelUtil<T> {
 
     /**
      * 对list数据源将其里面的数据导入到excel表单
+     *
+     * @return 结果
      */
     public void exportExcel(HttpServletResponse response) {
         try {
@@ -571,7 +658,7 @@ public class ExcelUtil<T> {
                 }
             }
             if (Type.EXPORT.equals(type)) {
-                fillExcelData(index);
+                fillExcelData(index, row);
                 addStatisticsRow();
             }
         }
@@ -581,17 +668,18 @@ public class ExcelUtil<T> {
      * 填充excel数据
      *
      * @param index 序号
+     * @param row   单元格行
      */
     @SuppressWarnings("unchecked")
-    public void fillExcelData(int index) {
+    public void fillExcelData(int index, Row row) {
         int startNo = index * sheetSize;
         int endNo = Math.min(startNo + sheetSize, list.size());
         int rowNo = (1 + rownum) - startNo;
         for (int i = startNo; i < endNo; i++) {
             rowNo = isSubList() ? (i > 1 ? rowNo + 1 : rowNo + i) : i + 1 + rownum - startNo;
-            Row row = sheet.createRow(rowNo);
+            row = sheet.createRow(rowNo);
             // 得到导出对象.
-            T vo = list.get(i);
+            T vo = (T) list.get(i);
             Collection<?> subList = null;
             if (isSubList()) {
                 if (isSubListValue(vo)) {
@@ -641,7 +729,7 @@ public class ExcelUtil<T> {
      */
     private Map<String, CellStyle> createStyles(Workbook wb) {
         // 写入各条记录,每条记录对应excel表中的一行
-        Map<String, CellStyle> styles = new HashMap<>();
+        Map<String, CellStyle> styles = new HashMap<String, CellStyle>();
         CellStyle style = wb.createCellStyle();
         style.setAlignment(HorizontalAlignment.CENTER);
         style.setVerticalAlignment(VerticalAlignment.CENTER);
@@ -692,7 +780,7 @@ public class ExcelUtil<T> {
      * @return 自定义样式列表
      */
     private Map<String, CellStyle> annotationHeaderStyles(Workbook wb, Map<String, CellStyle> styles) {
-        Map<String, CellStyle> headerStyles = new HashMap<>();
+        Map<String, CellStyle> headerStyles = new HashMap<String, CellStyle>();
         for (Object[] os : fields) {
             Excel excel = (Excel) os[1];
             String key = StringUtils.format("header_{}_{}", excel.headerColor(), excel.headerBackgroundColor());
@@ -722,7 +810,7 @@ public class ExcelUtil<T> {
      * @return 自定义样式列表
      */
     private Map<String, CellStyle> annotationDataStyles(Workbook wb) {
-        Map<String, CellStyle> styles = new HashMap<>();
+        Map<String, CellStyle> styles = new HashMap<String, CellStyle>();
         for (Object[] os : fields) {
             Excel excel = (Excel) os[1];
             String key = StringUtils.format("data_{}_{}_{}", excel.align(), excel.color(), excel.backgroundColor());
@@ -759,7 +847,7 @@ public class ExcelUtil<T> {
         Cell cell = row.createCell(column);
         // 写入列信息
         cell.setCellValue(attr.name());
-        setDataValidation(attr, column);
+        setDataValidation(attr, row, column);
         cell.setCellStyle(styles.get(StringUtils.format("header_{}_{}", attr.headerColor(), attr.headerBackgroundColor())));
         if (isSubList()) {
             // 填充默认样式，防止合并单元格样式失效
@@ -798,19 +886,10 @@ public class ExcelUtil<T> {
             String imagePath = Convert.toStr(value);
             if (StringUtils.isNotEmpty(imagePath)) {
                 byte[] data = ImageUtils.getImage(imagePath);
-                getDrawingPatriarch(cell.getSheet()).createPicture(anchor, cell.getSheet().getWorkbook().addPicture(data, getImageType(data)));
+                getDrawingPatriarch(cell.getSheet()).createPicture(anchor,
+                        cell.getSheet().getWorkbook().addPicture(data, getImageType(data)));
             }
         }
-    }
-
-    /**
-     * 获取画布
-     */
-    public static Drawing<?> getDrawingPatriarch(Sheet sheet) {
-        if (sheet.getDrawingPatriarch() == null) {
-            sheet.createDrawingPatriarch();
-        }
-        return sheet.getDrawingPatriarch();
     }
 
     /**
@@ -829,7 +908,7 @@ public class ExcelUtil<T> {
     /**
      * 创建表格样式
      */
-    public void setDataValidation(Excel attr, int column) {
+    public void setDataValidation(Excel attr, Row row, int column) {
         if (attr.name().indexOf("注：") >= 0) {
             sheet.setColumnWidth(column, 6000);
         } else {
@@ -904,7 +983,8 @@ public class ExcelUtil<T> {
      * @param firstCol      开始列
      * @param endCol        结束列
      */
-    public void setPromptOrValidation(Sheet sheet, String[] textlist, String promptContent, int firstRow, int endRow, int firstCol, int endCol) {
+    public void setPromptOrValidation(Sheet sheet, String[] textlist, String promptContent, int firstRow, int endRow,
+                                      int firstCol, int endCol) {
         DataValidationHelper helper = sheet.getDataValidationHelper();
         DataValidationConstraint constraint = textlist.length > 0 ? helper.createExplicitListConstraint(textlist) : helper.createCustomConstraint("DD1");
         CellRangeAddressList regions = new CellRangeAddressList(firstRow, endRow, firstCol, endCol);
@@ -971,88 +1051,6 @@ public class ExcelUtil<T> {
     }
 
     /**
-     * 解析导出值 0=男,1=女,2=未知
-     *
-     * @param propertyValue 参数值
-     * @param converterExp  翻译注解
-     * @param separator     分隔符
-     * @return 解析后值
-     */
-    public static String convertByExp(String propertyValue, String converterExp, String separator) {
-        StringBuilder propertyString = new StringBuilder();
-        String[] convertSource = converterExp.split(",");
-        for (String item : convertSource) {
-            String[] itemArray = item.split("=");
-            if (StringUtils.containsAny(propertyValue, separator)) {
-                for (String value : propertyValue.split(separator)) {
-                    if (itemArray[0].equals(value)) {
-                        propertyString.append(itemArray[1] + separator);
-                        break;
-                    }
-                }
-            } else {
-                if (itemArray[0].equals(propertyValue)) {
-                    return itemArray[1];
-                }
-            }
-        }
-        return StringUtils.stripEnd(propertyString.toString(), separator);
-    }
-
-    /**
-     * 反向解析值 男=0,女=1,未知=2
-     *
-     * @param propertyValue 参数值
-     * @param converterExp  翻译注解
-     * @param separator     分隔符
-     * @return 解析后值
-     */
-    public static String reverseByExp(String propertyValue, String converterExp, String separator) {
-        StringBuilder propertyString = new StringBuilder();
-        String[] convertSource = converterExp.split(",");
-        for (String item : convertSource) {
-            String[] itemArray = item.split("=");
-            if (StringUtils.containsAny(propertyValue, separator)) {
-                for (String value : propertyValue.split(separator)) {
-                    if (itemArray[1].equals(value)) {
-                        propertyString.append(itemArray[0] + separator);
-                        break;
-                    }
-                }
-            } else {
-                if (itemArray[1].equals(propertyValue)) {
-                    return itemArray[0];
-                }
-            }
-        }
-        return StringUtils.stripEnd(propertyString.toString(), separator);
-    }
-
-    /**
-     * 解析字典值
-     *
-     * @param dictValue 字典值
-     * @param dictType  字典类型
-     * @param separator 分隔符
-     * @return 字典标签
-     */
-    public static String convertDictByExp(String dictValue, String dictType, String separator) {
-        return DictUtils.getDictLabel(dictType, dictValue, separator);
-    }
-
-    /**
-     * 反向解析值字典值
-     *
-     * @param dictLabel 字典标签
-     * @param dictType  字典类型
-     * @param separator 分隔符
-     * @return 字典值
-     */
-    public static String reverseDictByExp(String dictLabel, String dictType, String separator) {
-        return DictUtils.getDictValue(dictType, dictLabel, separator);
-    }
-
-    /**
      * 数据处理器
      *
      * @param value 数据值
@@ -1061,7 +1059,7 @@ public class ExcelUtil<T> {
      */
     public String dataFormatHandlerAdapter(Object value, Excel excel) {
         try {
-            Object instance = excel.handler().getDeclaredConstructor().newInstance();
+            Object instance = excel.handler().newInstance();
             Method formatMethod = excel.handler().getMethod("format", new Class[]{Object.class, String[].class});
             value = formatMethod.invoke(instance, value, excel.args());
         } catch (Exception e) {
@@ -1081,7 +1079,7 @@ public class ExcelUtil<T> {
             }
             try {
                 temp = Double.valueOf(text);
-            } catch (NumberFormatException ignored) {
+            } catch (NumberFormatException e) {
             }
             statistics.put(index, statistics.get(index) + temp);
         }
@@ -1111,7 +1109,7 @@ public class ExcelUtil<T> {
      * 编码文件名
      */
     public String encodingFilename(String filename) {
-        filename = UUID.randomUUID() + "_" + filename + ".xlsx";
+        filename = UUID.randomUUID().toString() + "_" + filename + ".xlsx";
         return filename;
     }
 
@@ -1185,7 +1183,7 @@ public class ExcelUtil<T> {
      * 获取字段注解信息
      */
     public List<Object[]> getFields() {
-        List<Object[]> fields = new ArrayList<>();
+        List<Object[]> fields = new ArrayList<Object[]>();
         List<Field> tempFields = new ArrayList<>();
         tempFields.addAll(Arrays.asList(clazz.getSuperclass().getDeclaredFields()));
         tempFields.addAll(Arrays.asList(clazz.getDeclaredFields()));
@@ -1304,6 +1302,7 @@ public class ExcelUtil<T> {
      * 判断是否是空行
      *
      * @param row 判断的行
+     * @return
      */
     private boolean isRowEmpty(Row row) {
         if (row == null) {
@@ -1316,60 +1315,6 @@ public class ExcelUtil<T> {
             }
         }
         return true;
-    }
-
-    /**
-     * 获取Excel2003图片
-     *
-     * @param sheet    当前sheet对象
-     * @param workbook 工作簿对象
-     * @return Map key:图片单元格索引（1_1）String，value:图片流PictureData
-     */
-    public static Map<String, PictureData> getSheetPictures03(HSSFSheet sheet, HSSFWorkbook workbook) {
-        Map<String, PictureData> sheetIndexPicMap = new HashMap<>();
-        List<HSSFPictureData> pictures = workbook.getAllPictures();
-        if (!pictures.isEmpty()) {
-            for (HSSFShape shape : sheet.getDrawingPatriarch().getChildren()) {
-                HSSFClientAnchor anchor = (HSSFClientAnchor) shape.getAnchor();
-                if (shape instanceof HSSFPicture) {
-                    HSSFPicture pic = (HSSFPicture) shape;
-                    int pictureIndex = pic.getPictureIndex() - 1;
-                    HSSFPictureData picData = pictures.get(pictureIndex);
-                    String picIndex = anchor.getRow1() + "_" + String.valueOf(anchor.getCol1());
-                    sheetIndexPicMap.put(picIndex, picData);
-                }
-            }
-            return sheetIndexPicMap;
-        } else {
-            return sheetIndexPicMap;
-        }
-    }
-
-    /**
-     * 获取Excel2007图片
-     *
-     * @param sheet    当前sheet对象
-     * @param workbook 工作簿对象
-     * @return Map key:图片单元格索引（1_1）String，value:图片流PictureData
-     */
-    public static Map<String, PictureData> getSheetPictures07(XSSFSheet sheet, XSSFWorkbook workbook) {
-        Map<String, PictureData> sheetIndexPicMap = new HashMap<String, PictureData>();
-        for (POIXMLDocumentPart dr : sheet.getRelations()) {
-            if (dr instanceof XSSFDrawing) {
-                XSSFDrawing drawing = (XSSFDrawing) dr;
-                List<XSSFShape> shapes = drawing.getShapes();
-                for (XSSFShape shape : shapes) {
-                    if (shape instanceof XSSFPicture) {
-                        XSSFPicture pic = (XSSFPicture) shape;
-                        XSSFClientAnchor anchor = pic.getPreferredSize();
-                        CTMarker ctMarker = anchor.getFrom();
-                        String picIndex = ctMarker.getRow() + "_" + ctMarker.getCol();
-                        sheetIndexPicMap.put(picIndex, pic.getPictureData());
-                    }
-                }
-            }
-        }
-        return sheetIndexPicMap;
     }
 
     /**
@@ -1416,9 +1361,9 @@ public class ExcelUtil<T> {
     public Collection<?> getListCellValue(Object obj) {
         Object value;
         try {
-            value = subMethod.invoke(obj);
+            value = subMethod.invoke(obj, new Object[]{});
         } catch (Exception e) {
-            return new ArrayList<>();
+            return new ArrayList<Object>();
         }
         return (Collection<?>) value;
     }

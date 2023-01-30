@@ -1,8 +1,8 @@
 package com.ruoyi.generator.mapper;
 
-import java.util.List;
-
 import com.ruoyi.generator.domain.GenTable;
+
+import java.util.List;
 
 /**
  * 业务 数据层
@@ -10,14 +10,13 @@ import com.ruoyi.generator.domain.GenTable;
  * @author ruoyi
  */
 public interface GenTableMapper {
-
     /**
      * 查询业务列表
      *
      * @param genTable 业务信息
      * @return 业务集合
      */
-    List<GenTable> selectGenTableList(GenTable genTable);
+    public List<GenTable> selectGenTableList(GenTable genTable);
 
     /**
      * 查询据库列表
@@ -25,7 +24,7 @@ public interface GenTableMapper {
      * @param genTable 业务信息
      * @return 数据库表集合
      */
-    List<GenTable> selectDbTableList(GenTable genTable);
+    public List<GenTable> selectDbTableList(GenTable genTable);
 
     /**
      * 查询据库列表
@@ -33,14 +32,14 @@ public interface GenTableMapper {
      * @param tableNames 表名称组
      * @return 数据库表集合
      */
-    List<GenTable> selectDbTableListByNames(String[] tableNames);
+    public List<GenTable> selectDbTableListByNames(String[] tableNames);
 
     /**
      * 查询所有表信息
      *
      * @return 表信息集合
      */
-    List<GenTable> selectGenTableAll();
+    public List<GenTable> selectGenTableAll();
 
     /**
      * 查询表ID业务信息
@@ -48,7 +47,7 @@ public interface GenTableMapper {
      * @param id 业务ID
      * @return 业务信息
      */
-    GenTable selectGenTableById(Long id);
+    public GenTable selectGenTableById(Long id);
 
     /**
      * 查询表名称业务信息
@@ -56,7 +55,7 @@ public interface GenTableMapper {
      * @param tableName 表名称
      * @return 业务信息
      */
-    GenTable selectGenTableByName(String tableName);
+    public GenTable selectGenTableByName(String tableName);
 
     /**
      * 新增业务
@@ -64,7 +63,7 @@ public interface GenTableMapper {
      * @param genTable 业务信息
      * @return 结果
      */
-    int insertGenTable(GenTable genTable);
+    public int insertGenTable(GenTable genTable);
 
     /**
      * 修改业务
@@ -72,7 +71,7 @@ public interface GenTableMapper {
      * @param genTable 业务信息
      * @return 结果
      */
-    int updateGenTable(GenTable genTable);
+    public int updateGenTable(GenTable genTable);
 
     /**
      * 批量删除业务
@@ -80,5 +79,5 @@ public interface GenTableMapper {
      * @param ids 需要删除的数据ID
      * @return 结果
      */
-    int deleteGenTableByIds(Long[] ids);
+    public int deleteGenTableByIds(Long[] ids);
 }

@@ -24,7 +24,7 @@
     </resultMap>
 
     <sql id="selectOperLogVo">
-        SELECT oper_id,
+        select oper_id,
                title,
                business_type,
                method,
@@ -40,15 +40,15 @@
                status,
                error_msg,
                oper_time
-        FROM sys_oper_log
+        from sys_oper_log
     </sql>
 
     <insert id="insertOperlog" parameterType="SysOperLog">
-        INSERT INTO sys_oper_log(title, business_type, method, request_method, operator_type, oper_name, dept_name,
+        insert into sys_oper_log(title, business_type, method, request_method, operator_type, oper_name, dept_name,
                                  oper_url, oper_ip, oper_location, oper_param, json_result, status, error_msg,
                                  oper_time)
-        VALUES (#{title}, #{businessType}, #{method}, #{requestMethod}, #{operatorType}, #{operName}, #{deptName},
-                #{operUrl}, #{operIp}, #{operLocation}, #{operParam}, #{jsonResult}, #{status}, #{errorMsg}, SYSDATE())
+        values (#{title}, #{businessType}, #{method}, #{requestMethod}, #{operatorType}, #{operName}, #{deptName},
+                #{operUrl}, #{operIp}, #{operLocation}, #{operParam}, #{jsonResult}, #{status}, #{errorMsg}, sysdate())
     </insert>
 
     <select id="selectOperLogList" parameterType="SysOperLog" resultMap="SysOperLogResult">
@@ -95,7 +95,7 @@
     </select>
 
     <update id="cleanOperLog">
-        TRUNCATE TABLE sys_oper_log
+        truncate table sys_oper_log
     </update>
 
 </mapper> 

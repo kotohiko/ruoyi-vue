@@ -1,13 +1,12 @@
 package com.ruoyi.system.domain;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Size;
-
-import org.apache.commons.lang3.builder.ToStringBuilder;
-import org.apache.commons.lang3.builder.ToStringStyle;
 import com.ruoyi.common.core.domain.BaseEntity;
 import com.ruoyi.common.xss.Xss;
+import org.apache.commons.lang3.builder.ToStringBuilder;
+import org.apache.commons.lang3.builder.ToStringStyle;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Size;
 import java.io.Serial;
 
 /**
@@ -53,39 +52,39 @@ public class SysNotice extends BaseEntity {
         this.noticeId = noticeId;
     }
 
-    public void setNoticeTitle(String noticeTitle) {
-        this.noticeTitle = noticeTitle;
-    }
-
     @Xss(message = "公告标题不能包含脚本字符")
     @NotBlank(message = "公告标题不能为空")
-    @Size(max = 50, message = "公告标题不能超过50个字符")
+    @Size(min = 0, max = 50, message = "公告标题不能超过50个字符")
     public String getNoticeTitle() {
         return noticeTitle;
     }
 
-    public void setNoticeType(String noticeType) {
-        this.noticeType = noticeType;
+    public void setNoticeTitle(String noticeTitle) {
+        this.noticeTitle = noticeTitle;
     }
 
     public String getNoticeType() {
         return noticeType;
     }
 
-    public void setNoticeContent(String noticeContent) {
-        this.noticeContent = noticeContent;
+    public void setNoticeType(String noticeType) {
+        this.noticeType = noticeType;
     }
 
     public String getNoticeContent() {
         return noticeContent;
     }
 
-    public void setStatus(String status) {
-        this.status = status;
+    public void setNoticeContent(String noticeContent) {
+        this.noticeContent = noticeContent;
     }
 
     public String getStatus() {
         return status;
+    }
+
+    public void setStatus(String status) {
+        this.status = status;
     }
 
     @Override

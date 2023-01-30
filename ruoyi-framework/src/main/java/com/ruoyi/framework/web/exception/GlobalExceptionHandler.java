@@ -1,7 +1,10 @@
 package com.ruoyi.framework.web.exception;
 
-import javax.servlet.http.HttpServletRequest;
-
+import com.ruoyi.common.constant.HttpStatus;
+import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.exception.DemoModeException;
+import com.ruoyi.common.exception.ServiceException;
+import com.ruoyi.common.utils.StringUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.access.AccessDeniedException;
@@ -10,13 +13,8 @@ import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
-import com.ruoyi.common.constant.HttpStatus;
-import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.exception.DemoModeException;
-import com.ruoyi.common.exception.ServiceException;
-import com.ruoyi.common.utils.StringUtils;
 
-import java.util.Objects;
+import javax.servlet.http.HttpServletRequest;
 
 /**
  * 全局异常处理器
@@ -25,7 +23,6 @@ import java.util.Objects;
  */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
-
     private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     /**
@@ -53,7 +50,7 @@ public class GlobalExceptionHandler {
      * 业务异常
      */
     @ExceptionHandler(ServiceException.class)
-    public AjaxResult handleServiceException(ServiceException e) {
+    public AjaxResult handleServiceException(ServiceException e, HttpServletRequest request) {
         log.error(e.getMessage(), e);
         Integer code = e.getCode();
         return StringUtils.isNotNull(code) ? AjaxResult.error(code, e.getMessage()) : AjaxResult.error(e.getMessage());
@@ -95,7 +92,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Object handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         log.error(e.getMessage(), e);
-        String message = Objects.requireNonNull(e.getBindingResult().getFieldError()).getDefaultMessage();
+        String message = e.getBindingResult().getFieldError().getDefaultMessage();
         return AjaxResult.error(message);
     }
 
@@ -103,7 +100,7 @@ public class GlobalExceptionHandler {
      * 演示模式异常
      */
     @ExceptionHandler(DemoModeException.class)
-    public AjaxResult handleDemoModeException() {
+    public AjaxResult handleDemoModeException(DemoModeException e) {
         return AjaxResult.error("演示模式，不允许操作");
     }
 }

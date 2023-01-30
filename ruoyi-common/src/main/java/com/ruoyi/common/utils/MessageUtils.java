@@ -1,8 +1,8 @@
 package com.ruoyi.common.utils;
 
+import com.ruoyi.common.utils.spring.SpringUtils;
 import org.springframework.context.MessageSource;
 import org.springframework.context.i18n.LocaleContextHolder;
-import com.ruoyi.common.utils.spring.SpringUtils;
 
 /**
  * 获取i18n资源文件
@@ -10,7 +10,6 @@ import com.ruoyi.common.utils.spring.SpringUtils;
  * @author ruoyi
  */
 public class MessageUtils {
-
     /**
      * 根据消息键和参数 获取消息 委托给spring messageSource
      *

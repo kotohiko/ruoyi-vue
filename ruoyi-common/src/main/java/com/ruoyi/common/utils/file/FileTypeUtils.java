@@ -1,8 +1,8 @@
 package com.ruoyi.common.utils.file;
 
-import java.io.File;
-
 import org.apache.commons.lang3.StringUtils;
+
+import java.io.File;
 
 /**
  * 文件类型工具类
@@ -10,7 +10,6 @@ import org.apache.commons.lang3.StringUtils;
  * @author ruoyi
  */
 public class FileTypeUtils {
-
     /**
      * 获取文件类型
      * <p>

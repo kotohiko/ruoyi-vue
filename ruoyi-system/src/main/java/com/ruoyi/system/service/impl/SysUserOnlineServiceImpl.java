@@ -1,10 +1,10 @@
 package com.ruoyi.system.service.impl;
 
-import org.springframework.stereotype.Service;
 import com.ruoyi.common.core.domain.model.LoginUser;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.domain.SysUserOnline;
 import com.ruoyi.system.service.ISysUserOnlineService;
+import org.springframework.stereotype.Service;
 
 /**
  * 在线用户 服务层处理
@@ -13,7 +13,6 @@ import com.ruoyi.system.service.ISysUserOnlineService;
  */
 @Service
 public class SysUserOnlineServiceImpl implements ISysUserOnlineService {
-
     /**
      * 通过登录地址查询信息
      *

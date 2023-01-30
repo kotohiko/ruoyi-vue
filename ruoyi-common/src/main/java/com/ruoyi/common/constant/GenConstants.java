@@ -6,7 +6,6 @@ package com.ruoyi.common.constant;
  * @author ruoyi
  */
 public class GenConstants {
-
     /**
      * 单表（增删改查）
      */

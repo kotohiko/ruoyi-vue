@@ -22,7 +22,7 @@
     </resultMap>
 
     <sql id="selectRoleVo">
-        SELECT DISTINCT r.role_id,
+        select distinct r.role_id,
                         r.role_name,
                         r.role_key,
                         r.role_sort,
@@ -33,10 +33,10 @@
                         r.del_flag,
                         r.create_time,
                         r.remark
-        FROM sys_role r
-                 LEFT JOIN sys_user_role ur ON ur.role_id = r.role_id
-                 LEFT JOIN sys_user u ON u.user_id = ur.user_id
-                 LEFT JOIN sys_dept d ON u.dept_id = d.dept_id
+        from sys_role r
+                 left join sys_user_role ur on ur.role_id = r.role_id
+                 left join sys_user u on u.user_id = ur.user_id
+                 left join sys_dept d on u.dept_id = d.dept_id
     </sql>
 
     <select id="selectRoleList" parameterType="SysRole" resultMap="SysRoleResult">
@@ -75,11 +75,11 @@
     </select>
 
     <select id="selectRoleListByUserId" parameterType="Long" resultType="Long">
-        SELECT r.role_id
-        FROM sys_role r
-                 LEFT JOIN sys_user_role ur ON ur.role_id = r.role_id
-                 LEFT JOIN sys_user u ON u.user_id = ur.user_id
-        WHERE u.user_id = #{userId}
+        select r.role_id
+        from sys_role r
+                 left join sys_user_role ur on ur.role_id = r.role_id
+                 left join sys_user u on u.user_id = ur.user_id
+        where u.user_id = #{userId}
     </select>
 
     <select id="selectRoleById" parameterType="Long" resultMap="SysRoleResult">
@@ -148,9 +148,9 @@
     </update>
 
     <delete id="deleteRoleById" parameterType="Long">
-        UPDATE sys_role
-        SET del_flag = '2'
-        WHERE role_id = #{roleId}
+        update sys_role
+        set del_flag = '2'
+        where role_id = #{roleId}
     </delete>
 
     <delete id="deleteRoleByIds" parameterType="Long">

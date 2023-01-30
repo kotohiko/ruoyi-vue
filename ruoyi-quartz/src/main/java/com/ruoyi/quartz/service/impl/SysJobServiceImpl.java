@@ -1,15 +1,5 @@
 package com.ruoyi.quartz.service.impl;
 
-import java.util.List;
-import javax.annotation.PostConstruct;
-
-import org.quartz.JobDataMap;
-import org.quartz.JobKey;
-import org.quartz.Scheduler;
-import org.quartz.SchedulerException;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import com.ruoyi.common.constant.ScheduleConstants;
 import com.ruoyi.common.exception.job.TaskException;
 import com.ruoyi.quartz.domain.SysJob;
@@ -17,6 +7,16 @@ import com.ruoyi.quartz.mapper.SysJobMapper;
 import com.ruoyi.quartz.service.ISysJobService;
 import com.ruoyi.quartz.util.CronUtils;
 import com.ruoyi.quartz.util.ScheduleUtils;
+import org.quartz.JobDataMap;
+import org.quartz.JobKey;
+import org.quartz.Scheduler;
+import org.quartz.SchedulerException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import javax.annotation.PostConstruct;
+import java.util.List;
 
 /**
  * 定时任务调度信息 服务层
@@ -25,7 +25,6 @@ import com.ruoyi.quartz.util.ScheduleUtils;
  */
 @Service
 public class SysJobServiceImpl implements ISysJobService {
-
     @Autowired
     private Scheduler scheduler;
 
@@ -33,9 +32,7 @@ public class SysJobServiceImpl implements ISysJobService {
     private SysJobMapper jobMapper;
 
     /**
-     * 项目启动时的初始化定时器
-     * <p>
-     * 主要是防止手动修改数据库导致未同步到定时任务处理（注：不能手动修改数据库ID和任务组名，否则会导致脏数据）
+     * 项目启动时，初始化定时器 主要是防止手动修改数据库导致未同步到定时任务处理（注：不能手动修改数据库ID和任务组名，否则会导致脏数据）
      */
     @PostConstruct
     public void init() throws SchedulerException, TaskException {
@@ -47,9 +44,10 @@ public class SysJobServiceImpl implements ISysJobService {
     }
 
     /**
-     * 获取Quartz调度器的计划任务列表
+     * 获取quartz调度器的计划任务列表
      *
      * @param job 调度信息
+     * @return
      */
     @Override
     public List<SysJob> selectJobList(SysJob job) {
@@ -124,6 +122,7 @@ public class SysJobServiceImpl implements ISysJobService {
      * 批量删除调度信息
      *
      * @param jobIds 需要删除的任务ID
+     * @return 结果
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
@@ -225,7 +224,7 @@ public class SysJobServiceImpl implements ISysJobService {
     }
 
     /**
-     * 校验Cron表达式是否有效
+     * 校验cron表达式是否有效
      *
      * @param cronExpression 表达式
      * @return 结果

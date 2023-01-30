@@ -6,7 +6,6 @@ package com.ruoyi.common.enums;
  * @author ruoyi
  */
 public enum OperatorType {
-
     /**
      * 其它
      */

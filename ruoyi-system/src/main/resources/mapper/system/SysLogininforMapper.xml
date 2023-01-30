@@ -17,8 +17,8 @@
     </resultMap>
 
     <insert id="insertLogininfor" parameterType="SysLogininfor">
-        INSERT INTO sys_logininfor (user_name, status, ipaddr, login_location, browser, os, msg, login_time)
-        VALUES (#{userName}, #{status}, #{ipaddr}, #{loginLocation}, #{browser}, #{os}, #{msg}, SYSDATE())
+        insert into sys_logininfor (user_name, status, ipaddr, login_location, browser, os, msg, login_time)
+        values (#{userName}, #{status}, #{ipaddr}, #{loginLocation}, #{browser}, #{os}, #{msg}, sysdate())
     </insert>
 
     <select id="selectLogininforList" parameterType="SysLogininfor" resultMap="SysLogininforResult">
@@ -51,7 +51,7 @@
     </delete>
 
     <update id="cleanLogininfor">
-        TRUNCATE TABLE sys_logininfor
+        truncate table sys_logininfor
     </update>
 
 </mapper> 

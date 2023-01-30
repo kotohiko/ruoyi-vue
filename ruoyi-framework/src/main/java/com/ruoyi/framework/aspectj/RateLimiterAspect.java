@@ -1,9 +1,11 @@
 package com.ruoyi.framework.aspectj;
 
-import java.lang.reflect.Method;
-import java.util.Collections;
-import java.util.List;
-
+import com.ruoyi.common.annotation.RateLimiter;
+import com.ruoyi.common.enums.LimitType;
+import com.ruoyi.common.exception.ServiceException;
+import com.ruoyi.common.utils.ServletUtils;
+import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.common.utils.ip.IpUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Before;
@@ -14,12 +16,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.core.script.RedisScript;
 import org.springframework.stereotype.Component;
-import com.ruoyi.common.annotation.RateLimiter;
-import com.ruoyi.common.enums.LimitType;
-import com.ruoyi.common.exception.ServiceException;
-import com.ruoyi.common.utils.ServletUtils;
-import com.ruoyi.common.utils.StringUtils;
-import com.ruoyi.common.utils.ip.IpUtils;
+
+import java.lang.reflect.Method;
+import java.util.Collections;
+import java.util.List;
 
 /**
  * 限流处理
@@ -29,7 +29,6 @@ import com.ruoyi.common.utils.ip.IpUtils;
 @Aspect
 @Component
 public class RateLimiterAspect {
-
     private static final Logger log = LoggerFactory.getLogger(RateLimiterAspect.class);
 
     private RedisTemplate<Object, Object> redisTemplate;
@@ -47,7 +46,7 @@ public class RateLimiterAspect {
     }
 
     @Before("@annotation(rateLimiter)")
-    public void doBefore(JoinPoint point, RateLimiter rateLimiter) {
+    public void doBefore(JoinPoint point, RateLimiter rateLimiter) throws Throwable {
         int time = rateLimiter.time();
         int count = rateLimiter.count();
 
@@ -67,14 +66,14 @@ public class RateLimiterAspect {
     }
 
     public String getCombineKey(RateLimiter rateLimiter, JoinPoint point) {
-        StringBuilder stringBuilder = new StringBuilder(rateLimiter.key());
+        StringBuffer stringBuffer = new StringBuffer(rateLimiter.key());
         if (rateLimiter.limitType() == LimitType.IP) {
-            stringBuilder.append(IpUtils.getIpAddr(ServletUtils.getRequest())).append("-");
+            stringBuffer.append(IpUtils.getIpAddr(ServletUtils.getRequest())).append("-");
         }
         MethodSignature signature = (MethodSignature) point.getSignature();
         Method method = signature.getMethod();
         Class<?> targetClass = method.getDeclaringClass();
-        stringBuilder.append(targetClass.getName()).append("-").append(method.getName());
-        return stringBuilder.toString();
+        stringBuffer.append(targetClass.getName()).append("-").append(method.getName());
+        return stringBuffer.toString();
     }
 }

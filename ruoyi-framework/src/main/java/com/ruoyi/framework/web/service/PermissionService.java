@@ -1,23 +1,22 @@
 package com.ruoyi.framework.web.service;
 
-import java.util.Set;
-
-import org.springframework.stereotype.Service;
-import org.springframework.util.CollectionUtils;
 import com.ruoyi.common.core.domain.entity.SysRole;
 import com.ruoyi.common.core.domain.model.LoginUser;
 import com.ruoyi.common.utils.SecurityUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.framework.security.context.PermissionContextHolder;
+import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
+
+import java.util.Set;
 
 /**
- * RuoYi首创：自定义权限实现。ss取自Spring Security首字母
+ * RuoYi首创 自定义权限实现，ss取自SpringSecurity首字母
  *
  * @author ruoyi
  */
 @Service("ss")
 public class PermissionService {
-
     /**
      * 所有权限标识
      */
@@ -51,7 +50,7 @@ public class PermissionService {
     }
 
     /**
-     * 验证用户是否不具备某权限，与hasPermi逻辑相反
+     * 验证用户是否不具备某权限，与 hasPermi逻辑相反
      *
      * @param permission 权限字符串
      * @return 用户是否不具备某权限

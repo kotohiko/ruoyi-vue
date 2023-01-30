@@ -36,17 +36,11 @@ import java.util.Map;
 @Aspect
 @Component
 public class LogAspect {
-
-    private static final Logger log = LoggerFactory.getLogger(LogAspect.class);
-
     /**
      * 排除敏感属性字段
      */
     public static final String[] EXCLUDE_PROPERTIES = {"password", "oldPassword", "newPassword", "confirmPassword"};
-
-//    // 配置织入点（此处的织入点配置在近期版本中取消了。改为在方法中添加参数来实现切面）
-//    @Pointcut("@annotation(com.ruoyi.common.annotation.Log)")
-//    public void logPointCut() {}
+    private static final Logger log = LoggerFactory.getLogger(LogAspect.class);
 
     /**
      * 处理完请求后执行
@@ -69,15 +63,12 @@ public class LogAspect {
         handleLog(joinPoint, controllerLog, e, null);
     }
 
-    /**
-     * 核心日志方法
-     */
     protected void handleLog(final JoinPoint joinPoint, Log controllerLog, final Exception e, Object jsonResult) {
         try {
             // 获取当前的用户
             LoginUser loginUser = SecurityUtils.getLoginUser();
 
-            // *========数据库日志=========* //
+            // *========数据库日志=========*//
             SysOperLog operLog = new SysOperLog();
             operLog.setStatus(BusinessStatus.SUCCESS.ordinal());
             // 请求的地址
@@ -87,6 +78,7 @@ public class LogAspect {
             if (loginUser != null) {
                 operLog.setOperName(loginUser.getUsername());
             }
+
             if (e != null) {
                 operLog.setStatus(BusinessStatus.FAIL.ordinal());
                 operLog.setErrorMsg(StringUtils.substring(e.getMessage(), 0, 2000));
@@ -113,8 +105,9 @@ public class LogAspect {
      *
      * @param log     日志
      * @param operLog 操作日志
+     * @throws Exception
      */
-    public void getControllerMethodDescription(JoinPoint joinPoint, Log log, SysOperLog operLog, Object jsonResult) {
+    public void getControllerMethodDescription(JoinPoint joinPoint, Log log, SysOperLog operLog, Object jsonResult) throws Exception {
         // 设置action动作
         operLog.setBusinessType(log.businessType().ordinal());
         // 设置标题
@@ -136,8 +129,9 @@ public class LogAspect {
      * 获取请求的参数，放到log中
      *
      * @param operLog 操作日志
+     * @throws Exception 异常
      */
-    private void setRequestValue(JoinPoint joinPoint, SysOperLog operLog) {
+    private void setRequestValue(JoinPoint joinPoint, SysOperLog operLog) throws Exception {
         String requestMethod = operLog.getRequestMethod();
         if (HttpMethod.PUT.name().equals(requestMethod) || HttpMethod.POST.name().equals(requestMethod)) {
             String params = argsArrayToString(joinPoint.getArgs());
@@ -152,19 +146,19 @@ public class LogAspect {
      * 参数拼装
      */
     private String argsArrayToString(Object[] paramsArray) {
-        StringBuilder params = new StringBuilder();
-        if (paramsArray != null) {
+        String params = "";
+        if (paramsArray != null && paramsArray.length > 0) {
             for (Object o : paramsArray) {
                 if (StringUtils.isNotNull(o) && !isFilterObject(o)) {
                     try {
                         String jsonObj = JSON.toJSONString(o, excludePropertyPreFilter());
-                        params.append(jsonObj).append(" ");
-                    } catch (Exception ignored) {
+                        params += jsonObj.toString() + " ";
+                    } catch (Exception e) {
                     }
                 }
             }
         }
-        return params.toString().trim();
+        return params.trim();
     }
 
     /**
@@ -197,6 +191,7 @@ public class LogAspect {
                 return entry.getValue() instanceof MultipartFile;
             }
         }
-        return o instanceof MultipartFile || o instanceof HttpServletRequest || o instanceof HttpServletResponse || o instanceof BindingResult;
+        return o instanceof MultipartFile || o instanceof HttpServletRequest || o instanceof HttpServletResponse
+                || o instanceof BindingResult;
     }
 }

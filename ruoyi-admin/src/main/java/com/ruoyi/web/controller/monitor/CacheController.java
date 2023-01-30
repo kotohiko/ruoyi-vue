@@ -1,27 +1,17 @@
 package com.ruoyi.web.controller.monitor;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import java.util.Properties;
-import java.util.Set;
-
+import com.ruoyi.common.constant.CacheConstants;
+import com.ruoyi.common.core.domain.AjaxResult;
+import com.ruoyi.common.utils.StringUtils;
+import com.ruoyi.system.domain.SysCache;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.connection.RedisServerCommands;
 import org.springframework.data.redis.core.RedisCallback;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import com.ruoyi.common.constant.CacheConstants;
-import com.ruoyi.common.core.domain.AjaxResult;
-import com.ruoyi.common.utils.StringUtils;
-import com.ruoyi.system.domain.SysCache;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.*;
 
 /**
  * 缓存监控
@@ -32,10 +22,10 @@ import com.ruoyi.system.domain.SysCache;
 @RequestMapping("/monitor/cache")
 public class CacheController {
 
+    private final static List<SysCache> caches = new ArrayList<>();
+
     @Autowired
     private RedisTemplate<String, String> redisTemplate;
-
-    private final static List<SysCache> caches = new ArrayList<>();
 
     static {
         caches.add(new SysCache(CacheConstants.LOGIN_TOKEN_KEY, "用户信息"));
@@ -59,14 +49,15 @@ public class CacheController {
         result.put("dbSize", dbSize);
 
         List<Map<String, String>> pieList = new ArrayList<>();
-        assert commandStats != null;
-        commandStats.stringPropertyNames().forEach(key -> {
-            Map<String, String> data = new HashMap<>(2);
-            String property = commandStats.getProperty(key);
-            data.put("name", StringUtils.removeStart(key, "cmdstat_"));
-            data.put("value", StringUtils.substringBetween(property, "calls=", ",usec"));
-            pieList.add(data);
-        });
+        if (commandStats != null) {
+            commandStats.stringPropertyNames().forEach(key -> {
+                Map<String, String> data = new HashMap<>(2);
+                String property = commandStats.getProperty(key);
+                data.put("name", StringUtils.removeStart(key, "cmdstat_"));
+                data.put("value", StringUtils.substringBetween(property, "calls=", ",usec"));
+                pieList.add(data);
+            });
+        }
         result.put("commandStats", pieList);
         return AjaxResult.success(result);
     }
@@ -96,8 +87,9 @@ public class CacheController {
     @DeleteMapping("/clearCacheName/{cacheName}")
     public AjaxResult clearCacheName(@PathVariable String cacheName) {
         Collection<String> cacheKeys = redisTemplate.keys(cacheName + "*");
-        assert cacheKeys != null;
-        redisTemplate.delete(cacheKeys);
+        if (cacheKeys != null) {
+            redisTemplate.delete(cacheKeys);
+        }
         return AjaxResult.success();
     }
 
@@ -112,8 +104,9 @@ public class CacheController {
     @DeleteMapping("/clearCacheAll")
     public AjaxResult clearCacheAll() {
         Collection<String> cacheKeys = redisTemplate.keys("*");
-        assert cacheKeys != null;
-        redisTemplate.delete(cacheKeys);
+        if (cacheKeys != null) {
+            redisTemplate.delete(cacheKeys);
+        }
         return AjaxResult.success();
     }
 }

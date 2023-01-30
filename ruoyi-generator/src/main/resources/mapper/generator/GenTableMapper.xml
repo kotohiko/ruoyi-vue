@@ -54,7 +54,7 @@
     </resultMap>
 
     <sql id="selectGenTableVo">
-        SELECT table_id,
+        select table_id,
                table_name,
                table_comment,
                sub_table_name,
@@ -74,7 +74,7 @@
                update_by,
                update_time,
                remark
-        FROM gen_table
+        from gen_table
     </sql>
 
     <select id="selectGenTableList" parameterType="GenTable" resultMap="GenTableResult">
@@ -125,11 +125,11 @@
     </select>
 
     <select id="selectTableByName" parameterType="String" resultMap="GenTableResult">
-        SELECT table_name, table_comment, create_time, update_time
-        FROM information_schema.tables
-        WHERE table_comment <![CDATA[ <> ]]> ''
-          AND table_schema = (SELECT DATABASE())
-          AND table_name = #{tableName}
+        select table_name, table_comment, create_time, update_time
+        from information_schema.tables
+        where table_comment <![CDATA[ <> ]]> ''
+          and table_schema = (select database())
+          and table_name = #{tableName}
     </select>
 
     <select id="selectGenTableById" parameterType="Long" resultMap="GenTableResult">
@@ -168,8 +168,8 @@
                c.sort
         FROM gen_table t
                  LEFT JOIN gen_table_column c ON t.table_id = c.table_id
-        WHERE t.table_id = #{tableId}
-        ORDER BY c.sort
+        where t.table_id = #{tableId}
+        order by c.sort
     </select>
 
     <select id="selectGenTableByName" parameterType="String" resultMap="GenTableResult">
@@ -208,8 +208,8 @@
                c.sort
         FROM gen_table t
                  LEFT JOIN gen_table_column c ON t.table_id = c.table_id
-        WHERE t.table_name = #{tableName}
-        ORDER BY c.sort
+        where t.table_name = #{tableName}
+        order by c.sort
     </select>
 
     <select id="selectGenTableAll" parameterType="String" resultMap="GenTableResult">
@@ -246,7 +246,7 @@
                c.sort
         FROM gen_table t
                  LEFT JOIN gen_table_column c ON t.table_id = c.table_id
-        ORDER BY c.sort
+        order by c.sort
     </select>
 
     <insert id="insertGenTable" parameterType="GenTable" useGeneratedKeys="true" keyProperty="tableId">

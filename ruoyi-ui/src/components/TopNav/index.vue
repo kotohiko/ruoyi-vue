@@ -5,7 +5,7 @@
     @select="handleSelect"
   >
     <template v-for="(item, index) in topMenus">
-      <el-menu-item :style="{'--theme': theme}" :index="item.path" :key="index" v-if="index < visibleNumber"
+      <el-menu-item v-if="index < visibleNumber" :key="index" :index="item.path" :style="{'--theme': theme}"
       >
         <svg-icon :icon-class="item.meta.icon"/>
         {{ item.meta.title }}
@@ -14,13 +14,13 @@
     </template>
 
     <!-- 顶部菜单超出数量折叠 -->
-    <el-submenu :style="{'--theme': theme}" index="more" v-if="topMenus.length > visibleNumber">
+    <el-submenu v-if="topMenus.length > visibleNumber" :style="{'--theme': theme}" index="more">
       <template slot="title">更多菜单</template>
       <template v-for="(item, index) in topMenus">
         <el-menu-item
-          :index="item.path"
-          :key="index"
           v-if="index >= visibleNumber"
+          :key="index"
+          :index="item.path"
         >
           <svg-icon :icon-class="item.meta.icon"/>
           {{ item.meta.title }}

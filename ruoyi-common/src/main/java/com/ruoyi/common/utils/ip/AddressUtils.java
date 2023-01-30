@@ -1,13 +1,13 @@
 package com.ruoyi.common.utils.ip;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import com.alibaba.fastjson2.JSON;
 import com.alibaba.fastjson2.JSONObject;
 import com.ruoyi.common.config.RuoYiConfig;
 import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.http.HttpUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * 获取地址类
@@ -15,14 +15,11 @@ import com.ruoyi.common.utils.http.HttpUtils;
  * @author ruoyi
  */
 public class AddressUtils {
-
-    private static final Logger log = LoggerFactory.getLogger(AddressUtils.class);
-
     // IP地址查询
     public static final String IP_URL = "http://whois.pconline.com.cn/ipJson.jsp";
-
     // 未知地址
     public static final String UNKNOWN = "XX XX";
+    private static final Logger log = LoggerFactory.getLogger(AddressUtils.class);
 
     public static String getRealAddressByIP(String ip) {
         // 内网不查询

@@ -35,7 +35,6 @@ import javax.annotation.Resource;
  */
 @Component
 public class SysLoginService {
-
     @Autowired
     private TokenService tokenService;
 
@@ -67,11 +66,11 @@ public class SysLoginService {
             validateCaptcha(username, code, uuid);
         }
         // 用户验证
-        Authentication authentication;
+        Authentication authentication = null;
         try {
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
             AuthenticationContextHolder.setContext(authenticationToken);
-            // 该方法会去调用UserDetailsServiceImpl.loadUserByUsername（在DaoAuthenticationProvider的retrieveUser方法里）
+            // 该方法会去调用UserDetailsServiceImpl.loadUserByUsername
             authentication = authenticationManager.authenticate(authenticationToken);
         } catch (Exception e) {
             if (e instanceof BadCredentialsException) {
@@ -97,6 +96,7 @@ public class SysLoginService {
      * @param username 用户名
      * @param code     验证码
      * @param uuid     唯一标识
+     * @return 结果
      */
     public void validateCaptcha(String username, String code, String uuid) {
         String verifyKey = CacheConstants.CAPTCHA_CODE_KEY + StringUtils.nvl(uuid, "");
