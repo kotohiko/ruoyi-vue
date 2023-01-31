@@ -15,6 +15,7 @@ import java.util.List;
  * @author ruoyi
  */
 public class JobInvokeUtil {
+
     /**
      * 执行方法
      *
@@ -42,9 +43,7 @@ public class JobInvokeUtil {
      * @param methodName   方法名称
      * @param methodParams 方法参数
      */
-    private static void invokeMethod(Object bean, String methodName, List<Object[]> methodParams)
-            throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException,
-            InvocationTargetException {
+    private static void invokeMethod(Object bean, String methodName, List<Object[]> methodParams) throws NoSuchMethodException, SecurityException, IllegalAccessException, IllegalArgumentException, InvocationTargetException {
         if (StringUtils.isNotNull(methodParams) && methodParams.size() > 0) {
             Method method = bean.getClass().getMethod(methodName, getMethodParamsType(methodParams));
             method.invoke(bean, getMethodParamsValue(methodParams));

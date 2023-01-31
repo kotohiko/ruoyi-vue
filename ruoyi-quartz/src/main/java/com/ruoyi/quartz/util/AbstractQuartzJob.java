@@ -23,22 +23,21 @@ import java.util.Date;
  * @author ruoyi
  */
 public abstract class AbstractQuartzJob implements Job {
+
     private static final Logger log = LoggerFactory.getLogger(AbstractQuartzJob.class);
 
     /**
      * 线程本地变量
      */
-    private static ThreadLocal<Date> threadLocal = new ThreadLocal<>();
+    private static final ThreadLocal<Date> threadLocal = new ThreadLocal<>();
 
     @Override
-    public void execute(JobExecutionContext context) throws JobExecutionException {
+    public void execute(JobExecutionContext context) {
         SysJob sysJob = new SysJob();
         BeanUtils.copyBeanProp(sysJob, context.getMergedJobDataMap().get(ScheduleConstants.TASK_PROPERTIES));
         try {
             before(context, sysJob);
-            if (sysJob != null) {
-                doExecute(context, sysJob);
-            }
+            doExecute(context, sysJob);
             after(context, sysJob, null);
         } catch (Exception e) {
             log.error("任务执行异常  - ：", e);

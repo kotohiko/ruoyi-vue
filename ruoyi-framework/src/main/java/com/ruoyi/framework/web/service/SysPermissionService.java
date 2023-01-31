@@ -18,6 +18,7 @@ import java.util.Set;
  */
 @Component
 public class SysPermissionService {
+
     @Autowired
     private ISysRoleService roleService;
 

@@ -25,6 +25,7 @@ import java.util.Set;
  */
 @RestController
 public class SysLoginController {
+
     @Autowired
     private SysLoginService loginService;
 

@@ -7,6 +7,7 @@ import org.apache.commons.lang3.ArrayUtils;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
+import java.io.Serial;
 import java.util.List;
 
 /**
@@ -15,6 +16,8 @@ import java.util.List;
  * @author ruoyi
  */
 public class GenTable extends BaseEntity {
+
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**

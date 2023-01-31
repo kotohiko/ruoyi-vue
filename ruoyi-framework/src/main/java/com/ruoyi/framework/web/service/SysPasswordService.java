@@ -25,6 +25,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Component
 public class SysPasswordService {
+
     @Autowired
     private RedisCache redisCache;
 
@@ -55,7 +56,7 @@ public class SysPasswordService {
             retryCount = 0;
         }
 
-        if (retryCount >= Integer.valueOf(maxRetryCount).intValue()) {
+        if (retryCount >= maxRetryCount) {
             AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL,
                     MessageUtils.message("user.password.retry.limit.exceed", maxRetryCount, lockTime)));
             throw new UserPasswordRetryLimitExceedException(maxRetryCount, lockTime);

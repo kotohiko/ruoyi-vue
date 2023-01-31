@@ -10,8 +10,9 @@ import java.util.List;
  * @author ruoyi
  */
 public interface SysJobLogMapper {
+
     /**
-     * 获取quartz调度器日志的计划任务
+     * 获取Quartz调度器日志的计划任务
      *
      * @param jobLog 调度日志信息
      * @return 调度任务日志集合

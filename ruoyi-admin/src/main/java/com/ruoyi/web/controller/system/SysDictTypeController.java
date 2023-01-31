@@ -25,6 +25,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/system/dict/type")
 public class SysDictTypeController extends BaseController {
+
     @Autowired
     private ISysDictTypeService dictTypeService;
 

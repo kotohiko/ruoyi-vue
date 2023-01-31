@@ -34,6 +34,7 @@ import java.util.List;
 @RestController
 @RequestMapping("/system/role")
 public class SysRoleController extends BaseController {
+
     @Autowired
     private ISysRoleService roleService;
 

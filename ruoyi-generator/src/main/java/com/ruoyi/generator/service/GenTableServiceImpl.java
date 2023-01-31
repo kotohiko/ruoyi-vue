@@ -45,6 +45,7 @@ import java.util.zip.ZipOutputStream;
  */
 @Service
 public class GenTableServiceImpl implements IGenTableService {
+
     private static final Logger log = LoggerFactory.getLogger(GenTableServiceImpl.class);
 
     @Autowired

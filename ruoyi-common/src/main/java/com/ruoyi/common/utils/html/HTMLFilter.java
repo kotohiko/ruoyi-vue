@@ -12,6 +12,7 @@ import java.util.regex.Pattern;
  * @author ruoyi
  */
 public final class HTMLFilter {
+
     /**
      * regex flag union representing /si modifiers in php
      **/
@@ -226,14 +227,14 @@ public final class HTMLFilter {
 
     private String escapeComments(final String s) {
         final Matcher m = P_COMMENTS.matcher(s);
-        final StringBuffer buf = new StringBuffer();
+        final StringBuilder sb = new StringBuilder();
         if (m.find()) {
             final String match = m.group(1); // (.*?)
-            m.appendReplacement(buf, Matcher.quoteReplacement("<!--" + htmlSpecialChars(match) + "-->"));
+            m.appendReplacement(sb, Matcher.quoteReplacement("<!--" + htmlSpecialChars(match) + "-->"));
         }
-        m.appendTail(buf);
+        m.appendTail(sb);
 
-        return buf.toString();
+        return sb.toString();
     }
 
     private String balanceHTML(String s) {
@@ -267,17 +268,17 @@ public final class HTMLFilter {
     private String checkTags(String s) {
         Matcher m = P_TAGS.matcher(s);
 
-        final StringBuffer buf = new StringBuffer();
+        final StringBuilder sb = new StringBuilder();
         while (m.find()) {
             String replaceStr = m.group(1);
             replaceStr = processTag(replaceStr);
-            m.appendReplacement(buf, Matcher.quoteReplacement(replaceStr));
+            m.appendReplacement(sb, Matcher.quoteReplacement(replaceStr));
         }
-        m.appendTail(buf);
+        m.appendTail(sb);
 
         // these get tallied in processTag
         // (remember to reset before subsequent calls to filter method)
-        final StringBuilder sBuilder = new StringBuilder(buf.toString());
+        final StringBuilder sBuilder = new StringBuilder(sb.toString());
         for (String key : vTagCounts.keySet()) {
             for (int ii = 0; ii < vTagCounts.get(key); ii++) {
                 sBuilder.append("</").append(key).append(">");
@@ -410,69 +411,69 @@ public final class HTMLFilter {
     }
 
     private String decodeEntities(String s) {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
 
         Matcher m = P_ENTITY.matcher(s);
         while (m.find()) {
             final String match = m.group(1);
-            final int decimal = Integer.decode(match).intValue();
-            m.appendReplacement(buf, Matcher.quoteReplacement(chr(decimal)));
+            final int decimal = Integer.decode(match);
+            m.appendReplacement(sb, Matcher.quoteReplacement(chr(decimal)));
         }
-        m.appendTail(buf);
-        s = buf.toString();
+        m.appendTail(sb);
+        s = sb.toString();
 
-        buf = new StringBuffer();
+        sb = new StringBuilder();
         m = P_ENTITY_UNICODE.matcher(s);
         while (m.find()) {
             final String match = m.group(1);
-            final int decimal = Integer.valueOf(match, 16).intValue();
-            m.appendReplacement(buf, Matcher.quoteReplacement(chr(decimal)));
+            final int decimal = Integer.valueOf(match, 16);
+            m.appendReplacement(sb, Matcher.quoteReplacement(chr(decimal)));
         }
-        m.appendTail(buf);
-        s = buf.toString();
+        m.appendTail(sb);
+        s = sb.toString();
 
-        buf = new StringBuffer();
+        sb = new StringBuilder();
         m = P_ENCODE.matcher(s);
         while (m.find()) {
             final String match = m.group(1);
-            final int decimal = Integer.valueOf(match, 16).intValue();
-            m.appendReplacement(buf, Matcher.quoteReplacement(chr(decimal)));
+            final int decimal = Integer.valueOf(match, 16);
+            m.appendReplacement(sb, Matcher.quoteReplacement(chr(decimal)));
         }
-        m.appendTail(buf);
-        s = buf.toString();
+        m.appendTail(sb);
+        s = sb.toString();
 
         s = validateEntities(s);
         return s;
     }
 
     private String validateEntities(final String s) {
-        StringBuffer buf = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
 
         // validate entities throughout the string
         Matcher m = P_VALID_ENTITIES.matcher(s);
         while (m.find()) {
             final String one = m.group(1); // ([^&;]*)
             final String two = m.group(2); // (?=(;|&|$))
-            m.appendReplacement(buf, Matcher.quoteReplacement(checkEntity(one, two)));
+            m.appendReplacement(sb, Matcher.quoteReplacement(checkEntity(one, two)));
         }
-        m.appendTail(buf);
+        m.appendTail(sb);
 
-        return encodeQuotes(buf.toString());
+        return encodeQuotes(sb.toString());
     }
 
     private String encodeQuotes(final String s) {
         if (encodeQuotes) {
-            StringBuffer buf = new StringBuffer();
+            StringBuilder sb = new StringBuilder();
             Matcher m = P_VALID_QUOTES.matcher(s);
             while (m.find()) {
                 final String one = m.group(1); // (>|^)
                 final String two = m.group(2); // ([^<]+?)
                 final String three = m.group(3); // (<|$)
                 // 不替换双引号为&quot;，防止json格式无效 regexReplace(P_QUOTE, "&quot;", two)
-                m.appendReplacement(buf, Matcher.quoteReplacement(one + two + three));
+                m.appendReplacement(sb, Matcher.quoteReplacement(one + two + three));
             }
-            m.appendTail(buf);
-            return buf.toString();
+            m.appendTail(sb);
+            return sb.toString();
         } else {
             return s;
         }

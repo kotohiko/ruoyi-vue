@@ -15,11 +15,12 @@ import java.nio.charset.StandardCharsets;
 import java.security.cert.X509Certificate;
 
 /**
- * 通用http发送方法
+ * 通用HTTP发送方法
  *
  * @author ruoyi
  */
 public class HttpUtils {
+
     private static final Logger log = LoggerFactory.getLogger(HttpUtils.class);
 
     /**
@@ -90,7 +91,7 @@ public class HttpUtils {
     }
 
     /**
-     * 向指定 URL 发送POST方法的请求
+     * 向指定URL发送POST方法的请求
      *
      * @param url   发送请求的 URL
      * @param param 请求参数，请求参数应该是 name1=value1&name2=value2 的形式。
@@ -165,9 +166,9 @@ public class HttpUtils {
             conn.connect();
             InputStream is = conn.getInputStream();
             BufferedReader br = new BufferedReader(new InputStreamReader(is));
-            String ret = "";
+            String ret;
             while ((ret = br.readLine()) != null) {
-                if (ret != null && !"".equals(ret.trim())) {
+                if (!"".equals(ret.trim())) {
                     result.append(new String(ret.getBytes(StandardCharsets.ISO_8859_1), StandardCharsets.UTF_8));
                 }
             }

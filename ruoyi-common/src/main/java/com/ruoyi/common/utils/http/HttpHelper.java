@@ -17,6 +17,7 @@ import java.nio.charset.StandardCharsets;
  * @author ruoyi
  */
 public class HttpHelper {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(HttpHelper.class);
 
     public static String getBodyString(ServletRequest request) {
@@ -24,7 +25,7 @@ public class HttpHelper {
         BufferedReader reader = null;
         try (InputStream inputStream = request.getInputStream()) {
             reader = new BufferedReader(new InputStreamReader(inputStream, StandardCharsets.UTF_8));
-            String line = "";
+            String line;
             while ((line = reader.readLine()) != null) {
                 sb.append(line);
             }

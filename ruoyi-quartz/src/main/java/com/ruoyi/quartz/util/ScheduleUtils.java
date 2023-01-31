@@ -15,8 +15,9 @@ import org.quartz.*;
  * @author ruoyi
  */
 public class ScheduleUtils {
+
     /**
-     * 得到quartz任务类
+     * 得到Quartz任务类
      *
      * @param sysJob 执行计划
      * @return 具体执行任务类
@@ -55,8 +56,7 @@ public class ScheduleUtils {
         cronScheduleBuilder = handleCronScheduleMisfirePolicy(job, cronScheduleBuilder);
 
         // 按新的cronExpression表达式构建一个新的trigger
-        CronTrigger trigger = TriggerBuilder.newTrigger().withIdentity(getTriggerKey(jobId, jobGroup))
-                .withSchedule(cronScheduleBuilder).build();
+        CronTrigger trigger = TriggerBuilder.newTrigger().withIdentity(getTriggerKey(jobId, jobGroup)).withSchedule(cronScheduleBuilder).build();
 
         // 放入参数，运行时的方法可以获取
         jobDetail.getJobDataMap().put(ScheduleConstants.TASK_PROPERTIES, job);
@@ -82,21 +82,15 @@ public class ScheduleUtils {
     /**
      * 设置定时任务策略
      */
-    public static CronScheduleBuilder handleCronScheduleMisfirePolicy(SysJob job, CronScheduleBuilder cb)
-            throws TaskException {
-        switch (job.getMisfirePolicy()) {
-            case ScheduleConstants.MISFIRE_DEFAULT:
-                return cb;
-            case ScheduleConstants.MISFIRE_IGNORE_MISFIRES:
-                return cb.withMisfireHandlingInstructionIgnoreMisfires();
-            case ScheduleConstants.MISFIRE_FIRE_AND_PROCEED:
-                return cb.withMisfireHandlingInstructionFireAndProceed();
-            case ScheduleConstants.MISFIRE_DO_NOTHING:
-                return cb.withMisfireHandlingInstructionDoNothing();
-            default:
-                throw new TaskException("The task misfire policy '" + job.getMisfirePolicy()
-                        + "' cannot be used in cron schedule tasks", Code.CONFIG_ERROR);
-        }
+    public static CronScheduleBuilder handleCronScheduleMisfirePolicy(SysJob job, CronScheduleBuilder cb) throws TaskException {
+        return switch (job.getMisfirePolicy()) {
+            case ScheduleConstants.MISFIRE_DEFAULT -> cb;
+            case ScheduleConstants.MISFIRE_IGNORE_MISFIRES -> cb.withMisfireHandlingInstructionIgnoreMisfires();
+            case ScheduleConstants.MISFIRE_FIRE_AND_PROCEED -> cb.withMisfireHandlingInstructionFireAndProceed();
+            case ScheduleConstants.MISFIRE_DO_NOTHING -> cb.withMisfireHandlingInstructionDoNothing();
+            default ->
+                    throw new TaskException("The task misfire policy '" + job.getMisfirePolicy() + "' cannot be used in cron schedule tasks", Code.CONFIG_ERROR);
+        };
     }
 
     /**

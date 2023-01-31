@@ -15,6 +15,7 @@ import org.slf4j.LoggerFactory;
  * @author ruoyi
  */
 public class AddressUtils {
+
     // IP地址查询
     public static final String IP_URL = "http://whois.pconline.com.cn/ipJson.jsp";
     // 未知地址

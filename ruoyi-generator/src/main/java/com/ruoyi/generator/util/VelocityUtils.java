@@ -20,6 +20,7 @@ import java.util.Set;
  * @author ruoyi
  */
 public class VelocityUtils {
+
     /**
      * 项目空间路径
      */

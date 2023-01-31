@@ -6,6 +6,7 @@ package com.ruoyi.common.utils.file;
  * @author ruoyi
  */
 public class MimeTypeUtils {
+
     public static final String IMAGE_PNG = "image/png";
 
     public static final String IMAGE_JPG = "image/jpg";

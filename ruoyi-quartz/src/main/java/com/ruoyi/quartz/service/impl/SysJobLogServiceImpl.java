@@ -15,6 +15,7 @@ import java.util.List;
  */
 @Service
 public class SysJobLogServiceImpl implements ISysJobLogService {
+
     @Autowired
     private SysJobLogMapper jobLogMapper;
 

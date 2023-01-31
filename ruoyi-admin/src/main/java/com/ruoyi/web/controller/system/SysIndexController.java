@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RestController;
  */
 @RestController
 public class SysIndexController {
+
     /**
      * 系统基础配置
      */

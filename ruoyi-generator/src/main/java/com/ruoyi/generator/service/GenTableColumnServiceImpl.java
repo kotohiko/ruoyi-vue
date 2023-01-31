@@ -15,6 +15,7 @@ import java.util.List;
  */
 @Service
 public class GenTableColumnServiceImpl implements IGenTableColumnService {
+
     @Autowired
     private GenTableColumnMapper genTableColumnMapper;
 

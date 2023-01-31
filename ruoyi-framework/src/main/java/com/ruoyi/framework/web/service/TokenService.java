@@ -23,24 +23,31 @@ import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
- * token验证处理
+ * Token验证处理
  *
  * @author ruoyi
  */
 @Component
 public class TokenService {
+
     protected static final long MILLIS_SECOND = 1000;
+
     protected static final long MILLIS_MINUTE = 60 * MILLIS_SECOND;
+
     private static final Long MILLIS_MINUTE_TEN = 20 * 60 * 1000L;
+
     // 令牌自定义标识
     @Value("${token.header}")
     private String header;
+
     // 令牌秘钥
     @Value("${token.secret}")
     private String secret;
+
     // 令牌有效期（默认30分钟）
     @Value("${token.expireTime}")
     private int expireTime;
+
     @Autowired
     private RedisCache redisCache;
 
@@ -58,9 +65,8 @@ public class TokenService {
                 // 解析对应的权限以及用户信息
                 String uuid = (String) claims.get(Constants.LOGIN_USER_KEY);
                 String userKey = getTokenKey(uuid);
-                LoginUser user = redisCache.getCacheObject(userKey);
-                return user;
-            } catch (Exception e) {
+                return redisCache.getCacheObject(userKey);
+            } catch (Exception ignored) {
             }
         }
         return null;
@@ -104,9 +110,6 @@ public class TokenService {
 
     /**
      * 验证令牌有效期，相差不足20分钟，自动刷新缓存
-     *
-     * @param loginUser
-     * @return 令牌
      */
     public void verifyToken(LoginUser loginUser) {
         long expireTime = loginUser.getExpireTime();
@@ -150,10 +153,9 @@ public class TokenService {
      * @return 令牌
      */
     private String createToken(Map<String, Object> claims) {
-        String token = Jwts.builder()
+        return Jwts.builder()
                 .setClaims(claims)
                 .signWith(SignatureAlgorithm.HS512, secret).compact();
-        return token;
     }
 
     /**
@@ -183,7 +185,6 @@ public class TokenService {
     /**
      * 获取请求token
      *
-     * @param request
      * @return token
      */
     private String getToken(HttpServletRequest request) {

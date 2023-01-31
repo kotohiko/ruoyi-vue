@@ -8,6 +8,7 @@ import org.apache.commons.lang3.builder.ToStringStyle;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
+import java.io.Serial;
 
 /**
  * 参数配置表 sys_config
@@ -15,6 +16,8 @@ import javax.validation.constraints.Size;
  * @author ruoyi
  */
 public class SysConfig extends BaseEntity {
+
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**
@@ -56,7 +59,7 @@ public class SysConfig extends BaseEntity {
     }
 
     @NotBlank(message = "参数名称不能为空")
-    @Size(min = 0, max = 100, message = "参数名称不能超过100个字符")
+    @Size(max = 100, message = "参数名称不能超过100个字符")
     public String getConfigName() {
         return configName;
     }
@@ -66,7 +69,7 @@ public class SysConfig extends BaseEntity {
     }
 
     @NotBlank(message = "参数键名长度不能为空")
-    @Size(min = 0, max = 100, message = "参数键名长度不能超过100个字符")
+    @Size(max = 100, message = "参数键名长度不能超过100个字符")
     public String getConfigKey() {
         return configKey;
     }
@@ -76,7 +79,7 @@ public class SysConfig extends BaseEntity {
     }
 
     @NotBlank(message = "参数键值不能为空")
-    @Size(min = 0, max = 500, message = "参数键值长度不能超过500个字符")
+    @Size(max = 500, message = "参数键值长度不能超过500个字符")
     public String getConfigValue() {
         return configValue;
     }

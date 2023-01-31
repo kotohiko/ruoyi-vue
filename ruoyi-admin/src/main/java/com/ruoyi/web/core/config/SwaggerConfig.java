@@ -25,6 +25,7 @@ import java.util.List;
  */
 @Configuration
 public class SwaggerConfig {
+
     /**
      * 系统基础配置
      */
@@ -72,7 +73,7 @@ public class SwaggerConfig {
      * 安全模式，这里指定token通过Authorization头请求头传递
      */
     private List<SecurityScheme> securitySchemes() {
-        List<SecurityScheme> apiKeyList = new ArrayList<SecurityScheme>();
+        List<SecurityScheme> apiKeyList = new ArrayList<>();
         apiKeyList.add(new ApiKey("Authorization", "Authorization", In.HEADER.toValue()));
         return apiKeyList;
     }

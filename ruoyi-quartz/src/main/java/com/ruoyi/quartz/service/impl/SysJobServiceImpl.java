@@ -108,14 +108,13 @@ public class SysJobServiceImpl implements ISysJobService {
      */
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public int deleteJob(SysJob job) throws SchedulerException {
+    public void deleteJob(SysJob job) throws SchedulerException {
         Long jobId = job.getJobId();
         String jobGroup = job.getJobGroup();
         int rows = jobMapper.deleteJobById(jobId);
         if (rows > 0) {
             scheduler.deleteJob(ScheduleUtils.getJobKey(jobId, jobGroup));
         }
-        return rows;
     }
 
     /**

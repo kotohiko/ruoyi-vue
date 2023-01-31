@@ -25,6 +25,7 @@ import org.springframework.stereotype.Component;
  */
 @Component
 public class SysRegisterService {
+
     @Autowired
     private ISysUserService userService;
 
@@ -52,11 +53,9 @@ public class SysRegisterService {
             msg = "用户名不能为空";
         } else if (StringUtils.isEmpty(password)) {
             msg = "用户密码不能为空";
-        } else if (username.length() < UserConstants.USERNAME_MIN_LENGTH
-                || username.length() > UserConstants.USERNAME_MAX_LENGTH) {
+        } else if (username.length() < UserConstants.USERNAME_MIN_LENGTH || username.length() > UserConstants.USERNAME_MAX_LENGTH) {
             msg = "账户长度必须在2到20个字符之间";
-        } else if (password.length() < UserConstants.PASSWORD_MIN_LENGTH
-                || password.length() > UserConstants.PASSWORD_MAX_LENGTH) {
+        } else if (password.length() < UserConstants.PASSWORD_MIN_LENGTH || password.length() > UserConstants.PASSWORD_MAX_LENGTH) {
             msg = "密码长度必须在5到20个字符之间";
         } else if (UserConstants.NOT_UNIQUE.equals(userService.checkUserNameUnique(sysUser))) {
             msg = "保存用户'" + username + "'失败，注册账号已存在";
