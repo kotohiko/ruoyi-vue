@@ -2,6 +2,7 @@ package com.ruoyi.common.core.domain;
 
 import com.ruoyi.common.constant.HttpStatus;
 
+import java.io.Serial;
 import java.io.Serializable;
 
 /**
@@ -10,6 +11,10 @@ import java.io.Serializable;
  * @author ruoyi
  */
 public class R<T> implements Serializable {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     /**
      * 成功
      */
@@ -18,7 +23,7 @@ public class R<T> implements Serializable {
      * 失败
      */
     public static final int FAIL = HttpStatus.ERROR;
-    private static final long serialVersionUID = 1L;
+
     private int code;
 
     private String msg;

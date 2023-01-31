@@ -67,7 +67,7 @@ public class SysLoginService {
             validateCaptcha(username, code, uuid);
         }
         // 用户验证
-        Authentication authentication = null;
+        Authentication authentication;
         try {
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
             AuthenticationContextHolder.setContext(authenticationToken);
@@ -97,7 +97,6 @@ public class SysLoginService {
      * @param username 用户名
      * @param code     验证码
      * @param uuid     唯一标识
-     * @return 结果
      */
     public void validateCaptcha(String username, String code, String uuid) {
         String verifyKey = CacheConstants.CAPTCHA_CODE_KEY + StringUtils.nvl(uuid, "");

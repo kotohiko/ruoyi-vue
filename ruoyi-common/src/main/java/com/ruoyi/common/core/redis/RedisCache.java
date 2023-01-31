@@ -11,13 +11,14 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
- * spring redis 工具类
+ * Spring Redis 工具类
  *
  * @author ruoyi
  **/
 @SuppressWarnings(value = {"unchecked", "rawtypes"})
 @Component
 public class RedisCache {
+
     @Autowired
     public RedisTemplate redisTemplate;
 
@@ -63,7 +64,7 @@ public class RedisCache {
      * @return true=设置成功；false=设置失败
      */
     public boolean expire(final String key, final long timeout, final TimeUnit unit) {
-        return redisTemplate.expire(key, timeout, unit);
+        return Boolean.TRUE.equals(redisTemplate.expire(key, timeout, unit));
     }
 
     /**
@@ -100,17 +101,15 @@ public class RedisCache {
     /**
      * 删除单个对象
      *
-     * @param key
      */
     public boolean deleteObject(final String key) {
-        return redisTemplate.delete(key);
+        return Boolean.TRUE.equals(redisTemplate.delete(key));
     }
 
     /**
      * 删除集合对象
      *
      * @param collection 多个对象
-     * @return
      */
     public boolean deleteObject(final Collection collection) {
         return redisTemplate.delete(collection) > 0;
@@ -147,9 +146,8 @@ public class RedisCache {
      */
     public <T> BoundSetOperations<String, T> setCacheSet(final String key, final Set<T> dataSet) {
         BoundSetOperations<String, T> setOperation = redisTemplate.boundSetOps(key);
-        Iterator<T> it = dataSet.iterator();
-        while (it.hasNext()) {
-            setOperation.add(it.next());
+        for (T t : dataSet) {
+            setOperation.add(t);
         }
         return setOperation;
     }
@@ -158,7 +156,6 @@ public class RedisCache {
      * 获得缓存的set
      *
      * @param key
-     * @return
      */
     public <T> Set<T> getCacheSet(final String key) {
         return redisTemplate.opsForSet().members(key);
@@ -180,7 +177,6 @@ public class RedisCache {
      * 获得缓存的Map
      *
      * @param key
-     * @return
      */
     public <T> Map<String, T> getCacheMap(final String key) {
         return redisTemplate.opsForHash().entries(key);

@@ -3,6 +3,7 @@ package com.ruoyi.common.core.domain;
 import com.ruoyi.common.constant.HttpStatus;
 import com.ruoyi.common.utils.StringUtils;
 
+import java.io.Serial;
 import java.util.HashMap;
 
 /**
@@ -11,19 +12,24 @@ import java.util.HashMap;
  * @author ruoyi
  */
 public class AjaxResult extends HashMap<String, Object> {
+
+    @Serial
+    private static final long serialVersionUID = 1L;
+
     /**
      * 状态码
      */
     public static final String CODE_TAG = "code";
+
     /**
      * 返回内容
      */
     public static final String MSG_TAG = "msg";
+
     /**
      * 数据对象
      */
     public static final String DATA_TAG = "data";
-    private static final long serialVersionUID = 1L;
 
     /**
      * 初始化一个新创建的 AjaxResult 对象，使其表示一个空消息。

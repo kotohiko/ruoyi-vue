@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Objects;
 
 /**
  * 全局异常处理器
@@ -23,6 +24,7 @@ import javax.servlet.http.HttpServletRequest;
  */
 @RestControllerAdvice
 public class GlobalExceptionHandler {
+
     private static final Logger log = LoggerFactory.getLogger(GlobalExceptionHandler.class);
 
     /**
@@ -39,8 +41,7 @@ public class GlobalExceptionHandler {
      * 请求方式不支持
      */
     @ExceptionHandler(HttpRequestMethodNotSupportedException.class)
-    public AjaxResult handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException e,
-                                                          HttpServletRequest request) {
+    public AjaxResult handleHttpRequestMethodNotSupported(HttpRequestMethodNotSupportedException e, HttpServletRequest request) {
         String requestURI = request.getRequestURI();
         log.error("请求地址'{}',不支持'{}'请求", requestURI, e.getMethod());
         return AjaxResult.error(e.getMessage());
@@ -50,7 +51,7 @@ public class GlobalExceptionHandler {
      * 业务异常
      */
     @ExceptionHandler(ServiceException.class)
-    public AjaxResult handleServiceException(ServiceException e, HttpServletRequest request) {
+    public AjaxResult handleServiceException(ServiceException e) {
         log.error(e.getMessage(), e);
         Integer code = e.getCode();
         return StringUtils.isNotNull(code) ? AjaxResult.error(code, e.getMessage()) : AjaxResult.error(e.getMessage());
@@ -92,7 +93,7 @@ public class GlobalExceptionHandler {
     @ExceptionHandler(MethodArgumentNotValidException.class)
     public Object handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
         log.error(e.getMessage(), e);
-        String message = e.getBindingResult().getFieldError().getDefaultMessage();
+        String message = Objects.requireNonNull(e.getBindingResult().getFieldError()).getDefaultMessage();
         return AjaxResult.error(message);
     }
 
@@ -100,7 +101,7 @@ public class GlobalExceptionHandler {
      * 演示模式异常
      */
     @ExceptionHandler(DemoModeException.class)
-    public AjaxResult handleDemoModeException(DemoModeException e) {
+    public AjaxResult handleDemoModeException() {
         return AjaxResult.error("演示模式，不允许操作");
     }
 }
