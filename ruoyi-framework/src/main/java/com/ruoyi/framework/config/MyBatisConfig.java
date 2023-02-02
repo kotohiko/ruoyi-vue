@@ -26,12 +26,13 @@ import java.util.HashSet;
 import java.util.List;
 
 /**
- * Mybatis支持*匹配扫描包
+ * MyBatis支持*匹配扫描包
  *
  * @author ruoyi
  */
 @Configuration
 public class MyBatisConfig {
+
     static final String DEFAULT_RESOURCE_PATTERN = "**/*.class";
     @Autowired
     private Environment env;

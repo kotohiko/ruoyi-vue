@@ -10,11 +10,12 @@ import java.util.Random;
  * @author ruoyi
  */
 public class KaptchaTextCreator extends DefaultTextCreator {
+
     private static final String[] CNUMBERS = "0,1,2,3,4,5,6,7,8,9,10".split(",");
 
     @Override
     public String getText() {
-        Integer result = 0;
+        int result;
         Random random = new Random();
         int x = random.nextInt(10);
         int y = random.nextInt(10);
@@ -50,7 +51,7 @@ public class KaptchaTextCreator extends DefaultTextCreator {
                 suChinese.append(CNUMBERS[x]);
             }
         }
-        suChinese.append("=?@" + result);
+        suChinese.append("=?@").append(result);
         return suChinese.toString();
     }
 }

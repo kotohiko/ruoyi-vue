@@ -25,6 +25,7 @@ import java.util.List;
 @Aspect
 @Component
 public class DataScopeAspect {
+
     /**
      * 全部数据权限
      */

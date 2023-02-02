@@ -8,6 +8,7 @@ import io.jsonwebtoken.Claims;
  * @author ruoyi
  */
 public class Constants {
+
     /**
      * UTF-8 字符集
      */

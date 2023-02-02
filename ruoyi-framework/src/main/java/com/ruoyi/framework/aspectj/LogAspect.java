@@ -36,10 +36,12 @@ import java.util.Map;
 @Aspect
 @Component
 public class LogAspect {
+
     /**
      * 排除敏感属性字段
      */
     public static final String[] EXCLUDE_PROPERTIES = {"password", "oldPassword", "newPassword", "confirmPassword"};
+
     private static final Logger log = LoggerFactory.getLogger(LogAspect.class);
 
     /**
@@ -105,9 +107,8 @@ public class LogAspect {
      *
      * @param log     日志
      * @param operLog 操作日志
-     * @throws Exception
      */
-    public void getControllerMethodDescription(JoinPoint joinPoint, Log log, SysOperLog operLog, Object jsonResult) throws Exception {
+    public void getControllerMethodDescription(JoinPoint joinPoint, Log log, SysOperLog operLog, Object jsonResult) {
         // 设置action动作
         operLog.setBusinessType(log.businessType().ordinal());
         // 设置标题
@@ -129,9 +130,8 @@ public class LogAspect {
      * 获取请求的参数，放到log中
      *
      * @param operLog 操作日志
-     * @throws Exception 异常
      */
-    private void setRequestValue(JoinPoint joinPoint, SysOperLog operLog) throws Exception {
+    private void setRequestValue(JoinPoint joinPoint, SysOperLog operLog) {
         String requestMethod = operLog.getRequestMethod();
         if (HttpMethod.PUT.name().equals(requestMethod) || HttpMethod.POST.name().equals(requestMethod)) {
             String params = argsArrayToString(joinPoint.getArgs());
@@ -146,19 +146,19 @@ public class LogAspect {
      * 参数拼装
      */
     private String argsArrayToString(Object[] paramsArray) {
-        String params = "";
-        if (paramsArray != null && paramsArray.length > 0) {
+        StringBuilder params = new StringBuilder();
+        if (paramsArray != null) {
             for (Object o : paramsArray) {
                 if (StringUtils.isNotNull(o) && !isFilterObject(o)) {
                     try {
                         String jsonObj = JSON.toJSONString(o, excludePropertyPreFilter());
-                        params += jsonObj.toString() + " ";
-                    } catch (Exception e) {
+                        params.append(jsonObj).append(" ");
+                    } catch (Exception ignored) {
                     }
                 }
             }
         }
-        return params.trim();
+        return params.toString().trim();
     }
 
     /**
@@ -191,7 +191,6 @@ public class LogAspect {
                 return entry.getValue() instanceof MultipartFile;
             }
         }
-        return o instanceof MultipartFile || o instanceof HttpServletRequest || o instanceof HttpServletResponse
-                || o instanceof BindingResult;
+        return o instanceof MultipartFile || o instanceof HttpServletRequest || o instanceof HttpServletResponse || o instanceof BindingResult;
     }
 }

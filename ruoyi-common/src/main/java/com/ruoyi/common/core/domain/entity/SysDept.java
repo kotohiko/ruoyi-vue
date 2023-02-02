@@ -8,6 +8,7 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+import java.io.Serial;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -17,6 +18,8 @@ import java.util.List;
  * @author ruoyi
  */
 public class SysDept extends BaseEntity {
+
+    @Serial
     private static final long serialVersionUID = 1L;
 
     /**
@@ -183,21 +186,6 @@ public class SysDept extends BaseEntity {
 
     @Override
     public String toString() {
-        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE)
-                .append("deptId", getDeptId())
-                .append("parentId", getParentId())
-                .append("ancestors", getAncestors())
-                .append("deptName", getDeptName())
-                .append("orderNum", getOrderNum())
-                .append("leader", getLeader())
-                .append("phone", getPhone())
-                .append("email", getEmail())
-                .append("status", getStatus())
-                .append("delFlag", getDelFlag())
-                .append("createBy", getCreateBy())
-                .append("createTime", getCreateTime())
-                .append("updateBy", getUpdateBy())
-                .append("updateTime", getUpdateTime())
-                .toString();
+        return new ToStringBuilder(this, ToStringStyle.MULTI_LINE_STYLE).append("deptId", getDeptId()).append("parentId", getParentId()).append("ancestors", getAncestors()).append("deptName", getDeptName()).append("orderNum", getOrderNum()).append("leader", getLeader()).append("phone", getPhone()).append("email", getEmail()).append("status", getStatus()).append("delFlag", getDelFlag()).append("createBy", getCreateBy()).append("createTime", getCreateTime()).append("updateBy", getUpdateBy()).append("updateTime", getUpdateTime()).toString();
     }
 }

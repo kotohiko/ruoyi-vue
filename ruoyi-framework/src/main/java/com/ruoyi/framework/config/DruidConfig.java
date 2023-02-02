@@ -28,6 +28,7 @@ import java.util.Map;
  */
 @Configuration
 public class DruidConfig {
+
     @Bean
     @ConfigurationProperties("spring.datasource.druid.master")
     public DataSource masterDataSource(DruidProperties druidProperties) {
@@ -63,7 +64,7 @@ public class DruidConfig {
         try {
             DataSource dataSource = SpringUtils.getBean(beanName);
             targetDataSources.put(sourceName, dataSource);
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
     }
 
@@ -83,7 +84,7 @@ public class DruidConfig {
         // 创建filter进行过滤
         Filter filter = new Filter() {
             @Override
-            public void init(javax.servlet.FilterConfig filterConfig) throws ServletException {
+            public void init(javax.servlet.FilterConfig filterConfig) {
             }
 
             @Override

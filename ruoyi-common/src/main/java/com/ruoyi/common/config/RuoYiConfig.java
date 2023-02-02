@@ -11,6 +11,7 @@ import org.springframework.stereotype.Component;
 @Component
 @ConfigurationProperties(prefix = "ruoyi")
 public class RuoYiConfig {
+
     /**
      * 上传路径
      */

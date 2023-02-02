@@ -29,6 +29,7 @@ import java.util.List;
 @Aspect
 @Component
 public class RateLimiterAspect {
+
     private static final Logger log = LoggerFactory.getLogger(RateLimiterAspect.class);
 
     private RedisTemplate<Object, Object> redisTemplate;
