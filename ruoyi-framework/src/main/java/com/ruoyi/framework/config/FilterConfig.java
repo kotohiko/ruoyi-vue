@@ -20,6 +20,7 @@ import java.util.Map;
  */
 @Configuration
 public class FilterConfig {
+
     @Value("${xss.excludes}")
     private String excludes;
 
@@ -36,7 +37,7 @@ public class FilterConfig {
         registration.addUrlPatterns(StringUtils.split(urlPatterns, ","));
         registration.setName("xssFilter");
         registration.setOrder(FilterRegistrationBean.HIGHEST_PRECEDENCE);
-        Map<String, String> initParameters = new HashMap<String, String>();
+        Map<String, String> initParameters = new HashMap<>();
         initParameters.put("excludes", excludes);
         registration.setInitParameters(initParameters);
         return registration;

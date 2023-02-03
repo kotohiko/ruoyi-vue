@@ -9,68 +9,46 @@
       <el-scrollbar class="left-scrollbar">
         <div class="components-list">
           <div class="components-title">
-            <svg-icon icon-class="component"/>
+            <svg-icon icon-class="component" />
             输入型组件
           </div>
-          <draggable
-            :clone="cloneComponent"
-            :group="{ name: 'componentsGroup', pull: 'clone', put: false }"
-            :list="inputComponents"
-            :sort="false"
-            class="components-draggable"
-            draggable=".components-item"
-            @end="onEnd"
-          >
-            <div
-              v-for="(element, index) in inputComponents" :key="index" class="components-item"
-              @click="addComponent(element)"
-            >
+          <draggable :clone="cloneComponent" :group="{ name: 'componentsGroup', pull: 'clone', put: false }"
+            :list="inputComponents" :sort="false" class="components-draggable" draggable=".components-item"
+            @end="onEnd">
+            <div v-for="(element, index) in inputComponents" :key="index" class="components-item"
+              @click="addComponent(element)">
               <div class="components-body">
-                <svg-icon :icon-class="element.tagIcon"/>
+                <svg-icon :icon-class="element.tagIcon" />
                 {{ element.label }}
               </div>
             </div>
           </draggable>
           <div class="components-title">
-            <svg-icon icon-class="component"/>
+            <svg-icon icon-class="component" />
             选择型组件
           </div>
-          <draggable
-            :clone="cloneComponent"
-            :group="{ name: 'componentsGroup', pull: 'clone', put: false }"
-            :list="selectComponents"
-            :sort="false"
-            class="components-draggable"
-            draggable=".components-item"
-            @end="onEnd"
-          >
-            <div
-              v-for="(element, index) in selectComponents"
-              :key="index"
-              class="components-item"
-              @click="addComponent(element)"
-            >
+          <draggable :clone="cloneComponent" :group="{ name: 'componentsGroup', pull: 'clone', put: false }"
+            :list="selectComponents" :sort="false" class="components-draggable" draggable=".components-item"
+            @end="onEnd">
+            <div v-for="(element, index) in selectComponents" :key="index" class="components-item"
+              @click="addComponent(element)">
               <div class="components-body">
-                <svg-icon :icon-class="element.tagIcon"/>
+                <svg-icon :icon-class="element.tagIcon" />
                 {{ element.label }}
               </div>
             </div>
           </draggable>
           <div class="components-title">
-            <svg-icon icon-class="component"/>
+            <svg-icon icon-class="component" />
             布局型组件
           </div>
-          <draggable
-            :clone="cloneComponent" :group="{ name: 'componentsGroup', pull: 'clone', put: false }"
-            :list="layoutComponents" :sort="false"
-            class="components-draggable" draggable=".components-item" @end="onEnd"
-          >
-            <div
-              v-for="(element, index) in layoutComponents" :key="index" class="components-item"
-              @click="addComponent(element)"
-            >
+          <draggable :clone="cloneComponent" :group="{ name: 'componentsGroup', pull: 'clone', put: false }"
+            :list="layoutComponents" :sort="false" class="components-draggable" draggable=".components-item"
+            @end="onEnd">
+            <div v-for="(element, index) in layoutComponents" :key="index" class="components-item"
+              @click="addComponent(element)">
               <div class="components-body">
-                <svg-icon :icon-class="element.tagIcon"/>
+                <svg-icon :icon-class="element.tagIcon" />
                 {{ element.label }}
               </div>
             </div>
@@ -93,25 +71,12 @@
       </div>
       <el-scrollbar class="center-scrollbar">
         <el-row :gutter="formConf.gutter" class="center-board-row">
-          <el-form
-            :disabled="formConf.disabled"
-            :label-position="formConf.labelPosition"
-            :label-width="formConf.labelWidth + 'px'"
-            :size="formConf.size"
-          >
+          <el-form :disabled="formConf.disabled" :label-position="formConf.labelPosition"
+            :label-width="formConf.labelWidth + 'px'" :size="formConf.size">
             <draggable :animation="340" :list="drawingList" class="drawing-board" group="componentsGroup">
-              <draggable-item
-                v-for="(element, index) in drawingList"
-                :key="element.renderKey"
-                :active-id="activeId"
-                :drawing-list="drawingList"
-                :element="element"
-                :form-conf="formConf"
-                :index="index"
-                @activeItem="activeFormItem"
-                @copyItem="drawingItemCopy"
-                @deleteItem="drawingItemDelete"
-              />
+              <draggable-item v-for="(element, index) in drawingList" :key="element.renderKey" :active-id="activeId"
+                :drawing-list="drawingList" :element="element" :form-conf="formConf" :index="index"
+                @activeItem="activeFormItem" @copyItem="drawingItemCopy" @deleteItem="drawingItemDelete" />
             </draggable>
             <div v-show="!drawingList.length" class="empty-info">
               从左侧拖入或点选组件进行表单设计
@@ -121,19 +86,10 @@
       </el-scrollbar>
     </div>
 
-    <right-panel
-      :active-data="activeData"
-      :form-conf="formConf"
-      :show-field="!!drawingList.length"
-      @tag-change="tagChange"
-    />
+    <right-panel :active-data="activeData" :form-conf="formConf" :show-field="!!drawingList.length"
+      @tag-change="tagChange" />
 
-    <code-type-dialog
-      :show-file-name="showFileName"
-      :visible.sync="dialogVisible"
-      title="选择生成类型"
-      @confirm="generate"
-    />
+    <code-type-dialog :show-file-name="showFileName" :visible.sync="dialogVisible" title="选择生成类型" @confirm="generate" />
     <input id="copyNode" type="hidden">
   </div>
 </template>
@@ -144,11 +100,11 @@ import beautifier from 'js-beautify'
 import ClipboardJS from 'clipboard'
 import render from '@/utils/generator/render'
 import RightPanel from './RightPanel'
-import {formConf, inputComponents, layoutComponents, selectComponents} from '@/utils/generator/config'
-import {beautifierConf, titleCase} from '@/utils/index'
-import {cssStyle, makeUpHtml, vueScript, vueTemplate} from '@/utils/generator/html'
-import {makeUpJs} from '@/utils/generator/js'
-import {makeUpCss} from '@/utils/generator/css'
+import { formConf, inputComponents, layoutComponents, selectComponents } from '@/utils/generator/config'
+import { beautifierConf, titleCase } from '@/utils/index'
+import { cssStyle, makeUpHtml, vueScript, vueTemplate } from '@/utils/generator/html'
+import { makeUpJs } from '@/utils/generator/js'
+import { makeUpCss } from '@/utils/generator/css'
 import drawingDefault from '@/utils/generator/drawingDefault'
 import logo from '@/assets/logo/logo.png'
 import CodeTypeDialog from './CodeTypeDialog'
@@ -278,14 +234,14 @@ export default {
     },
     execDownload(data) {
       const codeStr = this.generateCode()
-      const blob = new Blob([codeStr], {type: 'text/plain;charset=utf-8'})
+      const blob = new Blob([codeStr], { type: 'text/plain;charset=utf-8' })
       this.$download.saveAs(blob, data.fileName)
     },
     execCopy(data) {
       document.getElementById('copyNode').click()
     },
     empty() {
-      this.$confirm('确定要清空所有组件吗？', '提示', {type: 'warning'}).then(
+      this.$confirm('确定要清空所有组件吗？', '提示', { type: 'warning' }).then(
         () => {
           this.drawingList = []
         }
@@ -320,7 +276,7 @@ export default {
       })
     },
     generateCode() {
-      const {type} = this.generateConf
+      const { type } = this.generateConf
       this.AssembleFormData()
       const script = vueScript(makeUpJs(this.formData, type))
       const html = vueTemplate(makeUpHtml(this.formData, type))
@@ -374,7 +330,8 @@ export default {
 </script>
 
 <style lang='scss'>
-body, html {
+body,
+html {
   margin: 0;
   padding: 0;
   background: #fff;
@@ -384,7 +341,8 @@ body, html {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
 }
 
-input, textarea {
+input,
+textarea {
   font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Helvetica, Arial, sans-serif, Apple Color Emoji, Segoe UI Emoji;
 }
 
@@ -480,13 +438,13 @@ input, textarea {
     }
   }
 
-  & + .reg-item {
+  &+.reg-item {
     margin-top: 18px;
   }
 }
 
 .action-bar {
-  & .el-button + .el-button {
+  & .el-button+.el-button {
     margin-left: 15px;
   }
 
@@ -506,7 +464,7 @@ input, textarea {
     float: right;
   }
 
-  i[class*="el-icon"] + i[class*="el-icon"] {
+  i[class*="el-icon"]+i[class*="el-icon"] {
     margin-left: 6px;
   }
 
@@ -636,7 +594,8 @@ $lighterBlue: #409EFF;
   height: 42px;
   text-align: right;
   padding: 0 15px;
-  box-sizing: border-box;;
+  box-sizing: border-box;
+  ;
   border: 1px solid #f1e8e8;
   border-top: none;
   border-left: none;
@@ -664,7 +623,7 @@ $lighterBlue: #409EFF;
   font-size: 17px;
   white-space: nowrap;
 
-  > img {
+  >img {
     width: 30px;
     height: 30px;
     vertical-align: top;
@@ -675,7 +634,7 @@ $lighterBlue: #409EFF;
     vertical-align: sub;
     margin-left: 15px;
 
-    > img {
+    >img {
       height: 22px;
     }
   }
@@ -685,7 +644,7 @@ $lighterBlue: #409EFF;
   padding: 12px 12px 15px 12px;
   box-sizing: border-box;
 
-  & > .el-form {
+  &>.el-form {
     // 69 = 12+15+42
     height: calc(100vh - 69px);
   }
@@ -725,16 +684,17 @@ $lighterBlue: #409EFF;
   }
 
   .active-from-item {
-    & > .el-form-item {
+    &>.el-form-item {
       background: $selectedColor;
       border-radius: 6px;
     }
 
-    & > .drawing-item-copy, & > .drawing-item-delete {
+    &>.drawing-item-copy,
+    &>.drawing-item-delete {
       display: initial;
     }
 
-    & > .component-name {
+    &>.component-name {
       color: $lighterBlue;
     }
   }
@@ -748,7 +708,7 @@ $lighterBlue: #409EFF;
   position: relative;
   cursor: move;
 
-  &.unfocus-bordered:not(.activeFromItem) > div:first-child {
+  &.unfocus-bordered:not(.activeFromItem)>div:first-child {
     border: 1px dashed #ccc;
   }
 
@@ -797,19 +757,22 @@ $lighterBlue: #409EFF;
   }
 }
 
-.drawing-item, .drawing-row-item {
+.drawing-item,
+.drawing-row-item {
   &:hover {
-    & > .el-form-item {
+    &>.el-form-item {
       background: $selectedColor;
       border-radius: 6px;
     }
 
-    & > .drawing-item-copy, & > .drawing-item-delete {
+    &>.drawing-item-copy,
+    &>.drawing-item-delete {
       display: initial;
     }
   }
 
-  & > .drawing-item-copy, & > .drawing-item-delete {
+  &>.drawing-item-copy,
+  &>.drawing-item-delete {
     display: none;
     position: absolute;
     top: -10px;
@@ -824,7 +787,7 @@ $lighterBlue: #409EFF;
     z-index: 1;
   }
 
-  & > .drawing-item-copy {
+  &>.drawing-item-copy {
     right: 56px;
     border-color: $lighterBlue;
     color: $lighterBlue;
@@ -836,7 +799,7 @@ $lighterBlue: #409EFF;
     }
   }
 
-  & > .drawing-item-delete {
+  &>.drawing-item-delete {
     right: 24px;
     border-color: #F56C6C;
     color: #F56C6C;
@@ -848,5 +811,4 @@ $lighterBlue: #409EFF;
     }
   }
 }
-
 </style>

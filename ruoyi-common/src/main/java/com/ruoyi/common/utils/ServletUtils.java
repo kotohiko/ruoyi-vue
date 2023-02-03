@@ -1,6 +1,5 @@
 package com.ruoyi.common.utils;
 
-import com.ruoyi.common.constant.Constants;
 import com.ruoyi.common.core.text.Convert;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
@@ -11,9 +10,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.net.URLEncoder;
+import java.nio.charset.StandardCharsets;
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.Map;
@@ -24,6 +23,7 @@ import java.util.Map;
  * @author ruoyi
  */
 public class ServletUtils {
+
     /**
      * 获取String参数
      */
@@ -136,8 +136,6 @@ public class ServletUtils {
 
     /**
      * 是否是Ajax异步请求
-     *
-     * @param request
      */
     public static boolean isAjaxRequest(HttpServletRequest request) {
         String accept = request.getHeader("accept");
@@ -166,11 +164,7 @@ public class ServletUtils {
      * @return 编码后的内容
      */
     public static String urlEncode(String str) {
-        try {
-            return URLEncoder.encode(str, Constants.UTF8);
-        } catch (UnsupportedEncodingException e) {
-            return StringUtils.EMPTY;
-        }
+        return URLEncoder.encode(str, StandardCharsets.UTF_8);
     }
 
     /**
@@ -180,10 +174,6 @@ public class ServletUtils {
      * @return 解码后的内容
      */
     public static String urlDecode(String str) {
-        try {
-            return URLDecoder.decode(str, Constants.UTF8);
-        } catch (UnsupportedEncodingException e) {
-            return StringUtils.EMPTY;
-        }
+        return URLDecoder.decode(str, StandardCharsets.UTF_8);
     }
 }

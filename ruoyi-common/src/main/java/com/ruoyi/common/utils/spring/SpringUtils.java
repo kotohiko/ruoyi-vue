@@ -11,7 +11,7 @@ import org.springframework.context.ApplicationContextAware;
 import org.springframework.stereotype.Component;
 
 /**
- * spring工具类 方便在非spring管理环境中获取bean
+ * Spring工具类 方便在非Spring管理环境中获取Bean
  *
  * @author ruoyi
  */
@@ -23,6 +23,16 @@ public final class SpringUtils implements BeanFactoryPostProcessor, ApplicationC
     private static ConfigurableListableBeanFactory beanFactory;
 
     private static ApplicationContext applicationContext;
+
+    @Override
+    public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
+        SpringUtils.beanFactory = beanFactory;
+    }
+
+    @Override
+    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
+        SpringUtils.applicationContext = applicationContext;
+    }
 
     /**
      * 获取对象
@@ -90,7 +100,7 @@ public final class SpringUtils implements BeanFactoryPostProcessor, ApplicationC
     }
 
     /**
-     * 获取aop代理对象
+     * 获取AOP代理对象
      *
      * @param invoker
      * @return
@@ -127,15 +137,5 @@ public final class SpringUtils implements BeanFactoryPostProcessor, ApplicationC
      */
     public static String getRequiredProperty(String key) {
         return applicationContext.getEnvironment().getRequiredProperty(key);
-    }
-
-    @Override
-    public void postProcessBeanFactory(ConfigurableListableBeanFactory beanFactory) throws BeansException {
-        SpringUtils.beanFactory = beanFactory;
-    }
-
-    @Override
-    public void setApplicationContext(ApplicationContext applicationContext) throws BeansException {
-        SpringUtils.applicationContext = applicationContext;
     }
 }

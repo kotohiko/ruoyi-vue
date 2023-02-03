@@ -1,32 +1,15 @@
 <template>
   <div class="icon-dialog">
-    <el-dialog
-      :modal-append-to-body="false"
-      v-bind="$attrs"
-      width="980px"
-      @close="onClose"
-      @open="onOpen"
-      v-on="$listeners"
-    >
+    <el-dialog :modal-append-to-body="false" v-bind="$attrs" width="980px" @close="onClose" @open="onOpen"
+      v-on="$listeners">
       <div slot="title">
         选择图标
-        <el-input
-          v-model="key"
-          :style="{width: '260px'}"
-          clearable
-          placeholder="请输入图标名称"
-          prefix-icon="el-icon-search"
-          size="mini"
-        />
+        <el-input v-model="key" :style="{ width: '260px' }" clearable placeholder="请输入图标名称" prefix-icon="el-icon-search"
+          size="mini" />
       </div>
       <ul class="icon-ul">
-        <li
-          v-for="icon in iconList"
-          :key="icon"
-          :class="active===icon?'active-item':''"
-          @click="onSelect(icon)"
-        >
-          <i :class="icon"/>
+        <li v-for="icon in iconList" :key="icon" :class="active === icon ? 'active-item' : ''" @click="onSelect(icon)">
+          <i :class="icon" />
           <div>{{ icon }}</div>
         </li>
       </ul>
@@ -99,7 +82,7 @@ export default {
       color: #7a6df0
     }
 
-    > i {
+    >i {
       font-size: 30px;
       line-height: 50px;
     }
