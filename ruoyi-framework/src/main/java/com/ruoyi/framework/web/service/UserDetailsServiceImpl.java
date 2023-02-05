@@ -16,6 +16,8 @@ import org.springframework.stereotype.Service;
 
 /**
  * 用户验证处理
+ * <p>
+ * 实现{@code UserDetailsService}接口就可以自定义用户名与密码。否则，Spring Security将会按照其自己默认的方式来创建用户名与密码。
  *
  * @author ruoyi
  */

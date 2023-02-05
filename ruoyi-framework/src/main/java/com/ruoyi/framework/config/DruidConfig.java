@@ -22,7 +22,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 /**
- * druid 配置多数据源
+ * Druid配置多数据源
  *
  * @author ruoyi
  */

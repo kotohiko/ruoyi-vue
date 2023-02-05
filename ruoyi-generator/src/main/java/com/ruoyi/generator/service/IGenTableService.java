@@ -55,7 +55,6 @@ public interface IGenTableService {
      * 修改业务
      *
      * @param genTable 业务信息
-     * @return 结果
      */
     void updateGenTable(GenTable genTable);
 
@@ -63,7 +62,6 @@ public interface IGenTableService {
      * 删除业务信息
      *
      * @param tableIds 需要删除的表数据ID
-     * @return 结果
      */
     void deleteGenTableByIds(Long[] tableIds);
 
@@ -94,7 +92,6 @@ public interface IGenTableService {
      * 生成代码（自定义路径）
      *
      * @param tableName 表名称
-     * @return 数据
      */
     void generatorCode(String tableName);
 
