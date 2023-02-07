@@ -67,7 +67,7 @@ CREATE TABLE sys_user
     user_type   VARCHAR(2)   DEFAULT '00' COMMENT '用户类型（00系统用户）',
     email       VARCHAR(50)  DEFAULT '' COMMENT '用户邮箱',
     phonenumber VARCHAR(11)  DEFAULT '' COMMENT '手机号码',
-    sex         CHAR(1)      DEFAULT '0' COMMENT '用户性别（0男 1女 2未知）',
+    sex         CHAR(1)      DEFAULT '2' COMMENT '用户性别（0男 1女 2未知）',
     avatar      VARCHAR(100) DEFAULT '' COMMENT '头像地址',
     password    VARCHAR(100) DEFAULT '' COMMENT '密码',
     status      CHAR(1)      DEFAULT '0' COMMENT '帐号状态（0正常 1停用）',

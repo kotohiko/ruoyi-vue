@@ -12,7 +12,7 @@ import java.io.InputStreamReader;
 import java.nio.charset.StandardCharsets;
 
 /**
- * 通用http工具封装
+ * 通用HTTP工具封装
  *
  * @author ruoyi
  */

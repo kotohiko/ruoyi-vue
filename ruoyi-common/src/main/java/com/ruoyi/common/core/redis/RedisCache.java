@@ -11,7 +11,7 @@ import java.util.*;
 import java.util.concurrent.TimeUnit;
 
 /**
- * Spring Redis 工具类
+ * Spring Redis工具类
  *
  * @author ruoyi
  **/
@@ -154,8 +154,6 @@ public class RedisCache {
 
     /**
      * 获得缓存的set
-     *
-     * @param key
      */
     public <T> Set<T> getCacheSet(final String key) {
         return redisTemplate.opsForSet().members(key);

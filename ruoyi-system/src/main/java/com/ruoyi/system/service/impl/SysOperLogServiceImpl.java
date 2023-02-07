@@ -15,6 +15,7 @@ import java.util.List;
  */
 @Service
 public class SysOperLogServiceImpl implements ISysOperLogService {
+
     @Autowired
     private SysOperLogMapper operLogMapper;
 

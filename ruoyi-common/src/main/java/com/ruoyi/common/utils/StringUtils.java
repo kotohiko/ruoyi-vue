@@ -12,6 +12,7 @@ import java.util.*;
  * @author ruoyi
  */
 public class StringUtils extends org.apache.commons.lang3.StringUtils {
+
     /**
      * 空字符串
      */
@@ -250,8 +251,8 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
      * @param sep 分隔符
      * @return set集合
      */
-    public static final Set<String> str2Set(String str, String sep) {
-        return new HashSet<String>(str2List(str, sep, true, false));
+    public static Set<String> str2Set(String str, String sep) {
+        return new HashSet<>(str2List(str, sep, true, false));
     }
 
     /**
@@ -263,8 +264,8 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
      * @param trim        去掉首尾空白
      * @return list集合
      */
-    public static final List<String> str2List(String str, String sep, boolean filterBlank, boolean trim) {
-        List<String> list = new ArrayList<String>();
+    public static List<String> str2List(String str, String sep, boolean filterBlank, boolean trim) {
+        List<String> list = new ArrayList<>();
         if (StringUtils.isEmpty(str)) {
             return list;
         }
@@ -290,21 +291,19 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     /**
      * 判断给定的set列表中是否包含数组array 判断给定的数组array中是否包含给定的元素value
      *
-     * @param set   给定的集合
-     * @param array 给定的数组
+     * @param collection 给定的集合
+     * @param array      给定的数组
      * @return boolean 结果
      */
     public static boolean containsAny(Collection<String> collection, String... array) {
-        if (isEmpty(collection) || isEmpty(array)) {
-            return false;
-        } else {
+        if (!isEmpty(collection) && !isEmpty(array)) {
             for (String str : array) {
                 if (collection.contains(str)) {
                     return true;
                 }
             }
-            return false;
         }
+        return false;
     }
 
     /**
@@ -335,9 +334,9 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
         }
         StringBuilder sb = new StringBuilder();
         // 前置字符是否大写
-        boolean preCharIsUpperCase = true;
+        boolean preCharIsUpperCase;
         // 当前字符是否大写
-        boolean curreCharIsUpperCase = true;
+        boolean curreCharIsUpperCase;
         // 下一字符是否大写
         boolean nexteCharIsUpperCase = true;
         for (int i = 0; i < str.length(); i++) {
@@ -462,14 +461,16 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
     }
 
     /**
-     * 判断url是否与规则配置:
+     * 判断URL是否与规则配置:
+     * <p>
      * ? 表示单个字符;
+     * <p>
      * * 表示一层路径内的任意字符串，不可跨层级;
+     * <p>
      * ** 表示任意层路径;
      *
      * @param pattern 匹配规则
-     * @param url     需要匹配的url
-     * @return
+     * @param url     需要匹配的URL
      */
     public static boolean isMatch(String pattern, String url) {
         AntPathMatcher matcher = new AntPathMatcher();
@@ -488,7 +489,7 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
      * @param size 字符串指定长度
      * @return 返回数字的字符串格式，该字符串为指定长度。
      */
-    public static final String padl(final Number num, final int size) {
+    public static String padl(final Number num, final int size) {
         return padl(num.toString(), size, '0');
     }
 
@@ -500,22 +501,18 @@ public class StringUtils extends org.apache.commons.lang3.StringUtils {
      * @param c    用于补齐的字符
      * @return 返回指定长度的字符串，由原字符串左补齐或截取得到。
      */
-    public static final String padl(final String s, final int size, final char c) {
+    public static String padl(final String s, final int size, final char c) {
         final StringBuilder sb = new StringBuilder(size);
         if (s != null) {
             final int len = s.length();
             if (s.length() <= size) {
-                for (int i = size - len; i > 0; i--) {
-                    sb.append(c);
-                }
+                sb.append(String.valueOf(c).repeat(size - len));
                 sb.append(s);
             } else {
                 return s.substring(len - size, len);
             }
         } else {
-            for (int i = size; i > 0; i--) {
-                sb.append(c);
-            }
+            sb.append(String.valueOf(c).repeat(Math.max(0, size)));
         }
         return sb.toString();
     }

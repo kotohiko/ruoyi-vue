@@ -17,7 +17,7 @@
     </resultMap>
 
     <sql id="selectConfigVo">
-        select config_id,
+        SELECT config_id,
                config_name,
                config_key,
                config_value,
@@ -27,7 +27,7 @@
                update_by,
                update_time,
                remark
-        from sys_config
+        FROM sys_config
     </sql>
 
     <!-- 查询条件 -->
@@ -113,9 +113,9 @@
     </update>
 
     <delete id="deleteConfigById" parameterType="Long">
-        delete
-        from sys_config
-        where config_id = #{configId}
+        DELETE
+        FROM sys_config
+        WHERE config_id = #{configId}
     </delete>
 
     <delete id="deleteConfigByIds" parameterType="Long">

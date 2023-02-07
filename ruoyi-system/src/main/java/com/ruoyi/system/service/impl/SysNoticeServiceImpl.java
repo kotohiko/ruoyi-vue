@@ -15,6 +15,7 @@ import java.util.List;
  */
 @Service
 public class SysNoticeServiceImpl implements ISysNoticeService {
+
     @Autowired
     private SysNoticeMapper noticeMapper;
 
