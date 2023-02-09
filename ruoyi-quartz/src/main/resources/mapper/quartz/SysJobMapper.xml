@@ -21,7 +21,7 @@
     </resultMap>
 
     <sql id="selectJobVo">
-        select job_id,
+        SELECT job_id,
                job_name,
                job_group,
                invoke_target,
@@ -32,7 +32,7 @@
                create_by,
                create_time,
                remark
-        from sys_job
+        FROM sys_job
     </sql>
 
     <select id="selectJobList" parameterType="SysJob" resultMap="SysJobResult">
@@ -63,9 +63,9 @@
     </select>
 
     <delete id="deleteJobById" parameterType="Long">
-        delete
-        from sys_job
-        where job_id = #{jobId}
+        DELETE
+        FROM sys_job
+        WHERE job_id = #{jobId}
     </delete>
 
     <delete id="deleteJobByIds" parameterType="Long">

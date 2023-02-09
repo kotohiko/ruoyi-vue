@@ -16,7 +16,7 @@
     </resultMap>
 
     <sql id="selectJobLogVo">
-        select job_log_id,
+        SELECT job_log_id,
                job_name,
                job_group,
                invoke_target,
@@ -24,7 +24,7 @@
                status,
                exception_info,
                create_time
-        from sys_job_log
+        FROM sys_job_log
     </sql>
 
     <select id="selectJobLogList" parameterType="SysJobLog" resultMap="SysJobLogResult">
@@ -61,9 +61,9 @@
     </select>
 
     <delete id="deleteJobLogById" parameterType="Long">
-        delete
-        from sys_job_log
-        where job_log_id = #{jobLogId}
+        DELETE
+        FROM sys_job_log
+        WHERE job_log_id = #{jobLogId}
     </delete>
 
     <delete id="deleteJobLogByIds" parameterType="Long">
@@ -74,7 +74,7 @@
     </delete>
 
     <update id="cleanJobLog">
-        truncate table sys_job_log
+        TRUNCATE TABLE sys_job_log
     </update>
 
     <insert id="insertJobLog" parameterType="SysJobLog">

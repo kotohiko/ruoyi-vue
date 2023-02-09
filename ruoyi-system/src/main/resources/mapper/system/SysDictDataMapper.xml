@@ -21,7 +21,7 @@
     </resultMap>
 
     <sql id="selectDictDataVo">
-        select dict_code,
+        SELECT dict_code,
                dict_sort,
                dict_label,
                dict_value,
@@ -33,7 +33,7 @@
                create_by,
                create_time,
                remark
-        from sys_dict_data
+        FROM sys_dict_data
     </sql>
 
     <select id="selectDictDataList" parameterType="SysDictData" resultMap="SysDictDataResult">
@@ -58,10 +58,10 @@
     </select>
 
     <select id="selectDictLabel" resultType="String">
-        select dict_label
-        from sys_dict_data
-        where dict_type = #{dictType}
-          and dict_value = #{dictValue}
+        SELECT dict_label
+        FROM sys_dict_data
+        WHERE dict_type = #{dictType}
+          AND dict_value = #{dictValue}
     </select>
 
     <select id="selectDictDataById" parameterType="Long" resultMap="SysDictDataResult">
@@ -70,15 +70,15 @@
     </select>
 
     <select id="countDictDataByType" resultType="Integer">
-        select count(1)
-        from sys_dict_data
-        where dict_type = #{dictType}
+        SELECT COUNT(1)
+        FROM sys_dict_data
+        WHERE dict_type = #{dictType}
     </select>
 
     <delete id="deleteDictDataById" parameterType="Long">
-        delete
-        from sys_dict_data
-        where dict_code = #{dictCode}
+        DELETE
+        FROM sys_dict_data
+        WHERE dict_code = #{dictCode}
     </delete>
 
     <delete id="deleteDictDataByIds" parameterType="Long">
@@ -107,9 +107,9 @@
     </update>
 
     <update id="updateDictDataType" parameterType="String">
-        update sys_dict_data
-        set dict_type = #{newDictType}
-        where dict_type = #{oldDictType}
+        UPDATE sys_dict_data
+        SET dict_type = #{newDictType}
+        WHERE dict_type = #{oldDictType}
     </update>
 
     <insert id="insertDictData" parameterType="SysDictData">

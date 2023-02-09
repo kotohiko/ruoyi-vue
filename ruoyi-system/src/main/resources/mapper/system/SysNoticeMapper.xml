@@ -18,17 +18,17 @@
     </resultMap>
 
     <sql id="selectNoticeVo">
-        select notice_id,
+        SELECT notice_id,
                notice_title,
                notice_type,
-               cast(notice_content as char) as notice_content,
+               CAST(notice_content AS CHAR) AS notice_content,
                status,
                create_by,
                create_time,
                update_by,
                update_time,
                remark
-        from sys_notice
+        FROM sys_notice
     </sql>
 
     <select id="selectNoticeById" parameterType="Long" resultMap="SysNoticeResult">
@@ -85,9 +85,9 @@
     </update>
 
     <delete id="deleteNoticeById" parameterType="Long">
-        delete
-        from sys_notice
-        where notice_id = #{noticeId}
+        DELETE
+        FROM sys_notice
+        WHERE notice_id = #{noticeId}
     </delete>
 
     <delete id="deleteNoticeByIds" parameterType="Long">
