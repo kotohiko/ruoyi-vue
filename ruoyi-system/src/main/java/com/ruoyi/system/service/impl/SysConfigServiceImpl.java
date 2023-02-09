@@ -145,6 +145,7 @@ public class SysConfigServiceImpl implements ISysConfigService {
     public void deleteConfigByIds(Long[] configIds) {
         for (Long configId : configIds) {
             SysConfig config = selectConfigById(configId);
+            // 如果是系统内置参数，则不可以删除
             if (StringUtils.equals(UserConstants.YES, config.getConfigType())) {
                 throw new ServiceException(String.format("内置参数【%1$s】不能删除 ", config.getConfigKey()));
             }

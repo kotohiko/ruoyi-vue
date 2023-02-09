@@ -23,7 +23,7 @@
     </resultMap>
 
     <sql id="selectDeptVo">
-        select d.dept_id,
+        SELECT d.dept_id,
                d.parent_id,
                d.ancestors,
                d.dept_name,
@@ -35,7 +35,7 @@
                d.del_flag,
                d.create_by,
                d.create_time
-        from sys_dept d
+        FROM sys_dept d
     </sql>
 
     <select id="selectDeptList" parameterType="SysDept" resultMap="SysDeptResult">
@@ -71,7 +71,7 @@
     </select>
 
     <select id="selectDeptById" parameterType="Long" resultMap="SysDeptResult">
-        select d.dept_id,
+        SELECT d.dept_id,
                d.parent_id,
                d.ancestors,
                d.dept_name,
@@ -80,38 +80,38 @@
                d.phone,
                d.email,
                d.status,
-               (select dept_name from sys_dept where dept_id = d.parent_id) parent_name
-        from sys_dept d
-        where d.dept_id = #{deptId}
+               (SELECT dept_name FROM sys_dept WHERE dept_id = d.parent_id) parent_name
+        FROM sys_dept d
+        WHERE d.dept_id = #{deptId}
     </select>
 
     <select id="checkDeptExistUser" parameterType="Long" resultType="int">
-        select count(1)
-        from sys_user
-        where dept_id = #{deptId}
-          and del_flag = '0'
+        SELECT COUNT(1)
+        FROM sys_user
+        WHERE dept_id = #{deptId}
+          AND del_flag = '0'
     </select>
 
     <select id="hasChildByDeptId" parameterType="Long" resultType="int">
-        select count(1)
-        from sys_dept
-        where del_flag = '0'
-          and parent_id = #{deptId}
-        limit 1
+        SELECT COUNT(1)
+        FROM sys_dept
+        WHERE del_flag = '0'
+          AND parent_id = #{deptId}
+        LIMIT 1
     </select>
 
     <select id="selectChildrenDeptById" parameterType="Long" resultMap="SysDeptResult">
-        select *
-        from sys_dept
-        where find_in_set(#{deptId}, ancestors)
+        SELECT *
+        FROM sys_dept
+        WHERE FIND_IN_SET(#{deptId}, ancestors)
     </select>
 
     <select id="selectNormalChildrenDeptById" parameterType="Long" resultType="int">
-        select count(*)
-        from sys_dept
-        where status = 0
-          and del_flag = '0'
-          and find_in_set(#{deptId}, ancestors)
+        SELECT COUNT(*)
+        FROM sys_dept
+        WHERE status = 0
+          AND del_flag = '0'
+          AND FIND_IN_SET(#{deptId}, ancestors)
     </select>
 
     <select id="checkDeptNameUnique" resultMap="SysDeptResult">
@@ -185,9 +185,9 @@
     </update>
 
     <delete id="deleteDeptById" parameterType="Long">
-        update sys_dept
-        set del_flag = '2'
-        where dept_id = #{deptId}
+        UPDATE sys_dept
+        SET del_flag = '2'
+        WHERE dept_id = #{deptId}
     </delete>
 
 </mapper> 

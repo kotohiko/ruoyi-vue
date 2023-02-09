@@ -16,8 +16,8 @@
     </resultMap>
 
     <sql id="selectDictTypeVo">
-        select dict_id, dict_name, dict_type, status, create_by, create_time, remark
-        from sys_dict_type
+        SELECT dict_id, dict_name, dict_type, status, create_by, create_time, remark
+        FROM sys_dict_type
     </sql>
 
     <select id="selectDictTypeList" parameterType="SysDictType" resultMap="SysDictTypeResult">
@@ -61,9 +61,9 @@
     </select>
 
     <delete id="deleteDictTypeById" parameterType="Long">
-        delete
-        from sys_dict_type
-        where dict_id = #{dictId}
+        DELETE
+        FROM sys_dict_type
+        WHERE dict_id = #{dictId}
     </delete>
 
     <delete id="deleteDictTypeByIds" parameterType="Long">
