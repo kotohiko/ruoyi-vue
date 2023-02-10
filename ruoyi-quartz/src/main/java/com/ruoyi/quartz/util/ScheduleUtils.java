@@ -24,6 +24,7 @@ public class ScheduleUtils {
      */
     private static Class<? extends Job> getQuartzJobClass(SysJob sysJob) {
         boolean isConcurrent = "0".equals(sysJob.getConcurrent());
+        // 根据是否并发来返回不同的类对象
         return isConcurrent ? QuartzJobExecution.class : QuartzDisallowConcurrentExecution.class;
     }
 
@@ -45,6 +46,7 @@ public class ScheduleUtils {
      * 创建定时任务
      */
     public static void createScheduleJob(Scheduler scheduler, SysJob job) throws SchedulerException, TaskException {
+        // 获取要执行的类
         Class<? extends Job> jobClass = getQuartzJobClass(job);
         // 构建job信息
         Long jobId = job.getJobId();

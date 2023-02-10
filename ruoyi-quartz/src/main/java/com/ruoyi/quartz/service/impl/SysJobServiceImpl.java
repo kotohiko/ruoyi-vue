@@ -25,6 +25,7 @@ import java.util.List;
  */
 @Service
 public class SysJobServiceImpl implements ISysJobService {
+
     @Autowired
     private Scheduler scheduler;
 
@@ -47,7 +48,6 @@ public class SysJobServiceImpl implements ISysJobService {
      * 获取quartz调度器的计划任务列表
      *
      * @param job 调度信息
-     * @return
      */
     @Override
     public List<SysJob> selectJobList(SysJob job) {
@@ -121,7 +121,6 @@ public class SysJobServiceImpl implements ISysJobService {
      * 批量删除调度信息
      *
      * @param jobIds 需要删除的任务ID
-     * @return 结果
      */
     @Override
     @Transactional(rollbackFor = Exception.class)

@@ -1,31 +1,22 @@
 <template>
   <div>
     <div class="user-info-head" @click="editCropper()"><img class="img-circle img-lg" title="点击上传头像"
-                                                            v-bind:src="options.img"/></div>
+        v-bind:src="options.img" /></div>
     <el-dialog :title="title" :visible.sync="open" append-to-body width="800px" @close="closeDialog"
-               @opened="modalOpened">
+      @opened="modalOpened">
       <el-row>
-        <el-col :md="12" :style="{height: '350px'}" :xs="24">
-          <vue-cropper
-            v-if="visible"
-            ref="cropper"
-            :autoCrop="options.autoCrop"
-            :autoCropHeight="options.autoCropHeight"
-            :autoCropWidth="options.autoCropWidth"
-            :fixedBox="options.fixedBox"
-            :img="options.img"
-            :info="true"
-            :outputType="options.outputType"
-            @realTime="realTime"
-          />
+        <el-col :md="12" :style="{ height: '350px' }" :xs="24">
+          <vue-cropper v-if="visible" ref="cropper" :autoCrop="options.autoCrop"
+            :autoCropHeight="options.autoCropHeight" :autoCropWidth="options.autoCropWidth" :fixedBox="options.fixedBox"
+            :img="options.img" :info="true" :outputType="options.outputType" @realTime="realTime" />
         </el-col>
-        <el-col :md="12" :style="{height: '350px'}" :xs="24">
+        <el-col :md="12" :style="{ height: '350px' }" :xs="24">
           <div class="avatar-upload-preview">
-            <img :src="previews.url" :style="previews.img"/>
+            <img :src="previews.url" :style="previews.img" />
           </div>
         </el-col>
       </el-row>
-      <br/>
+      <br />
       <el-row>
         <el-col :lg="2" :sm="3" :xs="3">
           <el-upload :before-upload="beforeUpload" :http-request="requestUpload" :show-file-list="false" action="#">
@@ -35,19 +26,19 @@
             </el-button>
           </el-upload>
         </el-col>
-        <el-col :lg="{span: 1, offset: 2}" :sm="2" :xs="2">
+        <el-col :lg="{ span: 1, offset: 2 }" :sm="2" :xs="2">
           <el-button icon="el-icon-plus" size="small" @click="changeScale(1)"></el-button>
         </el-col>
-        <el-col :lg="{span: 1, offset: 1}" :sm="2" :xs="2">
+        <el-col :lg="{ span: 1, offset: 1 }" :sm="2" :xs="2">
           <el-button icon="el-icon-minus" size="small" @click="changeScale(-1)"></el-button>
         </el-col>
-        <el-col :lg="{span: 1, offset: 1}" :sm="2" :xs="2">
+        <el-col :lg="{ span: 1, offset: 1 }" :sm="2" :xs="2">
           <el-button icon="el-icon-refresh-left" size="small" @click="rotateLeft()"></el-button>
         </el-col>
-        <el-col :lg="{span: 1, offset: 1}" :sm="2" :xs="2">
+        <el-col :lg="{ span: 1, offset: 1 }" :sm="2" :xs="2">
           <el-button icon="el-icon-refresh-right" size="small" @click="rotateRight()"></el-button>
         </el-col>
-        <el-col :lg="{span: 2, offset: 6}" :sm="2" :xs="2">
+        <el-col :lg="{ span: 2, offset: 6 }" :sm="2" :xs="2">
           <el-button size="small" type="primary" @click="uploadImg()">提 交</el-button>
         </el-col>
       </el-row>
@@ -57,12 +48,12 @@
 
 <script>
 import store from "@/store";
-import {VueCropper} from "vue-cropper";
-import {uploadAvatar} from "@/api/system/user";
-import {debounce} from '@/utils'
+import { VueCropper } from "vue-cropper";
+import { uploadAvatar } from "@/api/system/user";
+import { debounce } from '@/utils'
 
 export default {
-  components: {VueCropper},
+  components: { VueCropper },
   props: {
     user: {
       type: Object

@@ -42,8 +42,6 @@ public class FileUtils {
             while ((length = fis.read(b)) > 0) {
                 os.write(b, 0, length);
             }
-        } catch (IOException e) {
-            throw e;
         } finally {
             IOUtils.close(os);
             IOUtils.close(fis);
@@ -71,7 +69,7 @@ public class FileUtils {
      */
     public static String writeBytes(byte[] data, String uploadDir) throws IOException {
         FileOutputStream fos = null;
-        String pathName = "";
+        String pathName;
         try {
             String extension = getFileExtendName(data);
             pathName = DateUtils.datePath() + "/" + IdUtils.fastUUID() + "." + extension;
@@ -88,7 +86,6 @@ public class FileUtils {
      * 删除文件
      *
      * @param filePath 文件
-     * @return
      */
     public static boolean deleteFile(String filePath) {
         boolean flag = false;
@@ -161,7 +158,7 @@ public class FileUtils {
      * @param response     响应对象
      * @param realFileName 真实文件名
      */
-    public static void setAttachmentResponseHeader(HttpServletResponse response, String realFileName) throws UnsupportedEncodingException {
+    public static void setAttachmentResponseHeader(HttpServletResponse response, String realFileName) {
         String percentEncodedFileName = percentEncode(realFileName);
 
         response.addHeader("Access-Control-Expose-Headers", "Content-Disposition,download-filename");
@@ -175,7 +172,7 @@ public class FileUtils {
      * @param s 需要百分号编码的字符串
      * @return 百分号编码后的字符串
      */
-    public static String percentEncode(String s) throws UnsupportedEncodingException {
+    public static String percentEncode(String s) {
         String encode = URLEncoder.encode(s, StandardCharsets.UTF_8);
         return encode.replaceAll("\\+", "%20");
     }
