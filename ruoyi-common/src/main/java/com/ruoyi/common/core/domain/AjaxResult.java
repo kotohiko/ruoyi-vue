@@ -32,13 +32,13 @@ public class AjaxResult extends HashMap<String, Object> {
     public static final String DATA_TAG = "data";
 
     /**
-     * 初始化一个新创建的 AjaxResult 对象，使其表示一个空消息。
+     * 初始化一个新创建的AjaxResult对象，使其表示一个空消息。
      */
     public AjaxResult() {
     }
 
     /**
-     * 初始化一个新创建的 AjaxResult 对象
+     * 初始化一个新创建的AjaxResult对象
      *
      * @param code 状态码
      * @param msg  返回内容
@@ -49,7 +49,7 @@ public class AjaxResult extends HashMap<String, Object> {
     }
 
     /**
-     * 初始化一个新创建的 AjaxResult 对象
+     * 初始化一个新创建的AjaxResult对象
      *
      * @param code 状态码
      * @param msg  返回内容

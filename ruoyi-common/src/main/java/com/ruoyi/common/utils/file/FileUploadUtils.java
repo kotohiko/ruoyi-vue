@@ -66,7 +66,6 @@ public class FileUploadUtils {
      * @param baseDir 相对应用的基目录
      * @param file    上传的文件
      * @return 文件名称
-     * @throws IOException
      */
     public static String upload(String baseDir, MultipartFile file) throws IOException {
         try {
@@ -167,8 +166,6 @@ public class FileUploadUtils {
     /**
      * 判断MIME类型是否是允许的MIME类型
      *
-     * @param allowedExtension
-     * @return
      */
     public static boolean isAllowedExtension(String extension, String[] allowedExtension) {
         for (String str : allowedExtension) {
