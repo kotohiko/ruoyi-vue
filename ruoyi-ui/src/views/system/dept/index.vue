@@ -2,21 +2,12 @@
   <div class="app-container">
     <el-form v-show="showSearch" ref="queryForm" :inline="true" :model="queryParams" size="small">
       <el-form-item label="部门名称" prop="deptName">
-        <el-input
-          v-model="queryParams.deptName"
-          clearable
-          placeholder="请输入部门名称"
-          @keyup.enter.native="handleQuery"
-        />
+        <el-input v-model="queryParams.deptName" clearable placeholder="请输入部门名称" @keyup.enter.native="handleQuery" />
       </el-form-item>
       <el-form-item label="状态" prop="status">
         <el-select v-model="queryParams.status" clearable placeholder="部门状态">
-          <el-option
-            v-for="dict in dict.type.sys_normal_disable"
-            :key="dict.value"
-            :label="dict.label"
-            :value="dict.value"
-          />
+          <el-option v-for="dict in dict.type.sys_normal_disable" :key="dict.value" :label="dict.label"
+            :value="dict.value" />
         </el-select>
       </el-form-item>
       <el-form-item>
@@ -27,42 +18,24 @@
 
     <el-row :gutter="10" class="mb8">
       <el-col :span="1.5">
-        <el-button
-          v-hasPermi="['system:dept:add']"
-          icon="el-icon-plus"
-          plain
-          size="mini"
-          type="primary"
-          @click="handleAdd"
-        >新增
+        <el-button v-hasPermi="['system:dept:add']" icon="el-icon-plus" plain size="mini" type="primary"
+          @click="handleAdd">新增
         </el-button>
       </el-col>
       <el-col :span="1.5">
-        <el-button
-          icon="el-icon-sort"
-          plain
-          size="mini"
-          type="info"
-          @click="toggleExpandAll"
-        >展开/折叠
+        <el-button icon="el-icon-sort" plain size="mini" type="info" @click="toggleExpandAll">展开/折叠
         </el-button>
       </el-col>
       <right-toolbar :showSearch.sync="showSearch" @queryTable="getList"></right-toolbar>
     </el-row>
 
-    <el-table
-      v-if="refreshTable"
-      v-loading="loading"
-      :data="deptList"
-      :default-expand-all="isExpandAll"
-      :tree-props="{children: 'children', hasChildren: 'hasChildren'}"
-      row-key="deptId"
-    >
+    <el-table v-if="refreshTable" v-loading="loading" :data="deptList" :default-expand-all="isExpandAll"
+      :tree-props="{ children: 'children', hasChildren: 'hasChildren' }" row-key="deptId">
       <el-table-column label="部门名称" prop="deptName" width="260"></el-table-column>
       <el-table-column label="排序" prop="orderNum" width="200"></el-table-column>
       <el-table-column label="状态" prop="status" width="100">
         <template slot-scope="scope">
-          <dict-tag :options="dict.type.sys_normal_disable" :value="scope.row.status"/>
+          <dict-tag :options="dict.type.sys_normal_disable" :value="scope.row.status" />
         </template>
       </el-table-column>
       <el-table-column align="center" label="创建时间" prop="createTime" width="200">
@@ -72,30 +45,14 @@
       </el-table-column>
       <el-table-column align="center" class-name="small-padding fixed-width" label="操作">
         <template slot-scope="scope">
-          <el-button
-            v-hasPermi="['system:dept:edit']"
-            icon="el-icon-edit"
-            size="mini"
-            type="text"
-            @click="handleUpdate(scope.row)"
-          >修改
+          <el-button v-hasPermi="['system:dept:edit']" icon="el-icon-edit" size="mini" type="text"
+            @click="handleUpdate(scope.row)">修改
           </el-button>
-          <el-button
-            v-hasPermi="['system:dept:add']"
-            icon="el-icon-plus"
-            size="mini"
-            type="text"
-            @click="handleAdd(scope.row)"
-          >新增
+          <el-button v-hasPermi="['system:dept:add']" icon="el-icon-plus" size="mini" type="text"
+            @click="handleAdd(scope.row)">新增
           </el-button>
-          <el-button
-            v-if="scope.row.parentId != 0"
-            v-hasPermi="['system:dept:remove']"
-            icon="el-icon-delete"
-            size="mini"
-            type="text"
-            @click="handleDelete(scope.row)"
-          >删除
+          <el-button v-if="scope.row.parentId != 0" v-hasPermi="['system:dept:remove']" icon="el-icon-delete"
+            size="mini" type="text" @click="handleDelete(scope.row)">删除
           </el-button>
         </template>
       </el-table-column>
@@ -108,48 +65,46 @@
           <el-col v-if="form.parentId !== 0" :span="24">
             <el-form-item label="上级部门" prop="parentId">
               <treeselect v-model="form.parentId" :normalizer="normalizer" :options="deptOptions"
-                          placeholder="选择上级部门"/>
+                placeholder="选择上级部门" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
             <el-form-item label="部门名称" prop="deptName">
-              <el-input v-model="form.deptName" placeholder="请输入部门名称"/>
+              <el-input v-model="form.deptName" placeholder="请输入部门名称" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="显示排序" prop="orderNum">
-              <el-input-number v-model="form.orderNum" :min="0" controls-position="right"/>
+              <el-input-number v-model="form.orderNum" :min="0" controls-position="right" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
             <el-form-item label="负责人" prop="leader">
-              <el-input v-model="form.leader" maxlength="20" placeholder="请输入负责人"/>
+              <el-input v-model="form.leader" maxlength="20" placeholder="请输入负责人" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="联系电话" prop="phone">
-              <el-input v-model="form.phone" maxlength="11" placeholder="请输入联系电话"/>
+              <el-input v-model="form.phone" maxlength="11" placeholder="请输入联系电话" />
             </el-form-item>
           </el-col>
         </el-row>
         <el-row>
           <el-col :span="12">
             <el-form-item label="邮箱" prop="email">
-              <el-input v-model="form.email" maxlength="50" placeholder="请输入邮箱"/>
+              <el-input v-model="form.email" maxlength="50" placeholder="请输入邮箱" />
             </el-form-item>
           </el-col>
           <el-col :span="12">
             <el-form-item label="部门状态">
               <el-radio-group v-model="form.status">
-                <el-radio
-                  v-for="dict in dict.type.sys_normal_disable"
-                  :key="dict.value"
-                  :label="dict.value"
-                >{{ dict.label }}
+                <el-radio v-for="dict in dict.type.sys_normal_disable" :key="dict.value" :label="dict.value">{{
+                  dict.label
+                }}
                 </el-radio>
               </el-radio-group>
             </el-form-item>
@@ -165,14 +120,14 @@
 </template>
 
 <script>
-import {addDept, delDept, getDept, listDept, listDeptExcludeChild, updateDept} from "@/api/system/dept";
+import { addDept, delDept, getDept, listDept, listDeptExcludeChild, updateDept } from "@/api/system/dept";
 import Treeselect from "@riophae/vue-treeselect";
 import "@riophae/vue-treeselect/dist/vue-treeselect.css";
 
 export default {
   name: "Dept",
   dicts: ['sys_normal_disable'],
-  components: {Treeselect},
+  components: { Treeselect },
   data() {
     return {
       // 遮罩层
@@ -201,13 +156,13 @@ export default {
       // 表单校验
       rules: {
         parentId: [
-          {required: true, message: "上级部门不能为空", trigger: "blur"}
+          { required: true, message: "上级部门不能为空", trigger: "blur" }
         ],
         deptName: [
-          {required: true, message: "部门名称不能为空", trigger: "blur"}
+          { required: true, message: "部门名称不能为空", trigger: "blur" }
         ],
         orderNum: [
-          {required: true, message: "显示排序不能为空", trigger: "blur"}
+          { required: true, message: "显示排序不能为空", trigger: "blur" }
         ],
         email: [
           {
@@ -307,7 +262,7 @@ export default {
         listDeptExcludeChild(row.deptId).then(response => {
           this.deptOptions = this.handleTree(response.data, "deptId");
           if (this.deptOptions.length == 0) {
-            const noResultsOptions = {deptId: this.form.parentId, deptName: this.form.parentName, children: []};
+            const noResultsOptions = { deptId: this.form.parentId, deptName: this.form.parentName, children: [] };
             this.deptOptions.push(noResultsOptions);
           }
         });
