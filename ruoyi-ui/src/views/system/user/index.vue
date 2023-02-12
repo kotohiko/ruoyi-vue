@@ -115,8 +115,8 @@
           </el-table-column>
         </el-table>
 
-        <pagination v-show="total > 0" :limit.sync="queryParams.pageSize" :page.sync="queryParams.pageNum" :total="total"
-          @pagination="getList" />
+        <pagination v-show="total > 0" :limit.sync="queryParams.pageSize" :page.sync="queryParams.pageNum"
+          :total="total" @pagination="getList" />
       </el-col>
     </el-row>
 
