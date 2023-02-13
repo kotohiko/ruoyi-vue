@@ -245,10 +245,8 @@ public class ExcelUtil<T> {
                     sheetIndexPicMap.put(picIndex, picData);
                 }
             }
-            return sheetIndexPicMap;
-        } else {
-            return sheetIndexPicMap;
         }
+        return sheetIndexPicMap;
     }
 
     /**
@@ -1045,7 +1043,7 @@ public class ExcelUtil<T> {
     public String dataFormatHandlerAdapter(Object value, Excel excel) {
         try {
             Object instance = excel.handler().getDeclaredConstructor().newInstance();
-            Method formatMethod = excel.handler().getMethod("format", new Class[]{Object.class, String[].class});
+            Method formatMethod = excel.handler().getMethod("format", Object.class, String[].class);
             value = formatMethod.invoke(instance, value, excel.args());
         } catch (Exception e) {
             log.error("不能格式化数据 " + excel.handler(), e.getMessage());
@@ -1247,7 +1245,7 @@ public class ExcelUtil<T> {
      */
     public Object getCellValue(Row row, int column) {
         if (row == null) {
-            return row;
+            return null;
         }
         Object val = "";
         try {

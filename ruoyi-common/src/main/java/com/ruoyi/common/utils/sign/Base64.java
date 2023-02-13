@@ -160,7 +160,7 @@ public final class Base64 {
             return new byte[0];
         }
 
-        byte decodedData[];
+        byte[] decodedData;
         byte b1, b2, b3, b4;
         char d1, d2, d3, d4;
 

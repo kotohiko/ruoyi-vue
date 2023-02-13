@@ -15,6 +15,7 @@ import java.util.List;
  * @author ruoyi
  */
 public class DictUtils {
+
     /**
      * 分隔符
      */
@@ -112,18 +113,22 @@ public class DictUtils {
         List<SysDictData> datas = getDictCache(dictType);
 
         if (StringUtils.containsAny(separator, dictLabel) && StringUtils.isNotEmpty(datas)) {
-            for (SysDictData dict : datas) {
-                for (String label : dictLabel.split(separator)) {
-                    if (label.equals(dict.getDictLabel())) {
-                        propertyString.append(dict.getDictValue()).append(separator);
-                        break;
+            if (datas != null) {
+                for (SysDictData dict : datas) {
+                    for (String label : dictLabel.split(separator)) {
+                        if (label.equals(dict.getDictLabel())) {
+                            propertyString.append(dict.getDictValue()).append(separator);
+                            break;
+                        }
                     }
                 }
             }
         } else {
-            for (SysDictData dict : datas) {
-                if (dictLabel.equals(dict.getDictLabel())) {
-                    return dict.getDictValue();
+            if (datas != null) {
+                for (SysDictData dict : datas) {
+                    if (dictLabel.equals(dict.getDictLabel())) {
+                        return dict.getDictValue();
+                    }
                 }
             }
         }

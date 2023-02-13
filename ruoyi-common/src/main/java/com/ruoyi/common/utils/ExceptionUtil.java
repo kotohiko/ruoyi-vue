@@ -11,6 +11,7 @@ import java.io.StringWriter;
  * @author ruoyi
  */
 public class ExceptionUtil {
+
     /**
      * 获取exception的详细错误信息。
      */

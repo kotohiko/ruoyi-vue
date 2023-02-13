@@ -83,8 +83,7 @@ public class Arith {
      */
     public static double div(double v1, double v2, int scale) {
         if (scale < 0) {
-            throw new IllegalArgumentException(
-                    "The scale must be a positive integer or zero");
+            throw new IllegalArgumentException("The scale must be a positive integer or zero");
         }
         BigDecimal b1 = new BigDecimal(Double.toString(v1));
         BigDecimal b2 = new BigDecimal(Double.toString(v2));
@@ -103,8 +102,7 @@ public class Arith {
      */
     public static double round(double v, int scale) {
         if (scale < 0) {
-            throw new IllegalArgumentException(
-                    "The scale must be a positive integer or zero");
+            throw new IllegalArgumentException("The scale must be a positive integer or zero");
         }
         BigDecimal b = new BigDecimal(Double.toString(v));
         BigDecimal one = BigDecimal.ONE;

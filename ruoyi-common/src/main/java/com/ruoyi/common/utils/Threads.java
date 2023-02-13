@@ -6,11 +6,12 @@ import org.slf4j.LoggerFactory;
 import java.util.concurrent.*;
 
 /**
- * 线程相关工具类.
+ * 线程相关工具类
  *
  * @author ruoyi
  */
 public class Threads {
+
     private static final Logger logger = LoggerFactory.getLogger(Threads.class);
 
     /**
@@ -19,8 +20,7 @@ public class Threads {
     public static void sleep(long milliseconds) {
         try {
             Thread.sleep(milliseconds);
-        } catch (InterruptedException e) {
-            return;
+        } catch (InterruptedException ignored) {
         }
     }
 

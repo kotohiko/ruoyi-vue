@@ -11,6 +11,7 @@ import com.ruoyi.common.utils.sql.SqlUtil;
  * @author ruoyi
  */
 public class PageUtils extends PageHelper {
+
     /**
      * 设置请求分页数据
      */
