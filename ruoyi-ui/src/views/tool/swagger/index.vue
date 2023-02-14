@@ -1,15 +1,16 @@
 <template>
-  <i-frame :src="url"/>
+  <i-frame :src="url" />
 </template>
 <script>
 import iFrame from "@/components/iFrame/index";
 
 export default {
   name: "Swagger",
-  components: {iFrame},
+  components: { iFrame },
   data() {
     return {
-      url: process.env.VUE_APP_BASE_API + "/swagger-ui/index.html"
+      // 属性名应该是url，而非src
+      url: process.env.VUE_APP_BASE_API + "/doc.html"
     };
   },
 };
