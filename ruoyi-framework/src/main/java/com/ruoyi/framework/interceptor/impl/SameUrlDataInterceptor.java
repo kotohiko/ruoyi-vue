@@ -81,7 +81,7 @@ public class SameUrlDataInterceptor extends RepeatSubmitInterceptor {
                 }
             }
         }
-        // 如果是第一次请求，或者之前{#有效时间}内没有请求，则将当前请求存在Redis里，时间为
+        // 如果是第一次请求，或者之前{#有效时间}内没有请求，则将当前请求存在Redis里，时间为{#有效时间}
         Map<String, Object> cacheMap = new HashMap<>();
         cacheMap.put(url, nowDataMap);
         redisCache.setCacheObject(cacheRepeatKey, cacheMap, annotation.interval(), TimeUnit.MILLISECONDS);

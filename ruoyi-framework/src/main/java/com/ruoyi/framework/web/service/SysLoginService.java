@@ -14,12 +14,14 @@ import com.ruoyi.common.utils.MessageUtils;
 import com.ruoyi.common.utils.ServletUtils;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.ip.IpUtils;
+import com.ruoyi.common.utils.sign.RsaUtils;
 import com.ruoyi.framework.manager.AsyncManager;
 import com.ruoyi.framework.manager.factory.AsyncFactory;
 import com.ruoyi.framework.security.context.AuthenticationContextHolder;
 import com.ruoyi.system.service.ISysConfigService;
 import com.ruoyi.system.service.ISysUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -51,6 +53,10 @@ public class SysLoginService {
     @Autowired
     private ISysConfigService configService;
 
+    // 是否允许账户多终端同时登录（true允许 false不允许）
+    @Value("${token.soloLogin}")
+    private boolean soloLogin;
+
     /**
      * 登录验证
      *
@@ -69,7 +75,8 @@ public class SysLoginService {
         // 用户验证
         Authentication authentication;
         try {
-            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, password);
+            // 关键代码 RsaUtils.decryptByPrivateKey(password)
+            UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, RsaUtils.decryptByPrivateKey(password));
             AuthenticationContextHolder.setContext(authenticationToken);
             // 该方法会去调用UserDetailsServiceImpl.loadUserByUsername
             authentication = authenticationManager.authenticate(authenticationToken);
@@ -86,6 +93,16 @@ public class SysLoginService {
         }
         AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_SUCCESS, MessageUtils.message("user.login.success")));
         LoginUser loginUser = (LoginUser) authentication.getPrincipal();
+
+        if (!soloLogin) {
+            // 如果用户不允许多终端同时登录，清除缓存信息
+            String userIdKey = Constants.LOGIN_USERID_KEY + loginUser.getUser().getUserId();
+            String userKey = redisCache.getCacheObject(userIdKey);
+            if (StringUtils.isNotEmpty(userKey)) {
+                redisCache.deleteObject(userIdKey);
+                redisCache.deleteObject(userKey);
+            }
+        }
         recordLoginInfo(loginUser.getUserId());
         // 生成Token
         return tokenService.createToken(loginUser);

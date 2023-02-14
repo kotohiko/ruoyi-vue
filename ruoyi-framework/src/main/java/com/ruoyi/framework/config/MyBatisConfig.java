@@ -68,7 +68,7 @@ public class MyBatisConfig {
             if (allResult.size() > 0) {
                 typeAliasesPackage = String.join(",", allResult.toArray(new String[0]));
             } else {
-                throw new RuntimeException("mybatis typeAliasesPackage 路径扫描错误,参数typeAliasesPackage:" + typeAliasesPackage + "未找到任何包");
+                throw new RuntimeException("MyBatis typeAliasesPackage路径扫描错误，参数typeAliasesPackage:" + typeAliasesPackage + "未找到任何包");
             }
         } catch (IOException e) {
             e.printStackTrace();

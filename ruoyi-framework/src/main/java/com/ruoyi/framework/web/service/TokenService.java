@@ -48,6 +48,9 @@ public class TokenService {
     @Value("${token.expireTime}")
     private int expireTime;
 
+    @Value("${token.soloLogin}")
+    private boolean soloLogin;
+
     @Autowired
     private RedisCache redisCache;
 
@@ -92,6 +95,21 @@ public class TokenService {
     }
 
     /**
+     * 删除用户身份信息
+     */
+    public void delLoginUser(String token, Long userId) {
+        if (StringUtils.isNotEmpty(token)) {
+            String userKey = getTokenKey(token);
+            redisCache.deleteObject(userKey);
+        }
+        if (!soloLogin && StringUtils.isNotNull(userId)) {
+            String userIdKey = getUserIdKey(userId);
+            redisCache.deleteObject(userIdKey);
+        }
+    }
+
+
+    /**
      * 创建令牌
      *
      * @param loginUser 用户信息
@@ -130,6 +148,11 @@ public class TokenService {
         // 根据uuid将loginUser缓存
         String userKey = getTokenKey(loginUser.getToken());
         redisCache.setCacheObject(userKey, loginUser, expireTime, TimeUnit.MINUTES);
+        if (!soloLogin) {
+            // 缓存用户唯一标识，防止同一帐号，同时登录
+            String userIdKey = getUserIdKey(loginUser.getUser().getUserId());
+            redisCache.setCacheObject(userIdKey, userKey, expireTime, TimeUnit.MINUTES);
+        }
     }
 
     /**
@@ -192,5 +215,9 @@ public class TokenService {
 
     private String getTokenKey(String uuid) {
         return CacheConstants.LOGIN_TOKEN_KEY + uuid;
+    }
+
+    private String getUserIdKey(Long userId) {
+        return Constants.LOGIN_USERID_KEY + userId;
     }
 }

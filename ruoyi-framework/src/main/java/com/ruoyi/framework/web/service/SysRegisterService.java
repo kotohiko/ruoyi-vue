@@ -46,7 +46,7 @@ public class SysRegisterService {
         // 验证码开关
         boolean captchaEnabled = configService.selectCaptchaEnabled();
         if (captchaEnabled) {
-            validateCaptcha(username, registerBody.getCode(), registerBody.getUuid());
+            validateCaptcha(registerBody.getCode(), registerBody.getUuid());
         }
 
         if (StringUtils.isEmpty(username)) {
@@ -75,12 +75,10 @@ public class SysRegisterService {
     /**
      * 校验验证码
      *
-     * @param username 用户名
      * @param code     验证码
      * @param uuid     唯一标识
-     * @return 结果
      */
-    public void validateCaptcha(String username, String code, String uuid) {
+    public void validateCaptcha(String code, String uuid) {
         String verifyKey = CacheConstants.CAPTCHA_CODE_KEY + StringUtils.nvl(uuid, "");
         String captcha = redisCache.getCacheObject(verifyKey);
         redisCache.deleteObject(verifyKey);

@@ -57,7 +57,7 @@ public class ResourcesConfig implements WebMvcConfigurer {
         config.addAllowedHeader("*");
         // 设置访问源请求方法
         config.addAllowedMethod("*");
-        // 有效期 1800秒
+        // 有效期1800秒
         config.setMaxAge(1800L);
         // 添加映射路径，拦截一切请求
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();

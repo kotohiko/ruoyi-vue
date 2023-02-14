@@ -85,6 +85,11 @@ public class Constants {
     public static final String LOGIN_USER_KEY = "login_user_key";
 
     /**
+     * 登录用户编号 redis key
+     */
+    public static final String LOGIN_USERID_KEY = "login_userid:";
+
+    /**
      * 用户ID
      */
     public static final String JWT_USERID = "userid";
