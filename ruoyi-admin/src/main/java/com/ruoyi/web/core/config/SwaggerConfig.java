@@ -66,7 +66,7 @@ public class SwaggerConfig {
     }
 
     /**
-     * 安全模式，这里指定token通过Authorization头请求头传递
+     * 安全模式，这里指定Token通过Authorization头请求头传递
      */
     private List<SecurityScheme> securitySchemes() {
         List<SecurityScheme> apiKeyList = new ArrayList<>();

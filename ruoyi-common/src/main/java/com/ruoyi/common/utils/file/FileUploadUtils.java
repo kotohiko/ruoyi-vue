@@ -87,18 +87,13 @@ public class FileUploadUtils {
      * @throws IOException                          比如读写文件出错时
      * @throws InvalidExtensionException            文件校验异常
      */
-    public static String upload(String baseDir, MultipartFile file, String[] allowedExtension)
-            throws FileSizeLimitExceededException, IOException, FileNameLengthLimitExceededException,
-            InvalidExtensionException {
+    public static String upload(String baseDir, MultipartFile file, String[] allowedExtension) throws FileSizeLimitExceededException, IOException, FileNameLengthLimitExceededException, InvalidExtensionException {
         int fileNamelength = Objects.requireNonNull(file.getOriginalFilename()).length();
         if (fileNamelength > FileUploadUtils.DEFAULT_FILE_NAME_LENGTH) {
             throw new FileNameLengthLimitExceededException(FileUploadUtils.DEFAULT_FILE_NAME_LENGTH);
         }
-
         assertAllowed(file, allowedExtension);
-
         String fileName = extractFilename(file);
-
         String absPath = getAbsoluteFile(baseDir, fileName).getAbsolutePath();
         file.transferTo(Paths.get(absPath));
         return getPathFileName(baseDir, fileName);
@@ -108,13 +103,11 @@ public class FileUploadUtils {
      * 编码文件名
      */
     public static String extractFilename(MultipartFile file) {
-        return StringUtils.format("{}/{}_{}.{}", DateUtils.datePath(),
-                FilenameUtils.getBaseName(file.getOriginalFilename()), Seq.getId(Seq.uploadSeqType), getExtension(file));
+        return StringUtils.format("{}/{}_{}.{}", DateUtils.datePath(), FilenameUtils.getBaseName(file.getOriginalFilename()), Seq.getId(Seq.uploadSeqType), getExtension(file));
     }
 
     public static File getAbsoluteFile(String uploadDir, String fileName) {
         File desc = new File(uploadDir + File.separator + fileName);
-
         if (!desc.exists()) {
             if (!desc.getParentFile().exists()) {
                 desc.getParentFile().mkdirs();
@@ -135,28 +128,22 @@ public class FileUploadUtils {
      * @param file 上传的文件
      * @throws FileSizeLimitExceededException 如果超出最大大小
      */
-    public static void assertAllowed(MultipartFile file, String[] allowedExtension)
-            throws FileSizeLimitExceededException, InvalidExtensionException {
+    public static void assertAllowed(MultipartFile file, String[] allowedExtension) throws FileSizeLimitExceededException, InvalidExtensionException {
         long size = file.getSize();
         if (size > DEFAULT_MAX_SIZE) {
             throw new FileSizeLimitExceededException(DEFAULT_MAX_SIZE / 1024 / 1024);
         }
-
         String fileName = file.getOriginalFilename();
         String extension = getExtension(file);
         if (allowedExtension != null && !isAllowedExtension(extension, allowedExtension)) {
             if (allowedExtension == MimeTypeUtils.IMAGE_EXTENSION) {
-                throw new InvalidExtensionException.InvalidImageExtensionException(allowedExtension, extension,
-                        fileName);
+                throw new InvalidExtensionException.InvalidImageExtensionException(allowedExtension, extension, fileName);
             } else if (allowedExtension == MimeTypeUtils.FLASH_EXTENSION) {
-                throw new InvalidExtensionException.InvalidFlashExtensionException(allowedExtension, extension,
-                        fileName);
+                throw new InvalidExtensionException.InvalidFlashExtensionException(allowedExtension, extension, fileName);
             } else if (allowedExtension == MimeTypeUtils.MEDIA_EXTENSION) {
-                throw new InvalidExtensionException.InvalidMediaExtensionException(allowedExtension, extension,
-                        fileName);
+                throw new InvalidExtensionException.InvalidMediaExtensionException(allowedExtension, extension, fileName);
             } else if (allowedExtension == MimeTypeUtils.VIDEO_EXTENSION) {
-                throw new InvalidExtensionException.InvalidVideoExtensionException(allowedExtension, extension,
-                        fileName);
+                throw new InvalidExtensionException.InvalidVideoExtensionException(allowedExtension, extension, fileName);
             } else {
                 throw new InvalidExtensionException(allowedExtension, extension, fileName);
             }
@@ -165,7 +152,6 @@ public class FileUploadUtils {
 
     /**
      * 判断MIME类型是否是允许的MIME类型
-     *
      */
     public static boolean isAllowedExtension(String extension, String[] allowedExtension) {
         for (String str : allowedExtension) {

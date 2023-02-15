@@ -22,7 +22,7 @@ const service = axios.create({
 
 // request拦截器
 service.interceptors.request.use(config => {
-  // 是否需要设置 token
+  // 是否需要设置Token
   const isToken = (config.headers || {}).isToken === false
   // 是否需要防止数据重复提交
   const isRepeatSubmit = (config.headers || {}).repeatSubmit === false
