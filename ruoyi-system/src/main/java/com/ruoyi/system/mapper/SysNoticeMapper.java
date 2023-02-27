@@ -1,6 +1,7 @@
 package com.ruoyi.system.mapper;
 
 import com.ruoyi.system.domain.SysNotice;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -9,6 +10,7 @@ import java.util.List;
  *
  * @author ruoyi
  */
+@Repository
 public interface SysNoticeMapper {
 
     /**

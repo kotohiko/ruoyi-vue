@@ -2,6 +2,7 @@ package com.ruoyi.system.mapper;
 
 import com.ruoyi.common.core.domain.entity.SysMenu;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
@@ -10,6 +11,7 @@ import java.util.List;
  *
  * @author ruoyi
  */
+@Repository
 public interface SysMenuMapper {
 
     /**

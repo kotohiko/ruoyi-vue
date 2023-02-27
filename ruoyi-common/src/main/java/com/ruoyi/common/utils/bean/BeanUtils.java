@@ -7,7 +7,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * Bean 工具类
+ * Bean工具类
  *
  * @author ruoyi
  */

@@ -17,7 +17,7 @@ import org.slf4j.LoggerFactory;
 import java.util.Date;
 
 /**
- * 抽象quartz调用
+ * 抽象Quartz调用
  *
  * @author ruoyi
  */
