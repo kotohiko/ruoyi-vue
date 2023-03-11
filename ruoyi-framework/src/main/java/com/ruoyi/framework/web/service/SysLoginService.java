@@ -75,7 +75,7 @@ public class SysLoginService {
         // 用户验证
         Authentication authentication;
         try {
-            // 关键代码 RsaUtils.decryptByPrivateKey(password)
+            // 关键代码RsaUtils.decryptByPrivateKey(password)
             UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(username, RsaUtils.decryptByPrivateKey(password));
             AuthenticationContextHolder.setContext(authenticationToken);
             // 该方法会去调用UserDetailsServiceImpl.loadUserByUsername
