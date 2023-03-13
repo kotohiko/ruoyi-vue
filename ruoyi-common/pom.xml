@@ -57,6 +57,7 @@
         <dependency>
             <groupId>com.fasterxml.jackson.core</groupId>
             <artifactId>jackson-databind</artifactId>
+            <version>2.12.7.1</version>
         </dependency>
 
         <!-- 动态数据源 -->
@@ -82,6 +83,7 @@
         <dependency>
             <groupId>commons-fileupload</groupId>
             <artifactId>commons-fileupload</artifactId>
+            <version>1.5</version>
         </dependency>
 
         <!-- excel工具 -->
@@ -94,6 +96,7 @@
         <dependency>
             <groupId>org.yaml</groupId>
             <artifactId>snakeyaml</artifactId>
+            <version>2.0</version>
         </dependency>
 
         <!-- Token生成与解析-->
