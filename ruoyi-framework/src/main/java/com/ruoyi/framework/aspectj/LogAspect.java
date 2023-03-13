@@ -80,7 +80,6 @@ public class LogAspect {
             if (loginUser != null) {
                 operLog.setOperName(loginUser.getUsername());
             }
-
             if (e != null) {
                 operLog.setStatus(BusinessStatus.FAIL.ordinal());
                 operLog.setErrorMsg(StringUtils.substring(e.getMessage(), 0, 2000));

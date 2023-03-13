@@ -63,7 +63,6 @@ public abstract class AbstractQuartzJob implements Job {
     protected void after(JobExecutionContext context, SysJob sysJob, Exception e) {
         Date startTime = threadLocal.get();
         threadLocal.remove();
-
         final SysJobLog sysJobLog = new SysJobLog();
         sysJobLog.setJobName(sysJob.getJobName());
         sysJobLog.setJobGroup(sysJob.getJobGroup());
@@ -79,7 +78,6 @@ public abstract class AbstractQuartzJob implements Job {
         } else {
             sysJobLog.setStatus(Constants.SUCCESS);
         }
-
         // 写入数据库当中
         SpringUtils.getBean(ISysJobLogService.class).addJobLog(sysJobLog);
     }

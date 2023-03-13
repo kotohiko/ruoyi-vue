@@ -56,25 +56,20 @@ public class ScheduleUtils {
         // 表达式调度构建器
         CronScheduleBuilder cronScheduleBuilder = CronScheduleBuilder.cronSchedule(job.getCronExpression());
         cronScheduleBuilder = handleCronScheduleMisfirePolicy(job, cronScheduleBuilder);
-
         // 按新的cronExpression表达式构建一个新的trigger
         CronTrigger trigger = TriggerBuilder.newTrigger().withIdentity(getTriggerKey(jobId, jobGroup)).withSchedule(cronScheduleBuilder).build();
-
         // 放入参数，运行时的方法可以获取
         jobDetail.getJobDataMap().put(ScheduleConstants.TASK_PROPERTIES, job);
-
         // 判断是否存在
         if (scheduler.checkExists(getJobKey(jobId, jobGroup))) {
             // 防止创建时存在数据问题 先移除，然后在执行创建操作
             scheduler.deleteJob(getJobKey(jobId, jobGroup));
         }
-
         // 判断任务是否过期
         if (StringUtils.isNotNull(CronUtils.getNextExecution(job.getCronExpression()))) {
             // 执行调度任务
             scheduler.scheduleJob(jobDetail, trigger);
         }
-
         // 暂停任务
         if (job.getStatus().equals(ScheduleConstants.Status.PAUSE.getValue())) {
             scheduler.pauseJob(ScheduleUtils.getJobKey(jobId, jobGroup));

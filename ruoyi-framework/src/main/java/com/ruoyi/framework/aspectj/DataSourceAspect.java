@@ -35,11 +35,9 @@ public class DataSourceAspect {
     @Around("dsPointCut()")
     public Object around(ProceedingJoinPoint point) throws Throwable {
         DataSource dataSource = getDataSource(point);
-
         if (StringUtils.isNotNull(dataSource)) {
             DynamicDataSourceContextHolder.setDataSourceType(dataSource.value().name());
         }
-
         try {
             return point.proceed();
         } finally {
@@ -57,7 +55,6 @@ public class DataSourceAspect {
         if (Objects.nonNull(dataSource)) {
             return dataSource;
         }
-
         return AnnotationUtils.findAnnotation(signature.getDeclaringType(), DataSource.class);
     }
 }

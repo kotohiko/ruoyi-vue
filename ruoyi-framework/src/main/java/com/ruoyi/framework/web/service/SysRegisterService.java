@@ -42,13 +42,11 @@ public class SysRegisterService {
         String msg = "", username = registerBody.getUsername(), password = registerBody.getPassword();
         SysUser sysUser = new SysUser();
         sysUser.setUserName(username);
-
         // 验证码开关
         boolean captchaEnabled = configService.selectCaptchaEnabled();
         if (captchaEnabled) {
             validateCaptcha(registerBody.getCode(), registerBody.getUuid());
         }
-
         if (StringUtils.isEmpty(username)) {
             msg = "用户名不能为空";
         } else if (StringUtils.isEmpty(password)) {

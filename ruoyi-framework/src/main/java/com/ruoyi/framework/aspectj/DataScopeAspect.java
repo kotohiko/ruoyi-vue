@@ -101,7 +101,6 @@ public class DataScopeAspect {
             }
             conditions.add(dataScope);
         }
-
         if (StringUtils.isNotBlank(sqlString.toString())) {
             Object params = joinPoint.getArgs()[0];
             if (StringUtils.isNotNull(params) && params instanceof BaseEntity baseEntity) {
