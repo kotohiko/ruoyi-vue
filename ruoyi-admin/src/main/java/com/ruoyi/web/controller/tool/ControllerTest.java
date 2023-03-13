@@ -86,6 +86,7 @@ public class ControllerTest extends BaseController {
 
 @ApiModel(value = "UserEntity", description = "用户实体")
 class UserEntity {
+
     @ApiModelProperty("用户ID")
     private Integer userId;
 
