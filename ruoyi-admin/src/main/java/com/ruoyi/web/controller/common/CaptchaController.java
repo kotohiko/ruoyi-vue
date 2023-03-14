@@ -55,7 +55,6 @@ public class CaptchaController {
         // 保存验证码信息
         String uuid = IdUtils.simpleUUID();
         String verifyKey = CacheConstants.CAPTCHA_CODE_KEY + uuid;
-
         String capStr, code = null;
         BufferedImage image = null;
 
@@ -70,7 +69,6 @@ public class CaptchaController {
             capStr = code = captchaProducer.createText();
             image = captchaProducer.createImage(capStr);
         }
-
         redisCache.setCacheObject(verifyKey, code, Constants.CAPTCHA_EXPIRATION, TimeUnit.MINUTES);
         // 转换流信息写出
         FastByteArrayOutputStream os = new FastByteArrayOutputStream();
@@ -81,7 +79,6 @@ public class CaptchaController {
         } catch (IOException e) {
             return AjaxResult.error(e.getMessage());
         }
-
         ajax.put("uuid", uuid);
         ajax.put("img", Base64.encode(os.toByteArray()));
         return ajax;
