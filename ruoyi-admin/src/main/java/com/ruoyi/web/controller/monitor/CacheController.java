@@ -1,6 +1,6 @@
 package com.ruoyi.web.controller.monitor;
 
-import com.ruoyi.common.constant.CacheConstants;
+import com.ruoyi.common.constants.CacheConstants;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.system.domain.SysCache;

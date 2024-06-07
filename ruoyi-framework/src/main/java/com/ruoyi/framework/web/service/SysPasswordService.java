@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
-import com.ruoyi.common.constant.CacheConstants;
+import com.ruoyi.common.constants.CacheConstants;
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.redis.RedisCache;
 import com.ruoyi.common.exception.user.UserPasswordNotMatchException;

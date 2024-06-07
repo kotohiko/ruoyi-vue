@@ -1,7 +1,7 @@
 package com.ruoyi.web.controller.common;
 
 import com.ruoyi.common.config.RuoYiConfig;
-import com.ruoyi.common.constant.Constants;
+import com.ruoyi.common.constants.Constants;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.utils.StringUtils;
 import com.ruoyi.common.utils.file.FileUploadUtils;

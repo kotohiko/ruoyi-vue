@@ -9,7 +9,7 @@ import org.quartz.SchedulerException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-import com.ruoyi.common.constant.ScheduleConstants;
+import com.ruoyi.common.constants.ScheduleConstants;
 import com.ruoyi.common.exception.job.TaskException;
 import com.ruoyi.quartz.domain.SysJob;
 import com.ruoyi.quartz.mapper.SysJobMapper;

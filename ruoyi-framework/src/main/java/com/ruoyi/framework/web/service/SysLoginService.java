@@ -7,9 +7,9 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
-import com.ruoyi.common.constant.CacheConstants;
-import com.ruoyi.common.constant.Constants;
-import com.ruoyi.common.constant.UserConstants;
+import com.ruoyi.common.constants.CacheConstants;
+import com.ruoyi.common.constants.Constants;
+import com.ruoyi.common.constants.UserConstants;
 import com.ruoyi.common.core.domain.entity.SysUser;
 import com.ruoyi.common.core.domain.model.LoginUser;
 import com.ruoyi.common.core.redis.RedisCache;
@@ -158,7 +158,7 @@ public class SysLoginService
         }
         // IP黑名单校验
         String blackStr = configService.selectConfigByKey("sys.login.blackIPList");
-        if (IpUtils.isMatchedIp(blackStr, IpUtils.getIpAddr()))
+        if (IpUtils.isMatchedIp(blackStr, IpUtils.getIpAddress()))
         {
             AsyncManager.me().execute(AsyncFactory.recordLogininfor(username, Constants.LOGIN_FAIL, MessageUtils.message("login.blocked")));
             throw new BlackListException();
@@ -174,7 +174,7 @@ public class SysLoginService
     {
         SysUser sysUser = new SysUser();
         sysUser.setUserId(userId);
-        sysUser.setLoginIp(IpUtils.getIpAddr());
+        sysUser.setLoginIp(IpUtils.getIpAddress());
         sysUser.setLoginDate(DateUtils.getNowDate());
         userService.updateUserProfile(sysUser);
     }

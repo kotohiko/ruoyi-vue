@@ -78,7 +78,7 @@ public class RateLimiterAspect
         StringBuffer stringBuffer = new StringBuffer(rateLimiter.key());
         if (rateLimiter.limitType() == LimitType.IP)
         {
-            stringBuffer.append(IpUtils.getIpAddr()).append("-");
+            stringBuffer.append(IpUtils.getIpAddress()).append("-");
         }
         MethodSignature signature = (MethodSignature) point.getSignature();
         Method method = signature.getMethod();

@@ -9,8 +9,8 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import com.ruoyi.common.constant.CacheConstants;
-import com.ruoyi.common.constant.Constants;
+import com.ruoyi.common.constants.CacheConstants;
+import com.ruoyi.common.constants.Constants;
 import com.ruoyi.common.core.domain.model.LoginUser;
 import com.ruoyi.common.core.redis.RedisCache;
 import com.ruoyi.common.utils.ServletUtils;
@@ -161,7 +161,7 @@ public class TokenService
     public void setUserAgent(LoginUser loginUser)
     {
         UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("User-Agent"));
-        String ip = IpUtils.getIpAddr();
+        String ip = IpUtils.getIpAddress();
         loginUser.setIpaddr(ip);
         loginUser.setLoginLocation(AddressUtils.getRealAddressByIP(ip));
         loginUser.setBrowser(userAgent.getBrowser().getName());

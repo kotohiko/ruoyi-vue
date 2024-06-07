@@ -14,7 +14,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
-import com.ruoyi.common.constant.Constants;
+import com.ruoyi.common.constants.Constants;
 import com.ruoyi.common.core.text.Convert;
 
 /**

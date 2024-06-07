@@ -1,8 +1,8 @@
 package com.ruoyi.system.service.impl;
 
 import com.ruoyi.common.annotation.DataSource;
-import com.ruoyi.common.constant.CacheConstants;
-import com.ruoyi.common.constant.UserConstants;
+import com.ruoyi.common.constants.CacheConstants;
+import com.ruoyi.common.constants.UserConstants;
 import com.ruoyi.common.core.redis.RedisCache;
 import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.common.enums.DataSourceType;

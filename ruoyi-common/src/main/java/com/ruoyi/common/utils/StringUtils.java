@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 import org.springframework.util.AntPathMatcher;
-import com.ruoyi.common.constant.Constants;
+import com.ruoyi.common.constants.Constants;
 import com.ruoyi.common.core.text.StrFormatter;
 
 /**

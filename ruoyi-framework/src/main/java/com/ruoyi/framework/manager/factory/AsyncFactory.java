@@ -3,7 +3,7 @@ package com.ruoyi.framework.manager.factory;
 import java.util.TimerTask;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import com.ruoyi.common.constant.Constants;
+import com.ruoyi.common.constants.Constants;
 import com.ruoyi.common.utils.LogUtils;
 import com.ruoyi.common.utils.ServletUtils;
 import com.ruoyi.common.utils.StringUtils;
@@ -12,7 +12,7 @@ import com.ruoyi.common.utils.ip.IpUtils;
 import com.ruoyi.common.utils.spring.SpringUtils;
 import com.ruoyi.system.domain.SysLogininfor;
 import com.ruoyi.system.domain.SysOperLog;
-import com.ruoyi.system.service.ISysLogininforService;
+import com.ruoyi.system.service.ISysLoginInfoService;
 import com.ruoyi.system.service.ISysOperLogService;
 import eu.bitwalker.useragentutils.UserAgent;
 
@@ -38,7 +38,7 @@ public class AsyncFactory
             final Object... args)
     {
         final UserAgent userAgent = UserAgent.parseUserAgentString(ServletUtils.getRequest().getHeader("User-Agent"));
-        final String ip = IpUtils.getIpAddr();
+        final String ip = IpUtils.getIpAddress();
         return new TimerTask()
         {
             @Override
@@ -75,7 +75,7 @@ public class AsyncFactory
                     logininfor.setStatus(Constants.FAIL);
                 }
                 // 插入数据
-                SpringUtils.getBean(ISysLogininforService.class).insertLogininfor(logininfor);
+                SpringUtils.getBean(ISysLoginInfoService.class).insertLogininfor(logininfor);
             }
         };
     }
