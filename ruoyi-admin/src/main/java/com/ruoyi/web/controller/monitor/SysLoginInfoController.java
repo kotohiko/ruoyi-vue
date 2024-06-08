@@ -7,7 +7,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.poi.ExcelUtil;
 import com.ruoyi.framework.web.service.SysPasswordService;
-import com.ruoyi.system.domain.SysLogininfor;
+import com.ruoyi.system.domain.SysLoginInfo;
 import com.ruoyi.system.service.ISysLoginInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -33,18 +33,18 @@ public class SysLoginInfoController extends BaseController {
 
     @PreAuthorize("@ss.hasPermi('monitor:logininfor:list')")
     @GetMapping("/list")
-    public TableDataInfo list(SysLogininfor logininfor) {
+    public TableDataInfo list(SysLoginInfo logininfor) {
         startPage();
-        List<SysLogininfor> list = logininforService.selectLogininforList(logininfor);
+        List<SysLoginInfo> list = logininforService.selectLogininforList(logininfor);
         return getDataTable(list);
     }
 
     @Log(title = "登录日志", businessType = BusinessType.EXPORT)
     @PreAuthorize("@ss.hasPermi('monitor:logininfor:export')")
     @PostMapping("/export")
-    public void export(HttpServletResponse response, SysLogininfor logininfor) {
-        List<SysLogininfor> list = logininforService.selectLogininforList(logininfor);
-        ExcelUtil<SysLogininfor> util = new ExcelUtil<SysLogininfor>(SysLogininfor.class);
+    public void export(HttpServletResponse response, SysLoginInfo logininfor) {
+        List<SysLoginInfo> list = logininforService.selectLogininforList(logininfor);
+        ExcelUtil<SysLoginInfo> util = new ExcelUtil<SysLoginInfo>(SysLoginInfo.class);
         util.exportExcel(response, list, "登录日志");
     }
 

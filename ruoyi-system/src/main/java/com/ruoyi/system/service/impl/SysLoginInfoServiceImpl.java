@@ -1,7 +1,7 @@
 package com.ruoyi.system.service.impl;
 
-import com.ruoyi.system.domain.SysLogininfor;
-import com.ruoyi.system.mapper.SysLoginInforMapper;
+import com.ruoyi.system.domain.SysLoginInfo;
+import com.ruoyi.system.mapper.SysLoginInfoMapper;
 import com.ruoyi.system.service.ISysLoginInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,7 +17,7 @@ import java.util.List;
 public class SysLoginInfoServiceImpl implements ISysLoginInfoService {
 
     @Autowired
-    private SysLoginInforMapper logininforMapper;
+    private SysLoginInfoMapper logininforMapper;
 
     /**
      * 新增系统登录日志
@@ -25,7 +25,7 @@ public class SysLoginInfoServiceImpl implements ISysLoginInfoService {
      * @param logininfor 访问日志对象
      */
     @Override
-    public void insertLogininfor(SysLogininfor logininfor) {
+    public void insertLoginInfo(SysLoginInfo logininfor) {
         logininforMapper.insertLoginInfo(logininfor);
     }
 
@@ -36,7 +36,7 @@ public class SysLoginInfoServiceImpl implements ISysLoginInfoService {
      * @return 登录记录集合
      */
     @Override
-    public List<SysLogininfor> selectLogininforList(SysLogininfor logininfor) {
+    public List<SysLoginInfo> selectLogininforList(SysLoginInfo logininfor) {
         return logininforMapper.selectLogininforList(logininfor);
     }
 
@@ -48,7 +48,7 @@ public class SysLoginInfoServiceImpl implements ISysLoginInfoService {
      */
     @Override
     public int deleteLogininforByIds(Long[] infoIds) {
-        return logininforMapper.deleteLogininforByIds(infoIds);
+        return logininforMapper.deleteLoginInfoByIds(infoIds);
     }
 
     /**
@@ -56,6 +56,6 @@ public class SysLoginInfoServiceImpl implements ISysLoginInfoService {
      */
     @Override
     public void cleanLogininfor() {
-        logininforMapper.cleanLogininfor();
+        logininforMapper.cleanLoginInfo();
     }
 }
