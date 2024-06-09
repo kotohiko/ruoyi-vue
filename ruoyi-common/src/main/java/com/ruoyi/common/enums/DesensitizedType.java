@@ -1,6 +1,6 @@
 package com.ruoyi.common.enums;
 
-import com.ruoyi.common.utils.DesensitizedUtil;
+import com.ruoyi.common.utils.DesensitizedUtils;
 
 import java.util.function.Function;
 
@@ -19,7 +19,7 @@ public enum DesensitizedType {
     /**
      * 密码，全部字符都用*代替
      */
-    PASSWORD(DesensitizedUtil::password),
+    PASSWORD(DesensitizedUtils::password),
 
     /**
      * 身份证，中间10位星号替换
@@ -44,7 +44,7 @@ public enum DesensitizedType {
     /**
      * 车牌号码，包含普通车辆、新能源车辆
      */
-    CAR_LICENSE(DesensitizedUtil::carLicense);
+    CAR_LICENSE(DesensitizedUtils::carLicense);
 
     private final Function<String, String> desensitizer;
 

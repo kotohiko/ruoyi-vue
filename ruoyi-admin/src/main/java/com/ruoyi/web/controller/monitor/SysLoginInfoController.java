@@ -5,7 +5,7 @@ import com.ruoyi.common.core.controller.BaseController;
 import com.ruoyi.common.core.domain.AjaxResult;
 import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.enums.BusinessType;
-import com.ruoyi.common.utils.poi.ExcelUtil;
+import com.ruoyi.common.utils.poi.ExcelUtils;
 import com.ruoyi.framework.web.service.SysPasswordService;
 import com.ruoyi.system.domain.SysLoginInfo;
 import com.ruoyi.system.service.ISysLoginInfoService;
@@ -44,7 +44,7 @@ public class SysLoginInfoController extends BaseController {
     @PostMapping("/export")
     public void export(HttpServletResponse response, SysLoginInfo logininfor) {
         List<SysLoginInfo> list = logininforService.selectLogininforList(logininfor);
-        ExcelUtil<SysLoginInfo> util = new ExcelUtil<SysLoginInfo>(SysLoginInfo.class);
+        ExcelUtils<SysLoginInfo> util = new ExcelUtils<SysLoginInfo>(SysLoginInfo.class);
         util.exportExcel(response, list, "登录日志");
     }
 

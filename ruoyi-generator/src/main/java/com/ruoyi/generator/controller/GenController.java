@@ -11,7 +11,7 @@ import com.ruoyi.common.core.page.TableDataInfo;
 import com.ruoyi.common.core.text.Convert;
 import com.ruoyi.common.enums.BusinessType;
 import com.ruoyi.common.utils.SecurityUtils;
-import com.ruoyi.common.utils.sql.SqlUtil;
+import com.ruoyi.common.utils.sql.SqlUtils;
 import com.ruoyi.generator.domain.GenTable;
 import com.ruoyi.generator.domain.GenTableColumn;
 import com.ruoyi.generator.service.IGenTableColumnService;
@@ -117,7 +117,7 @@ public class GenController extends BaseController {
     @PostMapping("/createTable")
     public AjaxResult createTableSave(String sql) {
         try {
-            SqlUtil.filterKeyword(sql);
+            SqlUtils.filterKeyword(sql);
             List<SQLStatement> sqlStatements = SQLUtils.parseStatements(sql, DbType.mysql);
             List<String> tableNames = new ArrayList<>();
             for (SQLStatement sqlStatement : sqlStatements) {
