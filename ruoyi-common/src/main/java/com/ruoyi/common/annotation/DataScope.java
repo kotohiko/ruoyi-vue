@@ -11,6 +11,7 @@ import java.lang.annotation.*;
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
 public @interface DataScope {
+
     /**
      * 部门表的别名
      */
