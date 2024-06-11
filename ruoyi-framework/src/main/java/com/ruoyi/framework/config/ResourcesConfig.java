@@ -23,6 +23,7 @@ import java.util.concurrent.TimeUnit;
  */
 @Configuration
 public class ResourcesConfig implements WebMvcConfigurer {
+
     @Autowired
     private RepeatSubmitInterceptor repeatSubmitInterceptor;
 
